@@ -1,0 +1,178 @@
+[
+  {
+    "resultProp": [
+      "I",
+      "S",
+      "T",
+      "J"
+    ],
+    "resultDesc": "Practical and fact-minded individuals, whose reliability cannot be doubted.",
+    "resultPicture": "icon_url_istj",
+    "resultName": "ISTJ（Logistician）"
+  },
+  {
+    "resultProp": [
+      "I",
+      "S",
+      "F",
+      "J"
+    ],
+    "resultDesc": "Very dedicated and warm protectors, always ready to defend their loved ones.",
+    "resultPicture": "icon_url_isfj",
+    "resultName": "ISFJ（Defender）"
+  },
+  {
+    "resultProp": [
+      "I",
+      "N",
+      "F",
+      "J"
+    ],
+    "resultDesc": "Quiet visionaries, often serving as inspiring and tireless idealists.",
+    "resultPicture": "icon_url_infj",
+    "resultName": "INFJ（Advocate）"
+  },
+  {
+    "resultProp": [
+      "I",
+      "N",
+      "T",
+      "J"
+    ],
+    "resultDesc": "Imaginative and strategic thinkers, with a plan for everything.",
+    "resultPicture": "icon_url_intj",
+    "resultName": "INTJ（Architect）"
+  },
+  {
+    "resultProp": [
+      "I",
+      "S",
+      "T",
+      "P"
+    ],
+    "resultDesc": "Innovative and practical experimenters, masters of all kinds of tools.",
+    "resultPicture": "icon_url_istp",
+    "resultName": "ISTP（Virtuoso）"
+  },
+  {
+    "resultProp": [
+      "I",
+      "S",
+      "F",
+      "P"
+    ],
+    "resultDesc": "Flexible and charming, always ready to explore and experience something new.",
+    "resultPicture": "icon_url_isfp",
+    "resultName": "ISFP（Adventurer）"
+  },
+  {
+    "resultProp": [
+      "I",
+      "N",
+      "F",
+      "P"
+    ],
+    "resultDesc": "Poetic, kind, and altruistic people, always eager to help a good cause.",
+    "resultPicture": "icon_url_infp",
+    "resultName": "INFP（Mediator）"
+  },
+  {
+    "resultProp": [
+      "I",
+      "N",
+      "T",
+      "P"
+    ],
+    "resultDesc": "Innovative inventors with an unquenchable thirst for knowledge.",
+    "resultPicture": "icon_url_intp",
+    "resultName": "INTP（Logician）"
+  },
+  {
+    "resultProp": [
+      "E",
+      "S",
+      "T",
+      "P"
+    ],
+    "resultDesc": "Savvy, energetic, and very perceptive people who truly enjoy living on the edge.",
+    "resultPicture": "icon_url_estp",
+    "resultName": "ESTP（Entrepreneur）"
+  },
+  {
+    "resultProp": [
+      "E",
+      "S",
+      "F",
+      "P"
+    ],
+    "resultDesc": "Spontaneous, energetic, and enthusiastic people – life is never boring around them.",
+    "resultPicture": "icon_url_esfp",
+    "resultName": "ESFP（Entertainer）"
+  },
+  {
+    "resultProp": [
+      "E",
+      "N",
+      "F",
+      "P"
+    ],
+    "resultDesc": "Enthusiastic, creative, and sociable free spirits, who can always find a reason to smile.",
+    "resultPicture": "icon_url_enfp",
+    "resultName": "ENFP（Campaigner）"
+  },
+  {
+    "resultProp": [
+      "E",
+      "N",
+      "T",
+      "P"
+    ],
+    "resultDesc": "Curious and flexible thinkers who cannot resist an intellectual challenge.",
+    "resultPicture": "icon_url_entp",
+    "resultName": "ENTP（Debater）"
+  },
+  {
+    "resultProp": [
+      "E",
+      "S",
+      "T",
+      "J"
+    ],
+    "resultDesc": "Excellent organizers, unsurpassed at managing things – or people.",
+    "resultPicture": "icon_url_estj",
+    "resultName": "ESTJ（Executive）"
+  },
+  {
+    "resultProp": [
+      "E",
+      "S",
+      "F",
+      "J"
+    ],
+    "resultDesc": "Caring, social, community-minded people who are always eager to help.",
+    "resultPicture": "icon_url_esfj",
+    "resultName": "ESFJ（Consul）"
+  },
+  {
+    "resultProp": [
+      "E",
+      "N",
+      "F",
+      "J"
+    ],
+    "resultDesc": "Inspiring optimists, readily taking action to do what they feel is right.",
+    "resultPicture": "icon_url_enfj",
+    "resultName": "ENFJ（Protagonist）"
+  },
+  {
+    "resultProp": [
+      "E",
+      "N",
+      "T",
+      "J"
+    ],
+    "resultDesc": "Bold, imaginative, and strong-willed, always finding a way – or making one.",
+    "resultPicture": "icon_url_entj",
+    "resultName": "ENTJ（Commander）"
+  }
+]
