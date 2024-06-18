@@ -4,7 +4,7 @@ import "./index.scss";
 export default () => {
   return (
     <View className="globalFooter">
-      author: Steven Cui
+      author: DoF
     </View>
   );
 };
