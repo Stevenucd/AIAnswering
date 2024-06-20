@@ -29,10 +29,10 @@ public class CodeGenerator {
      */
     public static void main(String[] args) throws TemplateException, IOException {
         // 指定生成参数
-        String packageName = "com.yupi.AIAnswering";
-        String dataName = "用户评论";
-        String dataKey = "userComment";
-        String upperDataKey = "UserComment";
+        String packageName = "com.steven.AIAnswering";
+        String dataName = "userAnswer";
+        String dataKey = "userAnswer";
+        String upperDataKey = "UserAnswer";
 
         // 封装生成参数
         Map<String, Object> dataModel = new HashMap<>();
@@ -43,6 +43,7 @@ public class CodeGenerator {
 
         // 生成路径默认值
         String projectPath = System.getProperty("user.dir");
+        projectPath="/Users/stevencui/Desktop/projects/AIAnswering/AIAnswering-backend/";
         // 参考路径，可以自己调整下面的 outputPath
         String inputPath = projectPath + File.separator + "src/main/resources/templates/模板名称.java.ftl";
         String outputPath = String.format("%s/generator/包名/%s类后缀.java", projectPath, upperDataKey);
