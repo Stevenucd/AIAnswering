@@ -46,7 +46,7 @@ public class App implements Serializable {
     private Integer scoringStrategy;
 
     /**
-     * Audit Status: 0-Pending, 1-Passed, 2-Rejected
+     * Review Status: 0-Pending, 1-Passed, 2-Rejected
      */
     private Integer reviewStatus;
 
