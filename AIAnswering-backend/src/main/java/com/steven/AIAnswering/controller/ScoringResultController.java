@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * scoringResult接口
+ * 评分结果接口
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -47,7 +47,7 @@ public class ScoringResultController {
     // region 增删改查
 
     /**
-     * 创建scoringResult
+     * 创建评分结果
      *
      * @param scoringResultAddRequest
      * @param request
@@ -75,7 +75,7 @@ public class ScoringResultController {
     }
 
     /**
-     * 删除scoringResult
+     * 删除评分结果
      *
      * @param deleteRequest
      * @param request
@@ -102,7 +102,7 @@ public class ScoringResultController {
     }
 
     /**
-     * 更新scoringResult（仅管理员可用）
+     * 更新评分结果（仅管理员可用）
      *
      * @param scoringResultUpdateRequest
      * @return
@@ -131,7 +131,7 @@ public class ScoringResultController {
     }
 
     /**
-     * 根据 id 获取scoringResult（封装类）
+     * 根据 id 获取评分结果（封装类）
      *
      * @param id
      * @return
@@ -147,7 +147,7 @@ public class ScoringResultController {
     }
 
     /**
-     * 分页获取scoringResult列表（仅管理员可用）
+     * 分页获取评分结果列表（仅管理员可用）
      *
      * @param scoringResultQueryRequest
      * @return
@@ -164,7 +164,7 @@ public class ScoringResultController {
     }
 
     /**
-     * 分页获取scoringResult列表（封装类）
+     * 分页获取评分结果列表（封装类）
      *
      * @param scoringResultQueryRequest
      * @param request
@@ -172,7 +172,7 @@ public class ScoringResultController {
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<ScoringResultVO>> listScoringResultVOByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest,
-                                                               HttpServletRequest request) {
+                                                                         HttpServletRequest request) {
         long current = scoringResultQueryRequest.getCurrent();
         long size = scoringResultQueryRequest.getPageSize();
         // 限制爬虫
@@ -185,7 +185,7 @@ public class ScoringResultController {
     }
 
     /**
-     * 分页获取当前登录用户创建的scoringResult列表
+     * 分页获取当前登录用户创建的评分结果列表
      *
      * @param scoringResultQueryRequest
      * @param request
@@ -193,7 +193,7 @@ public class ScoringResultController {
      */
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<ScoringResultVO>> listMyScoringResultVOByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest,
-                                                                 HttpServletRequest request) {
+                                                                           HttpServletRequest request) {
         ThrowUtils.throwIf(scoringResultQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
         User loginUser = userService.getLoginUser(request);
@@ -210,7 +210,7 @@ public class ScoringResultController {
     }
 
     /**
-     * 编辑scoringResult（给用户使用）
+     * 编辑评分结果（给用户使用）
      *
      * @param scoringResultEditRequest
      * @param request

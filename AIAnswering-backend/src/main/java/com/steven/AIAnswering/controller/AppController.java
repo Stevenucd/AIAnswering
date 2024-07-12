@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
- * Application接口
+ * 应用接口
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -43,9 +43,8 @@ public class AppController {
 
     // region 增删改查
 
-
     /**
-     * 创建Application
+     * 创建应用
      *
      * @param appAddRequest
      * @param request
@@ -72,7 +71,7 @@ public class AppController {
     }
 
     /**
-     * 删除Application
+     * 删除应用
      *
      * @param deleteRequest
      * @param request
@@ -99,7 +98,7 @@ public class AppController {
     }
 
     /**
-     * 更新Application（仅管理员可用）
+     * 更新应用（仅管理员可用）
      *
      * @param appUpdateRequest
      * @return
@@ -126,7 +125,7 @@ public class AppController {
     }
 
     /**
-     * 根据 id 获取Application（封装类）
+     * 根据 id 获取应用（封装类）
      *
      * @param id
      * @return
@@ -142,7 +141,7 @@ public class AppController {
     }
 
     /**
-     * 分页获取Application列表（仅管理员可用）
+     * 分页获取应用列表（仅管理员可用）
      *
      * @param appQueryRequest
      * @return
@@ -159,7 +158,7 @@ public class AppController {
     }
 
     /**
-     * 分页获取Application列表（封装类）
+     * 分页获取应用列表（封装类）
      *
      * @param appQueryRequest
      * @param request
@@ -167,7 +166,7 @@ public class AppController {
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<AppVO>> listAppVOByPage(@RequestBody AppQueryRequest appQueryRequest,
-                                                               HttpServletRequest request) {
+                                                     HttpServletRequest request) {
         long current = appQueryRequest.getCurrent();
         long size = appQueryRequest.getPageSize();
         // 限制爬虫
@@ -182,15 +181,15 @@ public class AppController {
     }
 
     /**
-     * 分页获取当前登录用户创建的Application列表
+     * 分页获取当前登录用户创建的应用列表
      *
      * @param appQueryRequest
      * @param request
-     * @return
+     * @return success
      */
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<AppVO>> listMyAppVOByPage(@RequestBody AppQueryRequest appQueryRequest,
-                                                                 HttpServletRequest request) {
+                                                       HttpServletRequest request) {
         ThrowUtils.throwIf(appQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
         User loginUser = userService.getLoginUser(request);
@@ -199,8 +198,6 @@ public class AppController {
         long size = appQueryRequest.getPageSize();
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
-        // 只能看到已过审的应用
-        appQueryRequest.setReviewStatus(ReviewStatusEnum.PASS.getValue());
         // 查询数据库
         Page<App> appPage = appService.page(new Page<>(current, size),
                 appService.getQueryWrapper(appQueryRequest));
@@ -209,7 +206,7 @@ public class AppController {
     }
 
     /**
-     * 编辑Application（给用户使用）
+     * 编辑应用（给用户使用）
      *
      * @param appEditRequest
      * @param request
@@ -234,7 +231,7 @@ public class AppController {
         if (!oldApp.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-        // 重制审核状态
+        // 重置审核状态
         app.setReviewStatus(ReviewStatusEnum.REVIEWING.getValue());
         // 操作数据库
         boolean result = appService.updateById(app);
@@ -245,7 +242,7 @@ public class AppController {
     // endregion
 
     /**
-     * Application review
+     * 应用审核
      *
      * @param reviewRequest
      * @param request
@@ -267,7 +264,7 @@ public class AppController {
         ThrowUtils.throwIf(oldApp == null, ErrorCode.NOT_FOUND_ERROR);
         // 已是该状态
         if (oldApp.getReviewStatus().equals(reviewStatus)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Please do not double check");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请勿重复审核");
         }
         // 更新审核状态
         User loginUser = userService.getLoginUser(request);

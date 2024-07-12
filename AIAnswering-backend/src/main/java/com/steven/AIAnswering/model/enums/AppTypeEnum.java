@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
  */
 public enum AppTypeEnum {
 
-    SCORE("Score type", 0),
-    TEST("Assessment type", 1);
+    SCORE("得分类", 0),
+    TEST("测评类", 1);
 
     private final String text;
 
