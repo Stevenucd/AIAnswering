@@ -74,3 +74,6 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.steven.AIAnswering.controller
+# AI 配置
+ai:
+  apiKey: ef5adbb0ff01693e180d3d34f25d9b99.lZE2mpVDYSKXNeyK

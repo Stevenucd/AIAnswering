@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * userAnswer接口
+ * 用户答案接口
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -53,10 +53,11 @@ public class UserAnswerController {
 
     @Resource
     private ScoringStrategyExecutor scoringStrategyExecutor;
+
     // region 增删改查
 
     /**
-     * 创建userAnswer
+     * 创建用户答案
      *
      * @param userAnswerAddRequest
      * @param request
@@ -72,12 +73,12 @@ public class UserAnswerController {
         userAnswer.setChoices(JSONUtil.toJsonStr(choices));
         // 数据校验
         userAnswerService.validUserAnswer(userAnswer, true);
-        // 判断app是否存在
+        // 判断 app 是否存在
         Long appId = userAnswerAddRequest.getAppId();
         App app = appService.getById(appId);
         ThrowUtils.throwIf(app == null, ErrorCode.NOT_FOUND_ERROR);
-        if(!ReviewStatusEnum.getEnumByValue(app.getReviewStatus()).equals(ReviewStatusEnum.PASS)){
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "review not passed");
+        if (!ReviewStatusEnum.PASS.equals(ReviewStatusEnum.getEnumByValue(app.getReviewStatus()))) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "应用未通过审核，无法答题");
         }
         // 填充默认值
         User loginUser = userService.getLoginUser(request);
@@ -94,13 +95,13 @@ public class UserAnswerController {
             userAnswerService.updateById(userAnswerWithResult);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BusinessException(ErrorCode.OPERATION_ERROR, "Scoring error");
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "评分错误");
         }
         return ResultUtils.success(newUserAnswerId);
     }
 
     /**
-     * 删除userAnswer
+     * 删除用户答案
      *
      * @param deleteRequest
      * @param request
@@ -127,7 +128,7 @@ public class UserAnswerController {
     }
 
     /**
-     * 更新userAnswer（仅管理员可用）
+     * 更新用户答案（仅管理员可用）
      *
      * @param userAnswerUpdateRequest
      * @return
@@ -156,7 +157,7 @@ public class UserAnswerController {
     }
 
     /**
-     * 根据 id 获取userAnswer（封装类）
+     * 根据 id 获取用户答案（封装类）
      *
      * @param id
      * @return
@@ -172,7 +173,7 @@ public class UserAnswerController {
     }
 
     /**
-     * 分页获取userAnswer列表（仅管理员可用）
+     * 分页获取用户答案列表（仅管理员可用）
      *
      * @param userAnswerQueryRequest
      * @return
@@ -189,7 +190,7 @@ public class UserAnswerController {
     }
 
     /**
-     * 分页获取userAnswer列表（封装类）
+     * 分页获取用户答案列表（封装类）
      *
      * @param userAnswerQueryRequest
      * @param request
@@ -197,7 +198,7 @@ public class UserAnswerController {
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<UserAnswerVO>> listUserAnswerVOByPage(@RequestBody UserAnswerQueryRequest userAnswerQueryRequest,
-                                                               HttpServletRequest request) {
+                                                                   HttpServletRequest request) {
         long current = userAnswerQueryRequest.getCurrent();
         long size = userAnswerQueryRequest.getPageSize();
         // 限制爬虫
@@ -210,7 +211,7 @@ public class UserAnswerController {
     }
 
     /**
-     * 分页获取当前登录用户创建的userAnswer列表
+     * 分页获取当前登录用户创建的用户答案列表
      *
      * @param userAnswerQueryRequest
      * @param request
@@ -218,7 +219,7 @@ public class UserAnswerController {
      */
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<UserAnswerVO>> listMyUserAnswerVOByPage(@RequestBody UserAnswerQueryRequest userAnswerQueryRequest,
-                                                                 HttpServletRequest request) {
+                                                                     HttpServletRequest request) {
         ThrowUtils.throwIf(userAnswerQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
         User loginUser = userService.getLoginUser(request);
@@ -235,7 +236,7 @@ public class UserAnswerController {
     }
 
     /**
-     * 编辑userAnswer（给用户使用）
+     * 编辑用户答案（给用户使用）
      *
      * @param userAnswerEditRequest
      * @param request

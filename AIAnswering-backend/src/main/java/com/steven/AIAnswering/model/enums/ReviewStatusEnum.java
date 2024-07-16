@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
  */
 public enum ReviewStatusEnum {
 
-    REVIEWING("pending", 0),
-    PASS("pass", 1),
-    REJECT("reject", 2);
+    REVIEWING("待审核", 0),
+    PASS("通过", 1),
+    REJECT("拒绝", 2);
 
     private final String text;
 
