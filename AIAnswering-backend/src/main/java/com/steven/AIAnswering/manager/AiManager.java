@@ -20,13 +20,13 @@ public class AiManager {
 
     @Resource
     private ClientV4 clientV4;
-    //稳定随机数
+    // Stable random number
     private static final float STABLE_TEMPERATURE = 0.5f;
-    //不稳定随机数
+    // Unstable random number
     private static final float UNSTABLE_TEMPERATURE = 0.99f;
 
     /**
-     * 同步请求（答案不稳定）
+     * Synchronisation requests (unstable answers)
      *
      * @param systemMessage
      * @param userMessage
@@ -37,7 +37,7 @@ public class AiManager {
     }
 
     /**
-     * 同步请求（答案较稳定）
+     * Synchronisation requests (stable answers)
      *
      * @param systemMessage
      * @param userMessage
@@ -48,7 +48,7 @@ public class AiManager {
     }
 
     /**
-     * 同步请求
+     * Synchronisation requests
      *
      * @param systemMessage
      * @param userMessage
@@ -60,7 +60,7 @@ public class AiManager {
     }
 
     /**
-     * 通用请求（简化）
+     * Generic request (simplified)
      *
      * @param systemMessage
      * @param userMessage
@@ -78,7 +78,7 @@ public class AiManager {
     }
 
     /**
-     * 通用请求
+     * Generic request
      *
      * @param messages
      * @param stream
@@ -86,7 +86,7 @@ public class AiManager {
      * @return
      */
     public String doRequest(List<ChatMessage> messages, Boolean stream, Float temperature) {
-        // 构建请求
+        // Create request
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
                 .model(Constants.ModelChatGLM4)
                 .stream(stream)

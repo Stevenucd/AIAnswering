@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 评分结果接口
+ * Scoring results controller
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -44,10 +44,10 @@ public class ScoringResultController {
     @Resource
     private UserService userService;
 
-    // region 增删改查
+    // region CRUD
 
     /**
-     * 创建评分结果
+     * Create scoring results
      *
      * @param scoringResultAddRequest
      * @param request
@@ -56,26 +56,26 @@ public class ScoringResultController {
     @PostMapping("/add")
     public BaseResponse<Long> addScoringResult(@RequestBody ScoringResultAddRequest scoringResultAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(scoringResultAddRequest == null, ErrorCode.PARAMS_ERROR);
-        // 在此处将实体类和 DTO 进行转换
+        // Convert entity class and DTOs here
         ScoringResult scoringResult = new ScoringResult();
         BeanUtils.copyProperties(scoringResultAddRequest, scoringResult);
         List<String> resultProp = scoringResultAddRequest.getResultProp();
         scoringResult.setResultProp(JSONUtil.toJsonStr(resultProp));
-        // 数据校验
+        // Data verification
         scoringResultService.validScoringResult(scoringResult, true);
-        // 填充默认值
+        // Fill defaults
         User loginUser = userService.getLoginUser(request);
         scoringResult.setUserId(loginUser.getId());
-        // 写入数据库
+        // Write to database
         boolean result = scoringResultService.save(scoringResult);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        // 返回新写入的数据 id
+        // Returns the newly written data id
         long newScoringResultId = scoringResult.getId();
         return ResultUtils.success(newScoringResultId);
     }
 
     /**
-     * 删除评分结果
+     * Delete scoring results
      *
      * @param deleteRequest
      * @param request
@@ -88,21 +88,21 @@ public class ScoringResultController {
         }
         User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
-        // 判断是否存在
+        // Determine exist or not
         ScoringResult oldScoringResult = scoringResultService.getById(id);
         ThrowUtils.throwIf(oldScoringResult == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可删除
+        // Can be deleted only by creator or an admin
         if (!oldScoringResult.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-        // 操作数据库
+        // Operational database
         boolean result = scoringResultService.removeById(id);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }
 
     /**
-     * 更新评分结果（仅管理员可用）
+     * Update scoring results (available to admin only)
      *
      * @param scoringResultUpdateRequest
      * @return
@@ -113,25 +113,25 @@ public class ScoringResultController {
         if (scoringResultUpdateRequest == null || scoringResultUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // 在此处将实体类和 DTO 进行转换
+        // Convert entity class and DTOs here
         ScoringResult scoringResult = new ScoringResult();
         BeanUtils.copyProperties(scoringResultUpdateRequest, scoringResult);
         List<String> resultProp = scoringResultUpdateRequest.getResultProp();
         scoringResult.setResultProp(JSONUtil.toJsonStr(resultProp));
-        // 数据校验
+        // Data verification
         scoringResultService.validScoringResult(scoringResult, false);
-        // 判断是否存在
+        // Determine exist or not
         long id = scoringResultUpdateRequest.getId();
         ScoringResult oldScoringResult = scoringResultService.getById(id);
         ThrowUtils.throwIf(oldScoringResult == null, ErrorCode.NOT_FOUND_ERROR);
-        // 操作数据库
+        // Operational database
         boolean result = scoringResultService.updateById(scoringResult);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }
 
     /**
-     * 根据 id 获取评分结果（封装类）
+     * Get scoring result by id (Encapsulation)
      *
      * @param id
      * @return
@@ -139,15 +139,15 @@ public class ScoringResultController {
     @GetMapping("/get/vo")
     public BaseResponse<ScoringResultVO> getScoringResultVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
-        // 查询数据库
+        // Query database
         ScoringResult scoringResult = scoringResultService.getById(id);
         ThrowUtils.throwIf(scoringResult == null, ErrorCode.NOT_FOUND_ERROR);
-        // 获取封装类
+        // Get Encapsulation
         return ResultUtils.success(scoringResultService.getScoringResultVO(scoringResult, request));
     }
 
     /**
-     * 分页获取评分结果列表（仅管理员可用）
+     * List scoring result by page (available to admin only)
      *
      * @param scoringResultQueryRequest
      * @return
@@ -157,14 +157,14 @@ public class ScoringResultController {
     public BaseResponse<Page<ScoringResult>> listScoringResultByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest) {
         long current = scoringResultQueryRequest.getCurrent();
         long size = scoringResultQueryRequest.getPageSize();
-        // 查询数据库
+        // Query database
         Page<ScoringResult> scoringResultPage = scoringResultService.page(new Page<>(current, size),
                 scoringResultService.getQueryWrapper(scoringResultQueryRequest));
         return ResultUtils.success(scoringResultPage);
     }
 
     /**
-     * 分页获取评分结果列表（封装类）
+     * List scoring result by page（Encapsulation）
      *
      * @param scoringResultQueryRequest
      * @param request
@@ -175,17 +175,17 @@ public class ScoringResultController {
                                                                          HttpServletRequest request) {
         long current = scoringResultQueryRequest.getCurrent();
         long size = scoringResultQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restrictions on crawler
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
-        // 查询数据库
+        // Query database
         Page<ScoringResult> scoringResultPage = scoringResultService.page(new Page<>(current, size),
                 scoringResultService.getQueryWrapper(scoringResultQueryRequest));
-        // 获取封装类
+        // Get Encapsulation
         return ResultUtils.success(scoringResultService.getScoringResultVOPage(scoringResultPage, request));
     }
 
     /**
-     * 分页获取当前登录用户创建的评分结果列表
+     * List my scoring result by page
      *
      * @param scoringResultQueryRequest
      * @param request
@@ -195,22 +195,22 @@ public class ScoringResultController {
     public BaseResponse<Page<ScoringResultVO>> listMyScoringResultVOByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest,
                                                                            HttpServletRequest request) {
         ThrowUtils.throwIf(scoringResultQueryRequest == null, ErrorCode.PARAMS_ERROR);
-        // 补充查询条件，只查询当前登录用户的数据
+        // Supplementary query conditions to query only the data of the currently logged-in user
         User loginUser = userService.getLoginUser(request);
         scoringResultQueryRequest.setUserId(loginUser.getId());
         long current = scoringResultQueryRequest.getCurrent();
         long size = scoringResultQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restrictions on crawler
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
-        // 查询数据库
+        // Query database
         Page<ScoringResult> scoringResultPage = scoringResultService.page(new Page<>(current, size),
                 scoringResultService.getQueryWrapper(scoringResultQueryRequest));
-        // 获取封装类
+        // Get Encapsulation
         return ResultUtils.success(scoringResultService.getScoringResultVOPage(scoringResultPage, request));
     }
 
     /**
-     * 编辑评分结果（给用户使用）
+     * Edit scoring results (for users)
      *
      * @param scoringResultEditRequest
      * @param request
@@ -221,23 +221,23 @@ public class ScoringResultController {
         if (scoringResultEditRequest == null || scoringResultEditRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // 在此处将实体类和 DTO 进行转换
+        // Convert entity class and DTOs here
         ScoringResult scoringResult = new ScoringResult();
         BeanUtils.copyProperties(scoringResultEditRequest, scoringResult);
         List<String> resultProp = scoringResultEditRequest.getResultProp();
         scoringResult.setResultProp(JSONUtil.toJsonStr(resultProp));
-        // 数据校验
+        // Data verification
         scoringResultService.validScoringResult(scoringResult, false);
         User loginUser = userService.getLoginUser(request);
-        // 判断是否存在
+        // Determine exist or not
         long id = scoringResultEditRequest.getId();
         ScoringResult oldScoringResult = scoringResultService.getById(id);
         ThrowUtils.throwIf(oldScoringResult == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可编辑
+        // Editable by creator or admin only
         if (!oldScoringResult.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-        // 操作数据库
+        // Operational database
         boolean result = scoringResultService.updateById(scoringResult);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);

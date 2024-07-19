@@ -1,7 +1,7 @@
 package com.steven.AIAnswering.constant;
 
 /**
- * 通用常量
+ * Universal constants
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -9,12 +9,12 @@ package com.steven.AIAnswering.constant;
 public interface CommonConstant {
 
     /**
-     * 升序
+     * Ascending order
      */
     String SORT_ORDER_ASC = "ascend";
 
     /**
-     * 降序
+     * Descending order
      */
     String SORT_ORDER_DESC = " descend";
 

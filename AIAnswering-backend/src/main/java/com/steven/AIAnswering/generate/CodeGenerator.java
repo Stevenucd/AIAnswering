@@ -13,10 +13,9 @@ import java.io.FileWriter;
 import java.io.Writer;
 
 /**
- * 代码生成器
+ * 代码生成器 (An open source useful code generator)
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
+ * @author 程序员鱼皮
  */
 public class CodeGenerator {
 

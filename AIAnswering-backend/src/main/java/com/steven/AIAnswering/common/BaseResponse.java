@@ -4,7 +4,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * 通用返回类
+ * Generic return class
  *
  * @param <T>
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>

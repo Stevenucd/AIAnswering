@@ -1,7 +1,7 @@
 package com.steven.AIAnswering.common;
 
 /**
- * 返回工具类
+ * Return utils class
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -9,7 +9,7 @@ package com.steven.AIAnswering.common;
 public class ResultUtils {
 
     /**
-     * 成功
+     * Success
      *
      * @param data
      * @param <T>
@@ -20,7 +20,7 @@ public class ResultUtils {
     }
 
     /**
-     * 失败
+     * Fail
      *
      * @param errorCode
      * @return
@@ -30,7 +30,7 @@ public class ResultUtils {
     }
 
     /**
-     * 失败
+     * Fail
      *
      * @param code
      * @param message
@@ -41,7 +41,7 @@ public class ResultUtils {
     }
 
     /**
-     * 失败
+     * Fail
      *
      * @param errorCode
      * @return

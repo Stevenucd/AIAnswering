@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 帖子收藏接口
+ * Post Favorites controller
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -45,11 +45,11 @@ public class PostFavourController {
     private UserService userService;
 
     /**
-     * 收藏 / 取消收藏
+     * Favorite / Cancel favourite
      *
      * @param postFavourAddRequest
      * @param request
-     * @return resultNum 收藏变化数
+     * @return resultNum
      */
     @PostMapping("/")
     public BaseResponse<Integer> doPostFavour(@RequestBody PostFavourAddRequest postFavourAddRequest,
@@ -57,7 +57,7 @@ public class PostFavourController {
         if (postFavourAddRequest == null || postFavourAddRequest.getPostId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // 登录才能操作
+        // Login to operate
         final User loginUser = userService.getLoginUser(request);
         long postId = postFavourAddRequest.getPostId();
         int result = postFavourService.doPostFavour(postId, loginUser);
@@ -65,7 +65,7 @@ public class PostFavourController {
     }
 
     /**
-     * 获取我收藏的帖子列表
+     * Get a list of my favourite posts
      *
      * @param postQueryRequest
      * @param request
@@ -79,7 +79,7 @@ public class PostFavourController {
         User loginUser = userService.getLoginUser(request);
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restrictions on crawler
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Post> postPage = postFavourService.listFavourPostByPage(new Page<>(current, size),
                 postService.getQueryWrapper(postQueryRequest), loginUser.getId());
@@ -87,7 +87,7 @@ public class PostFavourController {
     }
 
     /**
-     * 获取用户收藏的帖子列表
+     * Get the list of user favourite posts
      *
      * @param postFavourQueryRequest
      * @param request
@@ -101,7 +101,7 @@ public class PostFavourController {
         long current = postFavourQueryRequest.getCurrent();
         long size = postFavourQueryRequest.getPageSize();
         Long userId = postFavourQueryRequest.getUserId();
-        // 限制爬虫
+        // Restrictions on crawler
         ThrowUtils.throwIf(size > 20 || userId == null, ErrorCode.PARAMS_ERROR);
         Page<Post> postPage = postFavourService.listFavourPostByPage(new Page<>(current, size),
                 postService.getQueryWrapper(postFavourQueryRequest.getPostQueryRequest()), userId);

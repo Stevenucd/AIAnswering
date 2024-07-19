@@ -97,7 +97,7 @@ const customRequest = async (option: any) => {
     onSuccess();
     console.log(file.value);
   } else {
-    Message.error("上传失败，" + res.data.message || "");
+    Message.error("Upload failed，" + res.data.message || "");
     onError(new Error(res.data.message));
   }
 };

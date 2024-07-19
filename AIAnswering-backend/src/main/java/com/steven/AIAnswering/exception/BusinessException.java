@@ -3,7 +3,7 @@ package com.steven.AIAnswering.exception;
 import com.steven.AIAnswering.common.ErrorCode;
 
 /**
- * 自定义异常类
+ * Custom Exception Class
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -11,7 +11,7 @@ import com.steven.AIAnswering.common.ErrorCode;
 public class BusinessException extends RuntimeException {
 
     /**
-     * 错误码
+     * Error code
      */
     private final int code;
 

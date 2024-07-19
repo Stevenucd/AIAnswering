@@ -42,7 +42,7 @@ public class ${upperDataKey}Controller {
     @Resource
     private UserService userService;
 
-    // region 增删改查
+    // region CRUD
 
     /**
      * 创建${dataName}
@@ -54,18 +54,18 @@ public class ${upperDataKey}Controller {
     @PostMapping("/add")
     public BaseResponse<Long> add${upperDataKey}(@RequestBody ${upperDataKey}AddRequest ${dataKey}AddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(${dataKey}AddRequest == null, ErrorCode.PARAMS_ERROR);
-        // todo 在此处将实体类和 DTO 进行转换
+        // todo Convert entity class and DTOs here
         ${upperDataKey} ${dataKey} = new ${upperDataKey}();
         BeanUtils.copyProperties(${dataKey}AddRequest, ${dataKey});
-        // 数据校验
+        // Data verification
         ${dataKey}Service.valid${upperDataKey}(${dataKey}, true);
-        // todo 填充默认值
+        // todo Fill defaults
         User loginUser = userService.getLoginUser(request);
         ${dataKey}.setUserId(loginUser.getId());
-        // 写入数据库
+        // Write to database
         boolean result = ${dataKey}Service.save(${dataKey});
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        // 返回新写入的数据 id
+        // Returns the newly written data id
         long new${upperDataKey}Id = ${dataKey}.getId();
         return ResultUtils.success(new${upperDataKey}Id);
     }
@@ -84,14 +84,14 @@ public class ${upperDataKey}Controller {
         }
         User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
-        // 判断是否存在
+        // Determine exist or not
         ${upperDataKey} old${upperDataKey} = ${dataKey}Service.getById(id);
         ThrowUtils.throwIf(old${upperDataKey} == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可删除
+        // Can be deleted only by creator or an admin
         if (!old${upperDataKey}.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-        // 操作数据库
+        // Operational database
         boolean result = ${dataKey}Service.removeById(id);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
@@ -109,16 +109,16 @@ public class ${upperDataKey}Controller {
         if (${dataKey}UpdateRequest == null || ${dataKey}UpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // todo 在此处将实体类和 DTO 进行转换
+        // todo Convert entity class and DTOs here
         ${upperDataKey} ${dataKey} = new ${upperDataKey}();
         BeanUtils.copyProperties(${dataKey}UpdateRequest, ${dataKey});
-        // 数据校验
+        // Data verification
         ${dataKey}Service.valid${upperDataKey}(${dataKey}, false);
-        // 判断是否存在
+        // Determine exist or not
         long id = ${dataKey}UpdateRequest.getId();
         ${upperDataKey} old${upperDataKey} = ${dataKey}Service.getById(id);
         ThrowUtils.throwIf(old${upperDataKey} == null, ErrorCode.NOT_FOUND_ERROR);
-        // 操作数据库
+        // Operational database
         boolean result = ${dataKey}Service.updateById(${dataKey});
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
@@ -133,10 +133,10 @@ public class ${upperDataKey}Controller {
     @GetMapping("/get/vo")
     public BaseResponse<${upperDataKey}VO> get${upperDataKey}VOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
-        // 查询数据库
+        // Query database
         ${upperDataKey} ${dataKey} = ${dataKey}Service.getById(id);
         ThrowUtils.throwIf(${dataKey} == null, ErrorCode.NOT_FOUND_ERROR);
-        // 获取封装类
+        // Get Encapsulation
         return ResultUtils.success(${dataKey}Service.get${upperDataKey}VO(${dataKey}, request));
     }
 
@@ -151,7 +151,7 @@ public class ${upperDataKey}Controller {
     public BaseResponse<Page<${upperDataKey}>> list${upperDataKey}ByPage(@RequestBody ${upperDataKey}QueryRequest ${dataKey}QueryRequest) {
         long current = ${dataKey}QueryRequest.getCurrent();
         long size = ${dataKey}QueryRequest.getPageSize();
-        // 查询数据库
+        // Query database
         Page<${upperDataKey}> ${dataKey}Page = ${dataKey}Service.page(new Page<>(current, size),
                 ${dataKey}Service.getQueryWrapper(${dataKey}QueryRequest));
         return ResultUtils.success(${dataKey}Page);
@@ -169,12 +169,12 @@ public class ${upperDataKey}Controller {
                                                                HttpServletRequest request) {
         long current = ${dataKey}QueryRequest.getCurrent();
         long size = ${dataKey}QueryRequest.getPageSize();
-        // 限制爬虫
+        // Restrictions on crawler
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
-        // 查询数据库
+        // Query database
         Page<${upperDataKey}> ${dataKey}Page = ${dataKey}Service.page(new Page<>(current, size),
                 ${dataKey}Service.getQueryWrapper(${dataKey}QueryRequest));
-        // 获取封装类
+        // Get Encapsulation
         return ResultUtils.success(${dataKey}Service.get${upperDataKey}VOPage(${dataKey}Page, request));
     }
 
@@ -189,17 +189,17 @@ public class ${upperDataKey}Controller {
     public BaseResponse<Page<${upperDataKey}VO>> listMy${upperDataKey}VOByPage(@RequestBody ${upperDataKey}QueryRequest ${dataKey}QueryRequest,
                                                                  HttpServletRequest request) {
         ThrowUtils.throwIf(${dataKey}QueryRequest == null, ErrorCode.PARAMS_ERROR);
-        // 补充查询条件，只查询当前登录用户的数据
+        // Supplementary query conditions to query only the data of the currently logged-in user
         User loginUser = userService.getLoginUser(request);
         ${dataKey}QueryRequest.setUserId(loginUser.getId());
         long current = ${dataKey}QueryRequest.getCurrent();
         long size = ${dataKey}QueryRequest.getPageSize();
-        // 限制爬虫
+        // Restrictions on crawler
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
-        // 查询数据库
+        // Query database
         Page<${upperDataKey}> ${dataKey}Page = ${dataKey}Service.page(new Page<>(current, size),
                 ${dataKey}Service.getQueryWrapper(${dataKey}QueryRequest));
-        // 获取封装类
+        // Get Encapsulation
         return ResultUtils.success(${dataKey}Service.get${upperDataKey}VOPage(${dataKey}Page, request));
     }
 
@@ -215,21 +215,21 @@ public class ${upperDataKey}Controller {
         if (${dataKey}EditRequest == null || ${dataKey}EditRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // todo 在此处将实体类和 DTO 进行转换
+        // todo Convert entity class and DTOs here
         ${upperDataKey} ${dataKey} = new ${upperDataKey}();
         BeanUtils.copyProperties(${dataKey}EditRequest, ${dataKey});
-        // 数据校验
+        // Data verification
         ${dataKey}Service.valid${upperDataKey}(${dataKey}, false);
         User loginUser = userService.getLoginUser(request);
-        // 判断是否存在
+        // Determine exist or not
         long id = ${dataKey}EditRequest.getId();
         ${upperDataKey} old${upperDataKey} = ${dataKey}Service.getById(id);
         ThrowUtils.throwIf(old${upperDataKey} == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可编辑
+        // Editable by creator or admin only
         if (!old${upperDataKey}.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-        // 操作数据库
+        // Operational database
         boolean result = ${dataKey}Service.updateById(${dataKey});
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);

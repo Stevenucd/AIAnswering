@@ -166,7 +166,7 @@ PUT post_v1
 
 ### 业务代码生成器
 
-支持自动生成 Service、Controller、数据模型代码，配合 MyBatisX 插件，可以快速开发增删改查等实用基础功能。
+支持自动生成 Service、Controller、数据模型代码，配合 MyBatisX 插件，可以快速开发CRUD等实用基础功能。
 
 找到 `generate.CodeGenerator` 类，修改生成参数和生成路径，并且支持注释掉不需要的生成逻辑，然后运行即可。
 
