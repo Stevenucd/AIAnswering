@@ -144,7 +144,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
      */
     @Override
     public AppVO getAppVO(App app, HttpServletRequest request) {
-        // 对象转封装类
+        // Object to VO
         AppVO appVO = AppVO.objToVo(app);
 
         // 可以根据需要为封装对象补充值，不需要的内容可以删除

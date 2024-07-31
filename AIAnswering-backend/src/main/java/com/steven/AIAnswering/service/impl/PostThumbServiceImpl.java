@@ -43,7 +43,7 @@ public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb
         if (post == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        // 是否已点赞
+        // Has liked or not
         long userId = loginUser.getId();
         // 每个用户串行点赞
         // 锁必须要包裹住事务方法
@@ -73,7 +73,7 @@ public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb
         if (oldPostThumb != null) {
             result = this.remove(thumbQueryWrapper);
             if (result) {
-                // 点赞数 - 1
+                // Likes number - 1
                 result = postService.update()
                         .eq("id", postId)
                         .gt("thumbNum", 0)
@@ -87,7 +87,7 @@ public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb
             // 未点赞
             result = this.save(postThumb);
             if (result) {
-                // 点赞数 + 1
+                // Likes number + 1
                 result = postService.update()
                         .eq("id", postId)
                         .setSql("thumbNum = thumbNum + 1")

@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * App 应用类型枚举
+ * App Type Enum
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 public enum AppTypeEnum {
 
-    SCORE("得分类", 0),
-    TEST("测评类", 1);
+    SCORE("Grading Type", 0),
+    TEST("Assessment Type", 1);
 
     private final String text;
 
@@ -27,7 +27,7 @@ public enum AppTypeEnum {
     }
 
     /**
-     * 根据 value 获取枚举
+     * Get enumeration by value
      *
      * @param value
      * @return
@@ -45,7 +45,7 @@ public enum AppTypeEnum {
     }
 
     /**
-     * 获取值列表
+     * Get value list
      *
      * @return
      */

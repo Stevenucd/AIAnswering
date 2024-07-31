@@ -24,32 +24,32 @@ public class ${upperDataKey}VO implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * Content
      */
     private String content;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 
     /**
-     * 创建时间
+     * Create time
      */
     private Date createTime;
 
     /**
-     * 更新时间
+     * Update time
      */
     private Date updateTime;
 
     /**
-     * 标签列表
+     * Tags list
      */
     private List<String> tagList;
 
@@ -59,7 +59,7 @@ public class ${upperDataKey}VO implements Serializable {
     private UserVO user;
 
     /**
-     * 封装类转对象
+     * VO to Object
      *
      * @param ${dataKey}VO
      * @return
@@ -76,7 +76,7 @@ public class ${upperDataKey}VO implements Serializable {
     }
 
     /**
-     * 对象转封装类
+     * Object to VO
      *
      * @param ${dataKey}
      * @return

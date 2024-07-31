@@ -20,17 +20,17 @@ public class ${upperDataKey}EditRequest implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * Content
      */
     private String content;
 
     /**
-     * 标签列表
+     * Tags list
      */
     private List<String> tags;
 

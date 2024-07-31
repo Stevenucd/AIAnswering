@@ -132,7 +132,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
      */
     @Override
     public UserAnswerVO getUserAnswerVO(UserAnswer userAnswer, HttpServletRequest request) {
-        // 对象转封装类
+        // Object to VO
         UserAnswerVO userAnswerVO = UserAnswerVO.objToVo(userAnswer);
 
         // 可以根据需要为封装对象补充值，不需要的内容可以删除

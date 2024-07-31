@@ -257,24 +257,44 @@ public class QuestionController {
     // endregion
 
     // region AI generate question function
-    private static final String GENERATE_QUESTION_SYSTEM_MESSAGE = "你是一位严谨的出题专家，我会给你如下信息：\n" +
+//    private static final String GENERATE_QUESTION_SYSTEM_MESSAGE = "你是一位严谨的出题专家，我会给你如下信息：\n" +
+//            "```\n" +
+//            "应用名称，\n" +
+//            "【【【应用描述】】】，\n" +
+//            "应用类别，\n" +
+//            "要生成的题目数，\n" +
+//            "每个题目的选项数\n" +
+//            "```\n" +
+//            "\n" +
+//            "请你根据上述信息，按照以下步骤来出题：\n" +
+//            "1. 要求：题目和选项尽可能地短，题目不要包含序号，每题的选项数以我提供的为主，题目不能重复\n" +
+//            "2. 严格按照下面的 json 格式输出题目和选项\n" +
+//            "```\n" +
+//            "[{\"options\":[{\"value\":\"选项内容\",\"key\":\"A\"},{\"value\":\"\",\"key\":\"B\"}],\"title\":\"题目标题\"}]\n" +
+//            "```\n" +
+//            "title 是题目，options 是选项，每个选项的 key 按照英文字母序（比如 A、B、C、D）以此类推，value 是选项内容\n" +
+//            "3. 检查题目是否包含序号，若包含序号则去除序号\n" +
+//            "4. 返回的题目列表格式必须为 JSON 数组";
+
+    private static final String GENERATE_QUESTION_SYSTEM_MESSAGE = "You are a rigorous questioner and I will give you the following information：\n" +
             "```\n" +
-            "应用名称，\n" +
-            "【【【应用描述】】】，\n" +
-            "应用类别，\n" +
-            "要生成的题目数，\n" +
-            "每个题目的选项数\n" +
+            "Application Name,\n" +
+            "【【【Application Description】】】,\n" +
+            "application category,\n" +
+            "Number of topics to be generated,\n" +
+            "Number of options per topic\n" +
             "```\n" +
             "\n" +
-            "请你根据上述信息，按照以下步骤来出题：\n" +
-            "1. 要求：题目和选项尽可能地短，题目不要包含序号，每题的选项数以我提供的为主，题目不能重复\n" +
-            "2. 严格按照下面的 json 格式输出题目和选项\n" +
+            "Based on the information above, please follow these steps to come up with a question:\n" +
+            "1. Requirements: questions and options should be as short as possible, questions should not contain serial numbers, the number of options for each question should be based on what I have provided, and questions should not be repeated.\n" +
+            "2. Strictly follow the following json format to output the questions and options\n" +
             "```\n" +
-            "[{\"options\":[{\"value\":\"选项内容\",\"key\":\"A\"},{\"value\":\"\",\"key\":\"B\"}],\"title\":\"题目标题\"}]\n" +
+            "[{\"options\":[{\"value\":\"Option content\",\"key\":\"A\"},{\"value\":\"\",\"key\":\"B\"}],\"title\":\"Question Title\"}]\n" +
             "```\n" +
-            "title 是题目，options 是选项，每个选项的 key 按照英文字母序（比如 A、B、C、D）以此类推，value 是选项内容\n" +
-            "3. 检查题目是否包含序号，若包含序号则去除序号\n" +
-            "4. 返回的题目列表格式必须为 JSON 数组";
+            "title is the title, options is the options, the key of each option is in alphabetical order (e.g. A, B, C, D) and so on, and value is the content of the option.\n" +
+            "3. Check whether the title contains a serial number, and if so, remove it.\n" +
+            "4. The returned list of topics must be in the form of a JSON array."+
+            "5. Everything should be in English";
 
     /**
      * Generate user messages for question

@@ -15,17 +15,17 @@ import java.util.List;
 public class ${upperDataKey}AddRequest implements Serializable {
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * Content
      */
     private String content;
 
     /**
-     * 标签列表
+     * Tags list
      */
     private List<String> tags;
 
