@@ -14,7 +14,7 @@
       <a-form-item field="appDesc" label="应用描述">
         <a-input v-model="form.appDesc" placeholder="请输入应用描述" />
       </a-form-item>
-      <a-form-item field="appIcon" label="应用图标">
+      <a-form-item field="appIcon" label="App icon">
         <a-input v-model="form.appIcon" placeholder="请输入应用图标" />
       </a-form-item>
       <!--      <a-form-item field="appIcon" label="应用图标">-->

@@ -152,7 +152,7 @@ const columns = [
     dataIndex: "userName",
   },
   {
-    title: "用户头像",
+    title: "User avatar",
     dataIndex: "userAvatar",
     slotName: "userAvatar",
   },

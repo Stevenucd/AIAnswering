@@ -4,7 +4,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * 用户更新请求
+ * User update requests
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -17,22 +17,22 @@ public class UserUpdateRequest implements Serializable {
     private Long id;
 
     /**
-     * 用户昵称
+     * Username
      */
     private String userName;
 
     /**
-     * 用户头像
+     * User avatar
      */
     private String userAvatar;
 
     /**
-     * 简介
+     * User profile
      */
     private String userProfile;
 
     /**
-     * 用户角色：user/admin/ban
+     * User role：user/admin/ban
      */
     private String userRole;
 

@@ -133,7 +133,7 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
      */
     @Override
     public ScoringResultVO getScoringResultVO(ScoringResult scoringResult, HttpServletRequest request) {
-        // 对象转封装类
+        // Object to VO
         ScoringResultVO scoringResultVO = ScoringResultVO.objToVo(scoringResult);
 
         // 可以根据需要为封装对象补充值，不需要的内容可以删除

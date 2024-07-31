@@ -28,27 +28,27 @@ public class ${upperDataKey}QueryRequest extends PageRequest implements Serializ
     private Long notId;
 
     /**
-     * 搜索词
+     * Search text
      */
     private String searchText;
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * Content
      */
     private String content;
 
     /**
-     * 标签列表
+     * Tags list
      */
     private List<String> tags;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 

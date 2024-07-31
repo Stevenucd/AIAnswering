@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Application视图
+ * Application VO
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -89,7 +89,7 @@ public class AppVO implements Serializable {
     private UserVO user;
 
     /**
-     * 封装类转对象
+     * VO to Object
      *
      * @param appVO
      * @return
@@ -104,7 +104,7 @@ public class AppVO implements Serializable {
     }
 
     /**
-     * 对象转封装类
+     * Object to VO
      *
      * @param app
      * @return

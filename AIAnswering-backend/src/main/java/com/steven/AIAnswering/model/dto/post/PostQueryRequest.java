@@ -27,37 +27,37 @@ public class PostQueryRequest extends PageRequest implements Serializable {
     private Long notId;
 
     /**
-     * 搜索词
+     * Search text
      */
     private String searchText;
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * content
      */
     private String content;
 
     /**
-     * 标签列表
+     * Tags list
      */
     private List<String> tags;
 
     /**
-     * 至少有一个标签
+     * At least one tag
      */
     private List<String> orTags;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 
     /**
-     * 收藏用户 id
+     * Favour user id
      */
     private Long favourUserId;
 

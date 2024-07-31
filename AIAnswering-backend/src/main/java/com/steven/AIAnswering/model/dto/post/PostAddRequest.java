@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 /**
- * 创建请求
+ * Creating Request
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -14,17 +14,17 @@ import lombok.Data;
 public class PostAddRequest implements Serializable {
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * Content
      */
     private String content;
 
     /**
-     * 标签列表
+     * Tags list
      */
     private List<String> tags;
 
