@@ -10,7 +10,7 @@ import com.steven.AIAnswering.model.vo.PostVO;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 帖子服务
+ * Post Service
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface PostService extends IService<Post> {
 
     /**
-     * 校验
+     * Verification
      *
      * @param post
      * @param add
@@ -26,7 +26,7 @@ public interface PostService extends IService<Post> {
     void validPost(Post post, boolean add);
 
     /**
-     * 获取查询条件
+     * Get Query Wrapper
      *
      * @param postQueryRequest
      * @return
@@ -34,7 +34,7 @@ public interface PostService extends IService<Post> {
     QueryWrapper<Post> getQueryWrapper(PostQueryRequest postQueryRequest);
 
     /**
-     * 获取帖子封装
+     * Get Post VO
      *
      * @param post
      * @param request
@@ -43,7 +43,7 @@ public interface PostService extends IService<Post> {
     PostVO getPostVO(Post post, HttpServletRequest request);
 
     /**
-     * 分页获取帖子封装
+     * Get Post VO by Page
      *
      * @param postPage
      * @param request

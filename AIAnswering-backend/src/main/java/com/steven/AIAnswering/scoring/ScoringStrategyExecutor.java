@@ -10,12 +10,12 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 评分策略执行器
+ * Scoring Strategy Executor
  */
 @Service
 public class ScoringStrategyExecutor {
 
-    // 策略列表
+    // Strategy list
     @Resource
     private List<ScoringStrategy> scoringStrategyList;
 
@@ -31,9 +31,9 @@ public class ScoringStrategyExecutor {
         Integer appType = app.getAppType();
         Integer appScoringStrategy = app.getScoringStrategy();
         if (appType == null || appScoringStrategy == null) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "应用配置有误，未找到匹配的策略");
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "The application was incorrectly configured and no matching strategy was found");
         }
-        // 根据注解获取策略
+        // Getting a strategy based on annotations
         for (ScoringStrategy strategy : scoringStrategyList) {
             if (strategy.getClass().isAnnotationPresent(ScoringStrategyConfig.class)) {
                 ScoringStrategyConfig scoringStrategyConfig = strategy.getClass().getAnnotation(ScoringStrategyConfig.class);
@@ -42,6 +42,6 @@ public class ScoringStrategyExecutor {
                 }
             }
         }
-        throw new BusinessException(ErrorCode.SYSTEM_ERROR, "应用配置有误，未找到匹配的策略");
+        throw new BusinessException(ErrorCode.SYSTEM_ERROR, "The application was incorrectly configured and no matching strategy was found");
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 自定义测评类应用评分策略
+ * Custom Test Scoring Strategy
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -34,7 +34,7 @@ public class CustomTestScoringStrategy implements ScoringStrategy {
     @Override
     public UserAnswer doScore(List<String> choices, App app) throws Exception {
         Long appId = app.getId();
-        // 1. 根据 id 查询到题目和题目结果信息
+        // 1. Search for the question and question result information according to id.
         Question question = questionService.getOne(
                 Wrappers.lambdaQuery(Question.class).eq(Question::getAppId, appId)
         );
@@ -43,57 +43,57 @@ public class CustomTestScoringStrategy implements ScoringStrategy {
                         .eq(ScoringResult::getAppId, appId)
         );
 
-        // 2. 统计用户每个选择对应的属性个数，如 I = 10 个，E = 5 个
-        // 初始化一个Map，用于存储每个选项的计数
+        // 2. Count the number of attributes for each user selection, e.g. I = 10, E = 5.
+        // Initialise a Map to store the count of each option
         Map<String, Integer> optionCount = new HashMap<>();
 
         QuestionVO questionVO = QuestionVO.objToVo(question);
         List<QuestionContentDTO> questionContent = questionVO.getQuestionContent();
 
-        // 遍历题目列表
+        // Iterate through the list of questions
         for (QuestionContentDTO questionContentDTO : questionContent) {
-            // 遍历答案列表
+            // Iterate through the list of answers
             for (String answer : choices) {
-                // 遍历题目中的选项
+                // Iterate through the options in the question
                 for (QuestionContentDTO.Option option : questionContentDTO.getOptions()) {
-                    // 如果答案和选项的key匹配
+                    // If the answer matches the key of the option
                     if (option.getKey().equals(answer)) {
-                        // 获取选项的result属性
+                        // Get the result property of the option
                         String result = option.getResult();
 
-                        // 如果result属性不在optionCount中，初始化为0
+                        // If the result attribute is not in optionCount, initialised to 0
                         if (!optionCount.containsKey(result)) {
                             optionCount.put(result, 0);
                         }
 
-                        // 在optionCount中增加计数
+                        // Increase count in optionCount
                         optionCount.put(result, optionCount.get(result) + 1);
                     }
                 }
             }
         }
 
-        // 3. 遍历每种评分结果，计算哪个结果的得分更高
-        // 初始化最高分数和最高分数对应的评分结果
+        // 3. Iterate through each scoring result and calculate which result has the higher score
+        // Initialise the highest score and the scoring result corresponding to the highest score
         int maxScore = 0;
         ScoringResult maxScoringResult = scoringResultList.get(0);
 
-        // 遍历评分结果列表
+        // Iterate through the list of scoring results
         for (ScoringResult scoringResult : scoringResultList) {
             List<String> resultProp = JSONUtil.toList(scoringResult.getResultProp(), String.class);
-            // 计算当前评分结果的分数，[I, E] => [10, 5] => 15
+            // Calculate the score of the current scoring result, [I, E] => [10, 5] => 15
             int score = resultProp.stream()
                     .mapToInt(prop -> optionCount.getOrDefault(prop, 0))
                     .sum();
 
-            // 如果分数高于当前最高分数，更新最高分数和最高分数对应的评分结果
+            // If the score is higher than the current maximum score, update the maximum score and the rating result corresponding to the maximum score
             if (score > maxScore) {
                 maxScore = score;
                 maxScoringResult = scoringResult;
             }
         }
 
-        // 4. 构造返回值，填充答案对象的属性
+        // 4. Construct the return value to populate the properties of the answer object
         UserAnswer userAnswer = new UserAnswer();
         userAnswer.setAppId(appId);
         userAnswer.setAppType(app.getAppType());

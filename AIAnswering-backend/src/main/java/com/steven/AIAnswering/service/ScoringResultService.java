@@ -10,7 +10,7 @@ import com.steven.AIAnswering.model.vo.ScoringResultVO;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * scoringResult服务
+ * scoringResult Service
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -18,15 +18,15 @@ import javax.servlet.http.HttpServletRequest;
 public interface ScoringResultService extends IService<ScoringResult> {
 
     /**
-     * 校验数据
+     * Verification Data
      *
      * @param scoringResult
-     * @param add 对创建的数据进行校验
+     * @param add 
      */
     void validScoringResult(ScoringResult scoringResult, boolean add);
 
     /**
-     * 获取查询条件
+     * Get Query Wrapper
      *
      * @param scoringResultQueryRequest
      * @return
@@ -34,7 +34,7 @@ public interface ScoringResultService extends IService<ScoringResult> {
     QueryWrapper<ScoringResult> getQueryWrapper(ScoringResultQueryRequest scoringResultQueryRequest);
     
     /**
-     * 获取scoringResult封装
+     * Get scoringResult VO
      *
      * @param scoringResult
      * @param request
@@ -43,7 +43,7 @@ public interface ScoringResultService extends IService<ScoringResult> {
     ScoringResultVO getScoringResultVO(ScoringResult scoringResult, HttpServletRequest request);
 
     /**
-     * 分页获取scoringResult封装
+     * Get scoringResult VO by Page
      *
      * @param scoringResultPage
      * @param request

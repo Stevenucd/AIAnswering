@@ -1,5 +1,5 @@
-import { View } from "@tarojs/components";
 import "./index.scss";
+import { View } from "@tarojs/components";
 
 export default () => {
   return (

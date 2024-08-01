@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * question服务实现
+ * Question Service Implementation
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -45,25 +45,25 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     private AppService appService;
 
     /**
-     * 校验数据
+     * Verification Date
      *
      * @param question
-     * @param add      对创建的数据进行校验
+     * @param add
      */
     @Override
     public void validQuestion(Question question, boolean add) {
         ThrowUtils.throwIf(question == null, ErrorCode.PARAMS_ERROR);
-        // 从对象中取值
+        // Get values from an object
         String questionContent = question.getQuestionContent();
         Long appId = question.getAppId();
-        // 创建数据时，参数不能为空
+        // Parameters cannot be empty when creating data
         if (add) {
-            // 补充校验规则
+            // Supplementary verification rules
             ThrowUtils.throwIf(StringUtils.isBlank(questionContent), ErrorCode.PARAMS_ERROR, "question content could not be null");
             ThrowUtils.throwIf(appId == null || appId <= 0, ErrorCode.PARAMS_ERROR, "appId invalid");
         }
-        // 修改数据时，有参数则校验
-        // 补充校验规则
+        // When modifying data, verification if have parameter
+        // Supplementary verification rules
         if (appId != null) {
             App app = appService.getById(appId);
             ThrowUtils.throwIf(app == null, ErrorCode.PARAMS_ERROR, "application not exist");
@@ -71,7 +71,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     /**
-     * 获取查询条件
+     * Get Query Wrapper
      *
      * @param questionQueryRequest
      * @return
@@ -82,7 +82,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         if (questionQueryRequest == null) {
             return queryWrapper;
         }
-        // 从对象中取值
+        // Get values from an object
         Long id = questionQueryRequest.getId();
         String questionContent = questionQueryRequest.getQuestionContent();
         Long appId = questionQueryRequest.getAppId();
@@ -91,15 +91,15 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         String sortField = questionQueryRequest.getSortField();
         String sortOrder = questionQueryRequest.getSortOrder();
 
-        // 补充需要的查询条件
-        // 模糊查询
+        // Supplementary required queries
+        // Fuzzy queries
         queryWrapper.like(StringUtils.isNotBlank(questionContent), "questionContent", questionContent);
-        // 精确查询
+        // Precise search
         queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(appId), "appId", appId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
-        // 排序规则
+        // Sorting rules
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
                 sortField);
@@ -107,7 +107,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     /**
-     * 获取question封装
+     * Get Question VO
      *
      * @param question
      * @param request
@@ -118,9 +118,8 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         // Object to VO
         QuestionVO questionVO = QuestionVO.objToVo(question);
 
-        // 可以根据需要为封装对象补充值，不需要的内容可以删除
-        // region 可选
-        // 1. 关联查询用户信息
+        // region
+        // 1. Linked query user information
         Long userId = question.getUserId();
         User user = null;
         if (userId != null && userId > 0) {
@@ -134,7 +133,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     /**
-     * 分页获取question封装
+     * Get Question VO by Page
      *
      * @param questionPage
      * @param request
@@ -147,18 +146,16 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         if (CollUtil.isEmpty(questionList)) {
             return questionVOPage;
         }
-        // 对象列表 => 封装对象列表
         List<QuestionVO> questionVOList = questionList.stream().map(question -> {
             return QuestionVO.objToVo(question);
         }).collect(Collectors.toList());
 
-        // 可以根据需要为封装对象补充值，不需要的内容可以删除
-        // region 可选
-        // 1. 关联查询用户信息
+        // region
+        // 1. Linked query user information
         Set<Long> userIdSet = questionList.stream().map(Question::getUserId).collect(Collectors.toSet());
         Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
                 .collect(Collectors.groupingBy(User::getId));
-        // 填充信息
+        // Filling information
         questionVOList.forEach(questionVO -> {
             Long userId = questionVO.getUserId();
             User user = null;

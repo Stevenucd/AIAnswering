@@ -1,6 +1,5 @@
 package com.steven.AIAnswering;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zhipu.oapi.ClientV4;
 import com.zhipu.oapi.Constants;
 import com.zhipu.oapi.service.v4.model.ChatCompletionRequest;
@@ -23,11 +22,11 @@ public class ZhiPuAiTest {
 
     @Test
     public void test() {
-        //初始化客户端
+        // Initialise client
         ClientV4 client = new ClientV4.Builder("ef5adbb0ff01693e180d3d34f25d9b99.lZE2mpVDYSKXNeyK").build();
-        //构建请求
+        // Build Requests
         List<ChatMessage> messages = new ArrayList<>();
-        ChatMessage chatMessage = new ChatMessage(ChatMessageRole.USER.value(), "作为一名营销专家，请为智谱开放平台创作一个吸引人的slogan");
+        ChatMessage chatMessage = new ChatMessage(ChatMessageRole.USER.value(), "As a marketing expert, create an engaging slogans for the Wisdom Spectrum Open Platform");
         messages.add(chatMessage);
         //String requestId = String.format(requestIdTemplate, System.currentTimeMillis());
 
