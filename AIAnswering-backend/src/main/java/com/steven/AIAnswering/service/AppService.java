@@ -10,7 +10,7 @@ import com.steven.AIAnswering.model.vo.AppVO;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Application服务
+ * Application Service
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -18,15 +18,15 @@ import javax.servlet.http.HttpServletRequest;
 public interface AppService extends IService<App> {
 
     /**
-     * 校验数据
+     * Verification Data
      *
      * @param app
-     * @param add 对创建的数据进行校验
+     * @param add 
      */
     void validApp(App app, boolean add);
 
     /**
-     * 获取查询条件
+     * Get Query Wrapper
      *
      * @param appQueryRequest
      * @return
@@ -34,7 +34,7 @@ public interface AppService extends IService<App> {
     QueryWrapper<App> getQueryWrapper(AppQueryRequest appQueryRequest);
     
     /**
-     * 获取Application封装
+     * Get Application VO
      *
      * @param app
      * @param request
@@ -43,7 +43,7 @@ public interface AppService extends IService<App> {
     AppVO getAppVO(App app, HttpServletRequest request);
 
     /**
-     * 分页获取Application封装
+     * Get Application VO by Page
      *
      * @param appPage
      * @param request

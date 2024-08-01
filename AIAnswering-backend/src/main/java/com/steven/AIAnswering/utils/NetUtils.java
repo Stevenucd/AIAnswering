@@ -4,7 +4,7 @@ import java.net.InetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 网络工具类
+ * Network Utils
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public class NetUtils {
 
     /**
-     * 获取客户端 IP 地址
+     * Get IP Address
      *
      * @param request
      * @return
@@ -28,7 +28,6 @@ public class NetUtils {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
             if (ip.equals("127.0.0.1")) {
-                // 根据网卡取本机配置的 IP
                 InetAddress inet = null;
                 try {
                     inet = InetAddress.getLocalHost();
@@ -40,7 +39,6 @@ public class NetUtils {
                 }
             }
         }
-        // 多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
         if (ip != null && ip.length() > 15) {
             if (ip.indexOf(",") > 0) {
                 ip = ip.substring(0, ip.indexOf(","));

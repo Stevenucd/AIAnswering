@@ -5,7 +5,7 @@ import com.steven.AIAnswering.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * 帖子点赞服务
+ * Post Likes Service
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface PostThumbService extends IService<PostThumb> {
 
     /**
-     * 点赞
+     * Likes
      *
      * @param postId
      * @param loginUser
@@ -22,7 +22,7 @@ public interface PostThumbService extends IService<PostThumb> {
     int doPostThumb(long postId, User loginUser);
 
     /**
-     * 帖子点赞（内部服务）
+     * Post Likes (Internal services)
      *
      * @param userId
      * @param postId

@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * scoringResult服务实现
+ * scoringResult Service Implementation
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -45,29 +45,29 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
     private AppService appService;
 
     /**
-     * 校验数据
+     * Verification Data
      *
      * @param scoringResult
-     * @param add      对创建的数据进行校验
+     * @param add      
      */
     @Override
     public void validScoringResult(ScoringResult scoringResult, boolean add) {
         ThrowUtils.throwIf(scoringResult == null, ErrorCode.PARAMS_ERROR);
-        // 从对象中取值
+        // Get values from an object
         String resultName = scoringResult.getResultName();
         Long appId = scoringResult.getAppId();
-        // 创建数据时，参数不能为空
+        // Parameters cannot be empty when creating data
         if (add) {
-            // 补充校验规则
+            // Supplementary varification rules
             ThrowUtils.throwIf(StringUtils.isBlank(resultName), ErrorCode.PARAMS_ERROR, "result name could not be null");
             ThrowUtils.throwIf(appId == null || appId <= 0, ErrorCode.PARAMS_ERROR, "appId invalid");
         }
-        // 修改数据时，有参数则校验
-        // 补充校验规则
+        // When modifying data, verification if have parameter
+        // Supplementary varification rules
         if (StringUtils.isNotBlank(resultName)) {
             ThrowUtils.throwIf(resultName.length() > 128, ErrorCode.PARAMS_ERROR, "result name length could not be greater than 128");
         }
-        // 补充校验规则
+        // Supplementary varification rules
         if (appId != null) {
             App app = appService.getById(appId);
             ThrowUtils.throwIf(app == null, ErrorCode.PARAMS_ERROR, "application not exist");
@@ -75,7 +75,7 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
     }
 
     /**
-     * 获取查询条件
+     * Get Query Wrapper
      *
      * @param scoringResultQueryRequest
      * @return
@@ -86,7 +86,7 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
         if (scoringResultQueryRequest == null) {
             return queryWrapper;
         }
-        // 从对象中取值
+        // Get values from an object
         Long id = scoringResultQueryRequest.getId();
         String resultName = scoringResultQueryRequest.getResultName();
         String resultDesc = scoringResultQueryRequest.getResultDesc();
@@ -100,24 +100,24 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
         String sortField = scoringResultQueryRequest.getSortField();
         String sortOrder = scoringResultQueryRequest.getSortOrder();
 
-        // 补充需要的查询条件
-        // 从多字段中搜索
+        // Supplementary required queries
+        // Search from multiple fields
         if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
+            // Need to splice query conditions
             queryWrapper.and(qw -> qw.like("resultName", searchText).or().like("resultDesc", searchText));
         }
-        // 模糊查询
+        // Fuzzy queries
         queryWrapper.like(StringUtils.isNotBlank(resultName), "resultName", resultName);
         queryWrapper.like(StringUtils.isNotBlank(resultDesc), "resultDesc", resultDesc);
         queryWrapper.like(StringUtils.isNotBlank(resultProp), "resultProp", resultProp);
-        // 精确查询
+        // Precise search
         queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(appId), "appId", appId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(resultScoreRange), "resultScoreRange", resultScoreRange);
         queryWrapper.eq(StringUtils.isNotBlank(resultPicture), "resultPicture", resultPicture);
-        // 排序规则
+        // Sorting rules
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
                 sortField);
@@ -125,7 +125,7 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
     }
 
     /**
-     * 获取scoringResult封装
+     * Get scoringResult VO
      *
      * @param scoringResult
      * @param request
@@ -136,9 +136,8 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
         // Object to VO
         ScoringResultVO scoringResultVO = ScoringResultVO.objToVo(scoringResult);
 
-        // 可以根据需要为封装对象补充值，不需要的内容可以删除
-        // region 可选
-        // 1. 关联查询用户信息
+        // region 
+        // 1. Linked query user information
         Long userId = scoringResult.getUserId();
         User user = null;
         if (userId != null && userId > 0) {
@@ -152,7 +151,7 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
     }
 
     /**
-     * 分页获取scoringResult封装
+     * Get scoringResult VO by Page
      *
      * @param scoringResultPage
      * @param request
@@ -165,18 +164,16 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
         if (CollUtil.isEmpty(scoringResultList)) {
             return scoringResultVOPage;
         }
-        // 对象列表 => 封装对象列表
         List<ScoringResultVO> scoringResultVOList = scoringResultList.stream().map(scoringResult -> {
             return ScoringResultVO.objToVo(scoringResult);
         }).collect(Collectors.toList());
 
-        // 可以根据需要为封装对象补充值，不需要的内容可以删除
-        // region 可选
-        // 1. 关联查询用户信息
+        // region
+        // 1. Linked query user information
         Set<Long> userIdSet = scoringResultList.stream().map(ScoringResult::getUserId).collect(Collectors.toSet());
         Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
                 .collect(Collectors.groupingBy(User::getId));
-        // 填充信息
+        // Filling information
         scoringResultVOList.forEach(scoringResultVO -> {
             Long userId = scoringResultVO.getUserId();
             User user = null;

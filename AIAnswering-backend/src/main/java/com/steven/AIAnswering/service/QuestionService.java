@@ -10,7 +10,7 @@ import com.steven.AIAnswering.model.vo.QuestionVO;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * question服务
+ * Question Service
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -18,15 +18,15 @@ import javax.servlet.http.HttpServletRequest;
 public interface QuestionService extends IService<Question> {
 
     /**
-     * 校验数据
+     * Verification Data
      *
      * @param question
-     * @param add 对创建的数据进行校验
+     * @param add 
      */
     void validQuestion(Question question, boolean add);
 
     /**
-     * 获取查询条件
+     * Get Query Wrapper
      *
      * @param questionQueryRequest
      * @return
@@ -34,7 +34,7 @@ public interface QuestionService extends IService<Question> {
     QueryWrapper<Question> getQueryWrapper(QuestionQueryRequest questionQueryRequest);
     
     /**
-     * 获取question封装
+     * Get Question VO
      *
      * @param question
      * @param request
@@ -43,7 +43,7 @@ public interface QuestionService extends IService<Question> {
     QuestionVO getQuestionVO(Question question, HttpServletRequest request);
 
     /**
-     * 分页获取question封装
+     * Get Question VO by Page
      *
      * @param questionPage
      * @param request

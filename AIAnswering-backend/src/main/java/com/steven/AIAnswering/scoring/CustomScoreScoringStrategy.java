@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * 自定义打分类应用评分策略
+ * Custom Score Scoring Strategy
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
@@ -33,7 +33,7 @@ public class CustomScoreScoringStrategy implements ScoringStrategy {
     @Override
     public UserAnswer doScore(List<String> choices, App app) throws Exception {
         Long appId = app.getId();
-        // 1. 根据 id 查询到题目和题目结果信息（按分数降序排序）
+        // 1. Search for question and question result information based on id (sorted by score in descending order)
         Question question = questionService.getOne(
                 Wrappers.lambdaQuery(Question.class).eq(Question::getAppId, appId)
         );
@@ -43,18 +43,18 @@ public class CustomScoreScoringStrategy implements ScoringStrategy {
                         .orderByDesc(ScoringResult::getResultScoreRange)
         );
 
-        // 2. 统计用户的总得分
+        // 2. Total score of users
         int totalScore = 0;
         QuestionVO questionVO = QuestionVO.objToVo(question);
         List<QuestionContentDTO> questionContent = questionVO.getQuestionContent();
 
-        // 遍历题目列表
+        // Iterate through the list of questions
         for (int i=0; i<questionContent.size(); i++) {
             QuestionContentDTO questionContentDTO = questionContent.get(i);
             String answer = choices.get(i);
-            // 遍历题目中的选项
+            // Iterate through the options in the question
             for (QuestionContentDTO.Option option : questionContentDTO.getOptions()) {
-                // 如果答案和选项的key匹配
+                // If the answer matches the key of the option
                 if (option.getKey().equals(answer)) {
                     int score = Optional.of(option.getScore()).orElse(0);
                     totalScore += score;
@@ -62,7 +62,7 @@ public class CustomScoreScoringStrategy implements ScoringStrategy {
             }
         }
 
-        // 3. 遍历得分结果，找到第一个用户分数大于得分范围的结果，作为最终结果
+        // 3. Iterate through the scoring results to find the first user score that is greater than the scoring range as the final result
         ScoringResult maxScoringResult = scoringResultList.get(0);
         for (ScoringResult scoringResult : scoringResultList) {
             if (totalScore >= scoringResult.getResultScoreRange()) {
@@ -71,7 +71,7 @@ public class CustomScoreScoringStrategy implements ScoringStrategy {
             }
         }
 
-        // 4. 构造返回值，填充答案对象的属性
+        // 4. Construct return values to populate the properties of the answer object
         UserAnswer userAnswer = new UserAnswer();
         userAnswer.setAppId(appId);
         userAnswer.setAppType(app.getAppType());
