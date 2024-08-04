@@ -1,6 +1,6 @@
 <template>
   <div id="addScoringResultPage">
-    <h2 style="margin-bottom: 32px">设置评分</h2>
+    <h2 style="margin-bottom: 32px">Edit rating</h2>
     <a-form
       :model="form"
       :style="{ width: '480px' }"
@@ -8,45 +8,51 @@
       auto-label-width
       @submit="handleSubmit"
     >
-      <a-form-item label="应用 id">
+      <a-form-item label="App id">
         {{ appId }}
       </a-form-item>
-      <a-form-item v-if="updateId" label="修改评分 id">
+      <a-form-item v-if="updateId" label="Edit rating id">
         {{ updateId }}
       </a-form-item>
-      <a-form-item field="resultName" label="结果名称">
-        <a-input v-model="form.resultName" placeholder="请输入结果名称" />
-      </a-form-item>
-      <a-form-item field="resultDesc" label="结果描述">
-        <a-input v-model="form.resultDesc" placeholder="请输入结果描述" />
-      </a-form-item>
-      <a-form-item field="resultPicture" label="结果图标">
+      <a-form-item field="resultName" label="Result name">
         <a-input
-          v-model="form.resultPicture"
-          placeholder="请输入结果图标地址"
+          v-model="form.resultName"
+          placeholder="Please enter result name"
         />
       </a-form-item>
-      <a-form-item field="resultProp" label="结果集">
+      <a-form-item field="resultDesc" label="Result description">
+        <a-input
+          v-model="form.resultDesc"
+          placeholder="Please enter result description"
+        />
+      </a-form-item>
+      <a-form-item field="resultPicture" label="Result picture">
+        <a-input
+          v-model="form.resultPicture"
+          placeholder="Please enter result picture address"
+        />
+      </a-form-item>
+      <a-form-item field="resultProp" label="Result prop">
         <a-input-tag
           v-model="form.resultProp"
           :style="{ width: '320px' }"
-          placeholder="请输出结果集，按回车确认"
+          placeholder="Please output the result prop and press enter to confirm"
           allow-clear
         />
       </a-form-item>
-      <a-form-item field="resultScoreRange" label="结果得分范围">
+      <a-form-item field="resultScoreRange" label="Range of outcome scores">
         <a-input-number
           v-model="form.resultScoreRange"
-          placeholder="请输入结果得分范围"
+          placeholder="Please enter range of outcome scores"
         />
       </a-form-item>
       <a-form-item>
         <a-button type="primary" html-type="submit" style="width: 120px">
-          提交
+          Submit
         </a-button>
       </a-form-item>
     </a-form>
-    <h2 style="margin-bottom: 32px">评分管理</h2>
+    <h2 style="margin-bottom: 32px">Admin rating</h2>
     <ScoringResultTable :appId="appId" :doUpdate="doUpdate" ref="tableRef" />
   </div>
 </template>
@@ -75,7 +81,7 @@ const props = withDefaults(defineProps<Props>(), {
 const router = useRouter();
 const tableRef = ref();
 
-// 表单参数
+// Form parameters
 const form = ref({
   resultDesc: "",
   resultName: "",
@@ -90,30 +96,30 @@ const doUpdate = (scoringResult: API.ScoringResultVO) => {
 };
 
 /**
- * 提交
+ * Submit
  */
 const handleSubmit = async () => {
   if (!props.appId) {
     return;
   }
   let res: any;
-  // 如果是修改
+  // If it is a modification
   if (updateId.value) {
     res = await editScoringResultUsingPost({
       id: updateId.value as any,
       ...form.value,
     });
   } else {
-    // 创建
+    // Create
     res = await addScoringResultUsingPost({
       appId: props.appId as any,
       ...form.value,
     });
   }
   if (res.data.code === 0) {
-    message.success("操作成功");
+    message.success("Successful operation");
   } else {
-    message.error("操作失败，" + res.data.message);
+    message.error("Operation failed，" + res.data.message);
   }
   if (tableRef.value) {
     tableRef.value.loadData();

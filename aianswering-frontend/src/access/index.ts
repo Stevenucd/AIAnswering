@@ -3,24 +3,24 @@ import { useLoginUserStore } from "@/store/userStore";
 import ACCESS_ENUM from "@/access/accessEnum";
 import checkAccess from "@/access/checkAccess";
 
-// 进入页面前，进行权限校验
+// Permission checking before entering the page
 router.beforeEach(async (to, from, next) => {
-  // 获取当前登录用户
+  // Get current logged in user
   const loginUserStore = useLoginUserStore();
   let loginUser = loginUserStore.loginUser;
 
-  // 如果之前没有尝试获取过登录用户信息，才自动登录
+  // Only log in automatically if no previous attempts have been made to obtain the logged in user information.
   if (!loginUser || !loginUser.userRole) {
-    // 加 await 是为了等待用户登录成功并获取到值后，再执行后续操作
+    // The purpose of await is to wait for the user to log in successfully and get the value before performing the subsequent actions.
     await loginUserStore.fetchLoginUser();
     loginUser = loginUserStore.loginUser;
   }
 
-  // 当前页面需要的权限
+  // Permissions required for the current page
   const needAccess = (to.meta?.access as string) ?? ACCESS_ENUM.NOT_LOGIN;
-  // 要跳转的页面必须登录
+  // You must be logged in to jump to the page
   if (needAccess !== ACCESS_ENUM.NOT_LOGIN) {
-    // 如果没登录，跳转到登录页面
+    // If you are not logged in, you will be redirected to the login page
     if (
       !loginUser ||
       !loginUser.userRole ||
@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
     ) {
       next(`/user/login?redirect=${to.fullPath}`);
     }
-    // 如果已经登录了，判断权限是否足够，如果不足，跳转到无权限页面
+    // If you are already logged in, determine if you have enough permissions, if not, jump to the no permissions page
     if (!checkAccess(loginUser, needAccess)) {
       next("/noAuth");
       return;

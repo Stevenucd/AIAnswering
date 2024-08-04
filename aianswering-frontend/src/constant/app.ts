@@ -1,4 +1,4 @@
-// 审核状态枚举
+// Review Status Enum
 export const REVIEW_STATUS_ENUM = {
   // Pending
   REVIEWING: 0,
@@ -8,14 +8,14 @@ export const REVIEW_STATUS_ENUM = {
   REJECT: 2,
 };
 
-// 审核状态映射
+// Review Status Map
 export const REVIEW_STATUS_MAP = {
   0: "Pending",
   1: "Pass",
   2: "Reject",
 };
 
-// 应用类型枚举
+// App Type Enum
 export const APP_TYPE_ENUM = {
   // Grading Type
   SCORE: 0,
@@ -23,21 +23,21 @@ export const APP_TYPE_ENUM = {
   TEST: 1,
 };
 
-// 应用类型映射
+// App Type Map
 export const APP_TYPE_MAP = {
   0: "Grading Type",
   1: "Assessment Type",
 };
 
-// 应用评分策略枚举
+// App Scoring Strategy Enum
 export const APP_SCORING_STRATEGY_ENUM = {
-  // 自定义
+  // C
   CUSTOM: 0,
   // AI
   AI: 1,
 };
 
-// 应用评分策略映射
+// App Scoring Strategy Map
 export const APP_SCORING_STRATEGY_MAP = {
   0: "Custom",
   1: "AI",

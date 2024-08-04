@@ -4,16 +4,20 @@
       <a-row style="margin-bottom: 16px">
         <a-col flex="auto" class="content-wrapper">
           <h2>{{ data.resultName }}</h2>
-          <p>结果描述：{{ data.resultDesc }}</p>
-          <p>结果 id：{{ data.resultId }}</p>
-          <p>结果得分：{{ data.resultScore }}</p>
-          <p>我的答案：{{ data.choices }}</p>
-          <p>应用 id：{{ data.appId }}</p>
-          <p>应用类型：{{ APP_TYPE_MAP[data.appType] }}</p>
-          <p>评分策略：{{ APP_SCORING_STRATEGY_MAP[data.scoringStrategy] }}</p>
+          <p>Result description：{{ data.resultDesc }}</p>
+          <p>Result id：{{ data.resultId }}</p>
+          <p>Result score：{{ data.resultScore }}</p>
+          <p>My answer：{{ data.choices }}</p>
+          <p>App id：{{ data.appId }}</p>
+          <p>App type：{{ APP_TYPE_MAP[data.appType] }}</p>
+          <p>
+            Scoring strategy：{{
+              APP_SCORING_STRATEGY_MAP[data.scoringStrategy]
+            }}
+          </p>
           <p>
             <a-space>
-              答题人：
+              Respondent：
               <div :style="{ display: 'flex', alignItems: 'center' }">
                 <a-avatar
                   :size="24"
@@ -21,17 +25,19 @@
                   :style="{ marginRight: '8px' }"
                 />
                 <a-typography-text
-                  >{{ data.user?.userName ?? "无名" }}
+                  >{{ data.user?.userName ?? "Unknown" }}
                 </a-typography-text>
               </div>
             </a-space>
           </p>
           <p>
-            答题时间：{{ dayjs(data.createTime).format("YYYY-MM-DD HH:mm:ss") }}
+            Answer time：{{
+              dayjs(data.createTime).format("YYYY-MM-DD HH:mm:ss")
+            }}
           </p>
           <a-space size="medium">
             <a-button type="primary" :href="`/answer/do/${data.appId}`"
-              >去答题
+              >Go answer the question
             </a-button>
           </a-space>
         </a-col>
@@ -67,7 +73,7 @@ const router = useRouter();
 const data = ref<API.UserAnswerVO>({});
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   if (!props.id) {
@@ -79,12 +85,12 @@ const loadData = async () => {
   if (res.data.code === 0) {
     data.value = res.data.data as any;
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
 /**
- * 监听 searchParams 变量，改变时触发数据的重新加载
+ * Listens to the searchParams variable and triggers a reload of the data when it changes.
  */
 watchEffect(() => {
   loadData();

@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 /**
  * MyBatis Plus configuration
  *
- * @author https://github.com/liyupi
  */
 @Configuration
 @MapperScan("com.steven.AIAnswering.mapper")

@@ -7,8 +7,6 @@ import java.io.Serializable;
 /**
  * Editing Application Requests
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @Data
 public class AppEditRequest implements Serializable {

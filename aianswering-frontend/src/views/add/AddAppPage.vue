@@ -1,6 +1,6 @@
 <template>
   <div id="addAppPage">
-    <h2 style="margin-bottom: 32px">创建应用</h2>
+    <h2 style="margin-bottom: 32px">Create app</h2>
     <a-form
       :model="form"
       :style="{ width: '480px' }"
@@ -8,26 +8,29 @@
       auto-label-width
       @submit="handleSubmit"
     >
-      <a-form-item field="appName" label="应用名称">
-        <a-input v-model="form.appName" placeholder="请输入应用名称" />
+      <a-form-item field="appName" label="App name">
+        <a-input v-model="form.appName" placeholder="Please enter app name" />
       </a-form-item>
-      <a-form-item field="appDesc" label="应用描述">
-        <a-input v-model="form.appDesc" placeholder="请输入应用描述" />
+      <a-form-item field="appDesc" label="App Description">
+        <a-input
+          v-model="form.appDesc"
+          placeholder="Please enter app description"
+        />
       </a-form-item>
       <a-form-item field="appIcon" label="App icon">
-        <a-input v-model="form.appIcon" placeholder="请输入应用图标" />
+        <a-input v-model="form.appIcon" placeholder="Please enter app icon" />
       </a-form-item>
-      <!--      <a-form-item field="appIcon" label="应用图标">-->
+      <!--      <a-form-item field="appIcon" label="App icon">-->
       <!--        <PictureUploader-->
       <!--          :value="form.appIcon"-->
       <!--          :onChange="(value) => (form.appIcon = value)"-->
       <!--        />-->
       <!--      </a-form-item>-->
-      <a-form-item field="appType" label="应用类型">
+      <a-form-item field="appType" label="App type">
         <a-select
           v-model="form.appType"
           :style="{ width: '320px' }"
-          placeholder="请选择应用类型"
+          placeholder="Please select the app type"
         >
           <a-option
             v-for="(value, key) of APP_TYPE_MAP"
@@ -36,11 +39,11 @@
           />
         </a-select>
       </a-form-item>
-      <a-form-item field="scoringStrategy" label="评分策略">
+      <a-form-item field="scoringStrategy" label="Scoring strategy">
         <a-select
           v-model="form.scoringStrategy"
           :style="{ width: '320px' }"
-          placeholder="请选择评分策略"
+          placeholder="Please enter scoring strategy"
         >
           <a-option
             v-for="(value, key) of APP_SCORING_STRATEGY_MAP"
@@ -51,7 +54,7 @@
       </a-form-item>
       <a-form-item>
         <a-button type="primary" html-type="submit" style="width: 120px">
-          提交
+          Submit
         </a-button>
       </a-form-item>
     </a-form>
@@ -93,7 +96,7 @@ const form = ref({
 const oldApp = ref<API.AppVO>();
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   if (!props.id) {
@@ -106,37 +109,39 @@ const loadData = async () => {
     oldApp.value = res.data.data;
     form.value = res.data.data;
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
-// 获取旧数据
+// Getting old data
 watchEffect(() => {
   loadData();
 });
 
 /**
- * 提交
+ * Submit
  */
 const handleSubmit = async () => {
   let res: any;
-  // 如果是修改
+  // If it is a modification
   if (props.id) {
     res = await editAppUsingPost({
       id: props.id as any,
       ...form.value,
     });
   } else {
-    // 创建
+    // Create
     res = await addAppUsingPost(form.value);
   }
   if (res.data.code === 0) {
-    message.success("操作成功，即将跳转到应用详情页");
+    message.success(
+      "Successful, you will be redirected to the app details page soon"
+    );
     setTimeout(() => {
       router.push(`/app/detail/${props.id || res.data.data}`);
     }, 3000);
   } else {
-    message.error("操作失败，" + res.data.message);
+    message.error("Operation failed，" + res.data.message);
   }
 };
 </script>

@@ -29,7 +29,7 @@
             :style="{ marginRight: '8px' }"
           />
           <a-typography-text
-            >{{ app.user?.userName ?? "无名" }}
+            >{{ app.user?.userName ?? "Unknown" }}
           </a-typography-text>
         </div>
       </template>
