@@ -95,7 +95,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/admin/user",
-    name: "ADMIN:   user",
+    name: "user",
     component: AdminUserPage,
     meta: {
       access: ACCESS_ENUM.ADMIN,
