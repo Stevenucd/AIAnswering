@@ -5,23 +5,23 @@
     layout="inline"
     @submit="doSearch"
   >
-    <a-form-item field="appName" label="应用名称">
+    <a-form-item field="appName" label="App name">
       <a-input
         v-model="formSearchParams.appName"
-        placeholder="请输入应用名称"
+        placeholder="Please enter app name"
         allow-clear
       />
     </a-form-item>
-    <a-form-item field="appDesc" label="应用描述">
+    <a-form-item field="appDesc" label="App Description">
       <a-input
         v-model="formSearchParams.appDesc"
-        placeholder="请输入应用描述"
+        placeholder="Please enter app description"
         allow-clear
       />
     </a-form-item>
     <a-form-item>
       <a-button type="primary" html-type="submit" style="width: 100px">
-        搜索
+        Search
       </a-button>
     </a-form-item>
   </a-form>
@@ -72,11 +72,17 @@
         <a-button
           v-if="record.reviewStatus !== REVIEW_STATUS_ENUM.REJECT"
           status="warning"
-          @click="doReview(record, REVIEW_STATUS_ENUM.REJECT, '不符合上架要求')"
+          @click="
+            doReview(
+              record,
+              REVIEW_STATUS_ENUM.REJECT,
+              'Failure to meet requirements'
+            )
+          "
         >
           Reject
         </a-button>
-        <a-button status="danger" @click="doDelete(record)">删除</a-button>
+        <a-button status="danger" @click="doDelete(record)">Delete</a-button>
       </a-space>
     </template>
   </a-table>
@@ -101,7 +107,7 @@ import {
 
 const formSearchParams = ref<API.AppQueryRequest>({});
 
-// 初始化搜索条件（不应该被修改）
+// Initialise search criteria (should not be modified)
 const initSearchParams = {
   current: 1,
   pageSize: 10,
@@ -114,7 +120,7 @@ const dataList = ref<API.App[]>([]);
 const total = ref<number>(0);
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   const res = await listAppByPageUsingPost(searchParams.value);
@@ -122,12 +128,12 @@ const loadData = async () => {
     dataList.value = res.data.data?.records || [];
     total.value = res.data.data?.total || 0;
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
 /**
- * 执行搜索
+ * Perform a search
  */
 const doSearch = () => {
   searchParams.value = {
@@ -137,7 +143,7 @@ const doSearch = () => {
 };
 
 /**
- * 当分页变化时，改变搜索条件，触发数据加载
+ * Change search criteria to trigger data loading when paging changes
  * @param page
  */
 const onPageChange = (page: number) => {
@@ -148,7 +154,7 @@ const onPageChange = (page: number) => {
 };
 
 /**
- * 删除
+ * Delete
  * @param record
  */
 const doDelete = async (record: API.App) => {
@@ -162,12 +168,12 @@ const doDelete = async (record: API.App) => {
   if (res.data.code === 0) {
     loadData();
   } else {
-    message.error("删除失败，" + res.data.message);
+    message.error("Delete failed，" + res.data.message);
   }
 };
 
 /**
- * 审核
+ * Review
  * @param record
  * @param reviewStatus
  * @param reviewMessage
@@ -189,80 +195,80 @@ const doReview = async (
   if (res.data.code === 0) {
     loadData();
   } else {
-    message.error("审核失败，" + res.data.message);
+    message.error("Audit failures，" + res.data.message);
   }
 };
 
 /**
- * 监听 searchParams 变量，改变时触发数据的重新加载
+ * Listens to the searchParams variable and triggers a reload of the data when it changes.
  */
 watchEffect(() => {
   loadData();
 });
 
-// 表格列配置
+// Table Column Configuration
 const columns = [
   {
     title: "id",
     dataIndex: "id",
   },
   {
-    title: "名称",
+    title: "Name",
     dataIndex: "appName",
   },
   {
-    title: "描述",
+    title: "Description",
     dataIndex: "appDesc",
   },
   {
-    title: "图标",
+    title: "Icon",
     dataIndex: "appIcon",
     slotName: "appIcon",
   },
   {
-    title: "应用类型",
+    title: "App type",
     dataIndex: "appType",
     slotName: "appType",
   },
   {
-    title: "评分策略",
+    title: "Scoring strategy",
     dataIndex: "scoringStrategy",
     slotName: "scoringStrategy",
   },
   {
-    title: "审核状态",
+    title: "Review Status",
     dataIndex: "reviewStatus",
     slotName: "reviewStatus",
   },
   {
-    title: "审核信息",
+    title: "Review Message",
     dataIndex: "reviewMessage",
   },
   {
-    title: "审核时间",
+    title: "Review Time",
     dataIndex: "reviewTime",
     slotName: "reviewTime",
   },
   {
-    title: "审核人 id",
+    title: "Reviewer id",
     dataIndex: "reviewerId",
   },
   {
-    title: "用户 id",
+    title: "User id",
     dataIndex: "userId",
   },
   {
-    title: "创建时间",
+    title: "Create Time",
     dataIndex: "createTime",
     slotName: "createTime",
   },
   {
-    title: "更新时间",
+    title: "Update Time",
     dataIndex: "updateTime",
     slotName: "updateTime",
   },
   {
-    title: "操作",
+    title: "Optional",
     slotName: "optional",
   },
 ];

@@ -7,7 +7,7 @@ const myAxios = axios.create({
   withCredentials: true,
 });
 
-// 全局请求拦截器
+// Global Request Interceptor
 myAxios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
@@ -19,7 +19,7 @@ myAxios.interceptors.request.use(
   }
 );
 
-// 全局响应拦截器
+// Global Response Interceptor
 myAxios.interceptors.response.use(
   function (response) {
     console.log(response);
@@ -29,12 +29,12 @@ myAxios.interceptors.response.use(
 
     // not logged in
     if (data.code === 40100) {
-      // 不是获取用户信息的请求，并且用户目前不是已经在用户登录页面，则跳转到登录页面
+      // Not a request to get user information and the user is not currently on the user login page, then jump to the login page
       if (
         !response.request.responseURL.includes("user/get/login") &&
         !window.location.pathname.includes("/user/login")
       ) {
-        Message.warning("请先登录");
+        Message.warning("Login First");
         window.location.href = `/user/login?redirect=${window.location.href}`;
       }
     }

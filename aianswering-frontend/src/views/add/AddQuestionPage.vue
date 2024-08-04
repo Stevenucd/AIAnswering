@@ -1,6 +1,6 @@
 <template>
   <div id="addQuestionPage">
-    <h2 style="margin-bottom: 32px">设置题目</h2>
+    <h2 style="margin-bottom: 32px">Edit question</h2>
     <a-form
       :model="questionContent"
       :style="{ width: '480px' }"
@@ -8,68 +8,84 @@
       auto-label-width
       @submit="handleSubmit"
     >
-      <a-form-item label="应用 id">
+      <a-form-item label="App id">
         {{ appId }}
       </a-form-item>
-      <a-form-item label="题目列表" :content-flex="false" :merge-props="false">
+      <a-form-item
+        label="Question list"
+        :content-flex="false"
+        :merge-props="false"
+      >
         <a-space size="medium">
           <a-button @click="addQuestion(questionContent.length)">
-            底部添加题目
+            Add question at the bottom
           </a-button>
-          <!-- AI 生成抽屉 -->
           <AiGenerateQuestionDrawer
             :appId="appId"
             :onSuccess="onAiGenerateSuccess"
           />
         </a-space>
-        <!-- 遍历每道题目 -->
         <div v-for="(question, index) in questionContent" :key="index">
           <a-space size="large">
-            <h3>题目 {{ index + 1 }}</h3>
+            <h3>Question {{ index + 1 }}</h3>
             <a-button size="small" @click="addQuestion(index + 1)">
-              添加题目
+              Add questions
             </a-button>
             <a-button
               size="small"
               status="danger"
               @click="deleteQuestion(index)"
             >
-              删除题目
+              Delete questions
             </a-button>
           </a-space>
-          <a-form-item field="posts.post1" :label="`题目 ${index + 1} 标题`">
-            <a-input v-model="question.title" placeholder="请输入标题" />
+          <a-form-item
+            field="posts.post1"
+            :label="`Question ${index + 1} Title`"
+          >
+            <a-input
+              v-model="question.title"
+              placeholder="Please enter title"
+            />
           </a-form-item>
-          <!--  题目选项 -->
           <a-space size="large">
-            <h4>题目 {{ index + 1 }} 选项列表</h4>
+            <h4>Question {{ index + 1 }} Option list</h4>
             <a-button
               size="small"
               @click="addQuestionOption(question, question.options.length)"
             >
-              底部添加选项
+              Add option at the bottom
             </a-button>
           </a-space>
           <a-form-item
             v-for="(option, optionIndex) in question.options"
             :key="optionIndex"
-            :label="`选项 ${optionIndex + 1}`"
+            :label="`Option ${optionIndex + 1}`"
             :content-flex="false"
             :merge-props="false"
           >
-            <a-form-item label="选项 key">
-              <a-input v-model="option.key" placeholder="请输入选项 key" />
+            <a-form-item label="Option key">
+              <a-input
+                v-model="option.key"
+                placeholder="Please enter the option key"
+              />
             </a-form-item>
-            <a-form-item label="选项值">
-              <a-input v-model="option.value" placeholder="请输入选项值" />
+            <a-form-item label="Option value">
+              <a-input
+                v-model="option.value"
+                placeholder="Please enter the option value"
+              />
             </a-form-item>
-            <a-form-item label="选项结果">
-              <a-input v-model="option.result" placeholder="请输入选项结果" />
+            <a-form-item label="Option result">
+              <a-input
+                v-model="option.result"
+                placeholder="Please enter the option result"
+              />
             </a-form-item>
-            <a-form-item label="选项得分">
+            <a-form-item label="Option score">
               <a-input-number
                 v-model="option.score"
-                placeholder="请输入选项得分"
+                placeholder="Please enter the option score"
               />
             </a-form-item>
             <a-space size="large">
@@ -77,23 +93,22 @@
                 size="mini"
                 @click="addQuestionOption(question, optionIndex + 1)"
               >
-                添加选项
+                Add Options
               </a-button>
               <a-button
                 size="mini"
                 status="danger"
                 @click="deleteQuestionOption(question, optionIndex as any)"
               >
-                删除选项
+                Delete Options
               </a-button>
             </a-space>
           </a-form-item>
-          <!-- 题目选项结尾 -->
         </div>
       </a-form-item>
       <a-form-item>
         <a-button type="primary" html-type="submit" style="width: 120px">
-          提交
+          Submit
         </a-button>
       </a-form-item>
     </a-form>
@@ -124,11 +139,11 @@ const props = withDefaults(defineProps<Props>(), {
 
 const router = useRouter();
 
-// 题目内容结构（理解为题目列表）
+// Structure of question content (understood as a list of questions)
 const questionContent = ref<API.QuestionContentDTO[]>([]);
 
 /**
- * 添加题目
+ * Add questions
  * @param index
  */
 const addQuestion = (index: number) => {
@@ -139,7 +154,7 @@ const addQuestion = (index: number) => {
 };
 
 /**
- * 删除题目
+ * Delete questions
  * @param index
  */
 const deleteQuestion = (index: number) => {
@@ -147,7 +162,7 @@ const deleteQuestion = (index: number) => {
 };
 
 /**
- * 添加题目选项
+ * Add question option
  * @param question
  * @param index
  */
@@ -162,7 +177,7 @@ const addQuestionOption = (question: API.QuestionContentDTO, index: number) => {
 };
 
 /**
- * 删除题目选项
+ * Delete question option
  * @param question
  * @param index
  */
@@ -179,7 +194,7 @@ const deleteQuestionOption = (
 const oldQuestion = ref<API.QuestionVO>();
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   if (!props.appId) {
@@ -198,51 +213,55 @@ const loadData = async () => {
       questionContent.value = oldQuestion.value.questionContent ?? [];
     }
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
-// 获取旧数据
+// Getting old data
 watchEffect(() => {
   loadData();
 });
 
 /**
- * 提交
+ * Submit
  */
 const handleSubmit = async () => {
   if (!props.appId || !questionContent.value) {
     return;
   }
   let res: any;
-  // 如果是修改
+  // If it is a modification
   if (oldQuestion.value?.id) {
     res = await editQuestionUsingPost({
       id: oldQuestion.value.id,
       questionContent: questionContent.value,
     });
   } else {
-    // 创建
+    // Create
     res = await addQuestionUsingPost({
       appId: props.appId as any,
       questionContent: questionContent.value,
     });
   }
   if (res.data.code === 0) {
-    message.success("操作成功，即将跳转到应用详情页");
+    message.success(
+      "Successful, you will be redirected to the app details page soon"
+    );
     setTimeout(() => {
       router.push(`/app/detail/${props.appId}`);
     }, 3000);
   } else {
-    message.error("操作失败，" + res.data.message);
+    message.error("Operation failed，" + res.data.message);
   }
 };
 
 /**
- * AI 生成题目成功后执行
+ * Execution after AI successful generate questions
  */
 const onAiGenerateSuccess = (result: API.QuestionContentDTO[]) => {
-  message.success(`AI 生成题目成功，生成 ${result.length} 道题目`);
+  message.success(
+    `AI generate title successful, generate ${result.length} question(s)`
+  );
   questionContent.value = [...questionContent.value, ...result];
 };
 </script>

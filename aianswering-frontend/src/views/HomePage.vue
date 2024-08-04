@@ -3,8 +3,8 @@
     <div class="searchBar">
       <a-input-search
         :style="{ width: '320px' }"
-        placeholder="快速发现答题应用"
-        button-text="搜索"
+        placeholder="Find apps"
+        button-text="Search"
         size="large"
         search-button
       />
@@ -36,7 +36,7 @@ import { listAppVoByPageUsingPost } from "@/api/appController";
 import message from "@arco-design/web-vue/es/message";
 import { REVIEW_STATUS_ENUM } from "@/constant/app";
 
-// 初始化搜索条件（不应该被修改）
+// Initialise search criteria (should not be modified)
 const initSearchParams = {
   current: 1,
   pageSize: 12,
@@ -49,7 +49,7 @@ const dataList = ref<API.AppVO[]>([]);
 const total = ref<number>(0);
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   const params = {
@@ -61,12 +61,12 @@ const loadData = async () => {
     dataList.value = res.data.data?.records || [];
     total.value = res.data.data?.total || 0;
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
 /**
- * 当分页变化时，改变搜索条件，触发数据加载
+ * Change search criteria to trigger data loading when paging changes
  * @param page
  */
 const onPageChange = (page: number) => {
@@ -77,7 +77,7 @@ const onPageChange = (page: number) => {
 };
 
 /**
- * 监听 searchParams 变量，改变时触发数据的重新加载
+ * Listens to the searchParams variable and triggers a reload of the data when it changes.
  */
 watchEffect(() => {
   loadData();

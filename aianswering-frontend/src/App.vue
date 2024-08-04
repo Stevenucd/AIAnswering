@@ -17,10 +17,10 @@ import { onMounted } from "vue";
 const route = useRoute();
 
 /**
- * 全局初始化函数，有全局单次调用的代码，都可以写到这里
+ * Global initialisation functions that have global single call code can be written here
  */
 const doInit = () => {
-  console.log("hello 欢迎来到我的项目");
+  console.log("Welcome to my project");
 };
 
 onMounted(() => {

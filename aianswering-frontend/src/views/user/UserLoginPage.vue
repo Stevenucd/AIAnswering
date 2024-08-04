@@ -1,6 +1,6 @@
 <template>
   <div id="userLoginPage">
-    <h2 style="margin-bottom: 16px">用户登录</h2>
+    <h2 style="margin-bottom: 16px">User Login</h2>
     <a-form
       :model="form"
       :style="{ width: '480px', margin: '0 auto' }"
@@ -8,13 +8,20 @@
       auto-label-width
       @submit="handleSubmit"
     >
-      <a-form-item field="userAccount" label="账号">
-        <a-input v-model="form.userAccount" placeholder="请输入账号" />
+      <a-form-item field="userAccount" label="Account">
+        <a-input
+          v-model="form.userAccount"
+          placeholder="Please enter account"
+        />
       </a-form-item>
-      <a-form-item field="userPassword" tooltip="密码不小于 8 位" label="密码">
+      <a-form-item
+        field="userPassword"
+        tooltip="Password not less than 8 digits"
+        label="Password"
+      >
         <a-input-password
           v-model="form.userPassword"
-          placeholder="请输入密码"
+          placeholder="Please enter password"
         />
       </a-form-item>
       <a-form-item>
@@ -27,9 +34,9 @@
           "
         >
           <a-button type="primary" html-type="submit" style="width: 120px">
-            登录
+            Login
           </a-button>
-          <a-link href="/user/register">新用户注册</a-link>
+          <a-link href="/user/register">New user register</a-link>
         </div>
       </a-form-item>
     </a-form>
@@ -53,19 +60,19 @@ const form = reactive({
 } as API.UserLoginRequest);
 
 /**
- * 提交
+ * Submit
  */
 const handleSubmit = async () => {
   const res = await userLoginUsingPost(form);
   if (res.data.code === 0) {
     await loginUserStore.fetchLoginUser();
-    message.success("登录成功");
+    message.success("Login Success");
     router.push({
       path: "/",
       replace: true,
     });
   } else {
-    message.error("登录失败，" + res.data.message);
+    message.error("Login Failed，" + res.data.message);
   }
 };
 </script>

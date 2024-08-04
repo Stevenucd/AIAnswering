@@ -5,11 +5,15 @@
         <a-col flex="auto" class="content-wrapper">
           <h2>{{ data.appName }}</h2>
           <p>{{ data.appDesc }}</p>
-          <p>应用类型：{{ APP_TYPE_MAP[data.appType] }}</p>
-          <p>评分策略：{{ APP_SCORING_STRATEGY_MAP[data.scoringStrategy] }}</p>
+          <p>App type：{{ APP_TYPE_MAP[data.appType] }}</p>
+          <p>
+            Scoring strategy：{{
+              APP_SCORING_STRATEGY_MAP[data.scoringStrategy]
+            }}
+          </p>
           <p>
             <a-space>
-              作者：
+              Author：
               <div :style="{ display: 'flex', alignItems: 'center' }">
                 <a-avatar
                   :size="24"
@@ -17,26 +21,28 @@
                   :style="{ marginRight: '8px' }"
                 />
                 <a-typography-text
-                  >{{ data.user?.userName ?? "无名" }}
+                  >{{ data.user?.userName ?? "Unknown" }}
                 </a-typography-text>
               </div>
             </a-space>
           </p>
           <p>
-            创建时间：{{ dayjs(data.createTime).format("YYYY-MM-DD HH:mm:ss") }}
+            Create Time：{{
+              dayjs(data.createTime).format("YYYY-MM-DD HH:mm:ss")
+            }}
           </p>
           <a-space size="medium">
             <a-button type="primary" :href="`/answer/do/${id}`"
-              >开始答题</a-button
+              >Start answering</a-button
             >
-            <a-button>分享应用</a-button>
+            <a-button>Share app</a-button>
             <a-button v-if="isMy" :href="`/add/question/${id}`"
-              >设置题目
+              >Edit question
             </a-button>
             <a-button v-if="isMy" :href="`/add/scoring_result/${id}`"
-              >设置评分
+              >Setting up ratings
             </a-button>
-            <a-button v-if="isMy" :href="`/add/app/${id}`">修改应用</a-button>
+            <a-button v-if="isMy" :href="`/add/app/${id}`">Edit app</a-button>
           </a-space>
         </a-col>
         <a-col flex="320px">
@@ -71,16 +77,16 @@ const router = useRouter();
 
 const data = ref<API.AppVO>({});
 
-// 获取登录用户
+// Get logged in user
 const loginUserStore = useLoginUserStore();
 let loginUserId = loginUserStore.loginUser?.id;
-// 是否为本人创建
+// Created by user or not
 const isMy = computed(() => {
   return loginUserId && loginUserId === data.value.userId;
 });
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   if (!props.id) {
@@ -92,12 +98,12 @@ const loadData = async () => {
   if (res.data.code === 0) {
     data.value = res.data.data as any;
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
 /**
- * 监听 searchParams 变量，改变时触发数据的重新加载
+ * Listens to the searchParams variable and triggers a reload of the data when it changes.
  */
 watchEffect(() => {
   loadData();

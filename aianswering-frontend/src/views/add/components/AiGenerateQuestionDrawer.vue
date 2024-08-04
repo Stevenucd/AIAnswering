@@ -1,5 +1,5 @@
 <template>
-  <a-button type="outline" @click="handleClick">AI 生成题目</a-button>
+  <a-button type="outline" @click="handleClick">AI Generate Question</a-button>
   <a-drawer
     :width="340"
     :visible="visible"
@@ -7,7 +7,7 @@
     @cancel="handleCancel"
     unmountOnClose
   >
-    <template #title>AI 生成题目</template>
+    <template #title>AI Generate Question</template>
     <div>
       <a-form
         :model="form"
@@ -15,23 +15,23 @@
         auto-label-width
         @submit="handleSubmit"
       >
-        <a-form-item label="应用 id">
+        <a-form-item label="App id">
           {{ appId }}
         </a-form-item>
-        <a-form-item field="questionNumber" label="题目数量">
+        <a-form-item field="questionNumber" label="Number of questions">
           <a-input-number
             min="0"
             max="20"
             v-model="form.questionNumber"
-            placeholder="请输入题目数量"
+            placeholder="Please enter number of questions"
           />
         </a-form-item>
-        <a-form-item field="optionNumber" label="选项数量">
+        <a-form-item field="optionNumber" label="Number of options">
           <a-input-number
             min="0"
             max="6"
             v-model="form.optionNumber"
-            placeholder="请输入选项数量"
+            placeholder="Please enter number of options"
           />
         </a-form-item>
         <a-form-item>
@@ -41,7 +41,7 @@
             html-type="submit"
             style="width: 120px"
           >
-            {{ submitting ? "生成中" : "一键生成" }}
+            {{ submitting ? "Generating" : "Generation" }}
           </a-button>
         </a-form-item>
       </a-form>
@@ -85,7 +85,7 @@ const handleCancel = () => {
 };
 
 /**
- * 提交
+ * Submit
  */
 const handleSubmit = async () => {
   if (!props.appId) {
@@ -100,12 +100,11 @@ const handleSubmit = async () => {
     if (props.onSuccess) {
       props.onSuccess(res.data.data);
     } else {
-      message.success("生成题目成功");
+      message.success("Generate Question Successfully");
     }
-    // 关闭抽屉
     handleCancel();
   } else {
-    message.error("操作失败，" + res.data.message);
+    message.error("Operation failed，" + res.data.message);
   }
   submitting.value = false;
 };

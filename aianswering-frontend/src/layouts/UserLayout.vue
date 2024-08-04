@@ -4,7 +4,7 @@
       <a-layout-header class="header">
         <a-space>
           <img class="logo" src="../assets/logo.png" />
-          <div>AIAnswering AI 答题应用平台</div>
+          <div>AIAnswering AI Answering System</div>
         </a-space>
       </a-layout-header>
       <a-layout-content class="content">

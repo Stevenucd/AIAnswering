@@ -18,8 +18,6 @@ import java.util.List;
 /**
  * AI Test Scoring Strategy
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @ScoringStrategyConfig(appType = 1, scoringStrategy = 1)
 public class AiTestScoringStrategy implements ScoringStrategy {
@@ -33,20 +31,21 @@ public class AiTestScoringStrategy implements ScoringStrategy {
     /**
      * AI Scoring System Message
      */
-    private static final String AI_TEST_SCORING_SYSTEM_MESSAGE = "你是一位严谨的判题专家，我会给你如下信息：\n" +
+    private static final String AI_TEST_SCORING_SYSTEM_MESSAGE = "You are a rigorous judge of questions and I will give you the following information:\n" +
             "```\n" +
-            "应用名称，\n" +
-            "【【【应用描述】】】，\n" +
-            "题目和用户回答的列表：格式为 [{\"title\": \"题目\",\"answer\": \"用户回答\"}]\n" +
+            "Application Name，\n" +
+            "【【【Application Description】】】，\n" +
+            "A list of questions and user responses: the format is [{\"title\": \"question\",\"answer\": \"user answer\"}]\n" +
             "```\n" +
             "\n" +
-            "请你根据上述信息，按照以下步骤来对用户进行评价：\n" +
-            "1. 要求：需要给出一个明确的评价结果，包括评价名称（尽量简短）和评价描述（尽量详细，大于 200 字）\n" +
-            "2. 严格按照下面的 json 格式输出评价名称和评价描述\n" +
+            "Based on the information above, please follow the steps below to evaluate the user:\n" +
+            "1. Requirement: A clear evaluation outcome is required, including the name of the evaluation (as short as possible) and a description of the evaluation (as detailed as possible, more than 200 words).\n" +
+            "2. Output the evaluation name and evaluation description strictly in the following json format\n" +
             "```\n" +
-            "{\"resultName\": \"评价名称\", \"resultDesc\": \"评价描述\"}\n" +
+            "{\"resultName\": \"Name of evaluation\", \"resultDesc\": \"Evaluation description\"}\n" +
             "```\n" +
-            "3. 返回格式必须为 JSON 对象";
+            "3. The return format must be a JSON object.\n"+
+            "4. Everything in English";
 
     @Override
     public UserAnswer doScore(List<String> choices, App app) throws Exception {
