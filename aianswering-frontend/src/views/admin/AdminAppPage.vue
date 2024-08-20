@@ -1,94 +1,97 @@
 <template>
-  <a-form
-    :model="formSearchParams"
-    :style="{ marginBottom: '20px' }"
-    layout="inline"
-    @submit="doSearch"
-  >
-    <a-form-item field="appName" label="App name">
-      <a-input
-        v-model="formSearchParams.appName"
-        placeholder="Please enter app name"
-        allow-clear
-      />
-    </a-form-item>
-    <a-form-item field="appDesc" label="App Description">
-      <a-input
-        v-model="formSearchParams.appDesc"
-        placeholder="Please enter app description"
-        allow-clear
-      />
-    </a-form-item>
-    <a-form-item>
-      <a-button type="primary" html-type="submit" style="width: 100px">
-        Search
-      </a-button>
-    </a-form-item>
-  </a-form>
-  <a-table
-    :columns="columns"
-    :data="dataList"
-    :pagination="{
-      showTotal: true,
-      pageSize: searchParams.pageSize,
-      current: searchParams.current,
-      total,
-    }"
-    @page-change="onPageChange"
-  >
-    <template #appIcon="{ record }">
-      <a-image width="64" :src="record.appIcon" />
-    </template>
-    <template #appType="{ record }">
-      {{ APP_TYPE_MAP[record.appType] }}
-    </template>
-    <template #scoringStrategy="{ record }">
-      {{ APP_SCORING_STRATEGY_MAP[record.scoringStrategy] }}
-    </template>
-    <template #reviewStatus="{ record }">
-      {{ REVIEW_STATUS_MAP[record.reviewStatus] }}
-    </template>
-    <template #reviewTime="{ record }">
-      {{
-        record.reviewTime &&
-        dayjs(record.reviewTime).format("YYYY-MM-DD HH:mm:ss")
-      }}
-    </template>
-    <template #createTime="{ record }">
-      {{ dayjs(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
-    </template>
-    <template #updateTime="{ record }">
-      {{ dayjs(record.updateTime).format("YYYY-MM-DD HH:mm:ss") }}
-    </template>
-    <template #optional="{ record }">
-      <a-space>
-        <a-button
-          v-if="record.reviewStatus !== REVIEW_STATUS_ENUM.PASS"
-          status="success"
-          @click="doReview(record, REVIEW_STATUS_ENUM.PASS, '')"
-        >
-          Pass
+  <a-config-provider :locale="locale">
+    <a-form
+      :model="formSearchParams"
+      :style="{ marginBottom: '20px' }"
+      layout="inline"
+      @submit="doSearch"
+    >
+      <a-form-item field="appName" label="App name">
+        <a-input
+          v-model="formSearchParams.appName"
+          placeholder="Please enter app name"
+          allow-clear
+        />
+      </a-form-item>
+      <a-form-item field="appDesc" label="App Description">
+        <a-input
+          v-model="formSearchParams.appDesc"
+          placeholder="Please enter app description"
+          allow-clear
+        />
+      </a-form-item>
+      <a-form-item>
+        <a-button type="primary" html-type="submit" style="width: 100px">
+          Search
         </a-button>
-        <a-button
-          v-if="record.reviewStatus !== REVIEW_STATUS_ENUM.REJECT"
-          status="warning"
-          @click="
-            doReview(
-              record,
-              REVIEW_STATUS_ENUM.REJECT,
-              'Failure to meet requirements'
-            )
-          "
-        >
-          Reject
-        </a-button>
-        <a-button status="danger" @click="doDelete(record)">Delete</a-button>
-      </a-space>
-    </template>
-  </a-table>
+      </a-form-item>
+    </a-form>
+    <a-table
+      :columns="columns"
+      :data="dataList"
+      :pagination="{
+        showTotal: true,
+        pageSize: searchParams.pageSize,
+        current: searchParams.current,
+        total,
+      }"
+      @page-change="onPageChange"
+    >
+      <template #appIcon="{ record }">
+        <a-image width="64" :src="record.appIcon" />
+      </template>
+      <template #appType="{ record }">
+        {{ APP_TYPE_MAP[record.appType] }}
+      </template>
+      <template #scoringStrategy="{ record }">
+        {{ APP_SCORING_STRATEGY_MAP[record.scoringStrategy] }}
+      </template>
+      <template #reviewStatus="{ record }">
+        {{ REVIEW_STATUS_MAP[record.reviewStatus] }}
+      </template>
+      <template #reviewTime="{ record }">
+        {{
+          record.reviewTime &&
+          dayjs(record.reviewTime).format("YYYY-MM-DD HH:mm:ss")
+        }}
+      </template>
+      <template #createTime="{ record }">
+        {{ dayjs(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
+      </template>
+      <template #updateTime="{ record }">
+        {{ dayjs(record.updateTime).format("YYYY-MM-DD HH:mm:ss") }}
+      </template>
+      <template #optional="{ record }">
+        <a-space>
+          <a-button
+            v-if="record.reviewStatus !== REVIEW_STATUS_ENUM.PASS"
+            status="success"
+            @click="doReview(record, REVIEW_STATUS_ENUM.PASS, '')"
+          >
+            Pass
+          </a-button>
+          <a-button
+            v-if="record.reviewStatus !== REVIEW_STATUS_ENUM.REJECT"
+            status="warning"
+            @click="
+              doReview(
+                record,
+                REVIEW_STATUS_ENUM.REJECT,
+                'Failure to meet requirements'
+              )
+            "
+          >
+            Reject
+          </a-button>
+          <a-button status="danger" @click="doDelete(record)">Delete</a-button>
+        </a-space>
+      </template>
+    </a-table>
+  </a-config-provider>
 </template>
 
 <script setup lang="ts">
+import enUS from "@arco-design/web-vue/es/locale/lang/en-us";
 import { ref, watchEffect } from "vue";
 import {
   deleteAppUsingPost,
@@ -105,6 +108,7 @@ import {
   REVIEW_STATUS_MAP,
 } from "@/constant/app";
 
+const locale = ref(enUS);
 const formSearchParams = ref<API.AppQueryRequest>({});
 
 // Initialise search criteria (should not be modified)

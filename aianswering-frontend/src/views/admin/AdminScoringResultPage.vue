@@ -1,73 +1,76 @@
 <template>
-  <a-form
-    :model="formSearchParams"
-    :style="{ marginBottom: '20px' }"
-    layout="inline"
-    @submit="doSearch"
-  >
-    <a-form-item field="resultName" label="Result name">
-      <a-input
-        v-model="formSearchParams.resultName"
-        placeholder="Please enter result name"
-        allow-clear
-      />
-    </a-form-item>
-    <a-form-item field="resultDesc" label="Result description">
-      <a-input
-        v-model="formSearchParams.resultDesc"
-        placeholder="Please enter result description"
-        allow-clear
-      />
-    </a-form-item>
-    <a-form-item field="appId" label="App id">
-      <a-input
-        v-model="formSearchParams.appId"
-        placeholder="Please enter app id"
-        allow-clear
-      />
-    </a-form-item>
-    <a-form-item field="userId" label="User id">
-      <a-input
-        v-model="formSearchParams.userId"
-        placeholder="Please enter user id"
-        allow-clear
-      />
-    </a-form-item>
-    <a-form-item>
-      <a-button type="primary" html-type="submit" style="width: 100px">
-        Search
-      </a-button>
-    </a-form-item>
-  </a-form>
-  <a-table
-    :columns="columns"
-    :data="dataList"
-    :pagination="{
-      showTotal: true,
-      pageSize: searchParams.pageSize,
-      current: searchParams.current,
-      total,
-    }"
-    @page-change="onPageChange"
-  >
-    <template #resultPicture="{ record }">
-      <a-image width="64" :src="record.resultPicture" />
-    </template>
-    <template #createTime="{ record }">
-      {{ dayjs(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
-    </template>
-    <template #updateTime="{ record }">
-      {{ dayjs(record.updateTime).format("YYYY-MM-DD HH:mm:ss") }}
-    </template>
-    <template #optional="{ record }">
-      <a-space>
-        <a-button status="danger" @click="doDelete(record)">Delete</a-button>
-      </a-space>
-    </template>
-  </a-table>
+  <a-config-provider :locale="locale">
+    <a-form
+      :model="formSearchParams"
+      :style="{ marginBottom: '20px' }"
+      layout="inline"
+      @submit="doSearch"
+    >
+      <a-form-item field="resultName" label="Result name">
+        <a-input
+          v-model="formSearchParams.resultName"
+          placeholder="Please enter result name"
+          allow-clear
+        />
+      </a-form-item>
+      <a-form-item field="resultDesc" label="Result description">
+        <a-input
+          v-model="formSearchParams.resultDesc"
+          placeholder="Please enter result description"
+          allow-clear
+        />
+      </a-form-item>
+      <a-form-item field="appId" label="App id">
+        <a-input
+          v-model="formSearchParams.appId"
+          placeholder="Please enter app id"
+          allow-clear
+        />
+      </a-form-item>
+      <a-form-item field="userId" label="User id">
+        <a-input
+          v-model="formSearchParams.userId"
+          placeholder="Please enter user id"
+          allow-clear
+        />
+      </a-form-item>
+      <a-form-item>
+        <a-button type="primary" html-type="submit" style="width: 100px">
+          Search
+        </a-button>
+      </a-form-item>
+    </a-form>
+    <a-table
+      :columns="columns"
+      :data="dataList"
+      :pagination="{
+        showTotal: true,
+        pageSize: searchParams.pageSize,
+        current: searchParams.current,
+        total,
+      }"
+      @page-change="onPageChange"
+    >
+      <template #resultPicture="{ record }">
+        <a-image width="64" :src="record.resultPicture" />
+      </template>
+      <template #createTime="{ record }">
+        {{ dayjs(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
+      </template>
+      <template #updateTime="{ record }">
+        {{ dayjs(record.updateTime).format("YYYY-MM-DD HH:mm:ss") }}
+      </template>
+      <template #optional="{ record }">
+        <a-space>
+          <a-button status="danger" @click="doDelete(record)">Delete</a-button>
+        </a-space>
+      </template>
+    </a-table>
+  </a-config-provider>
 </template>
 
 <script setup lang="ts">
+import enUS from "@arco-design/web-vue/es/locale/lang/en-us";
 import { ref, watchEffect } from "vue";
 import {
   deleteScoringResultUsingPost,
@@ -77,6 +80,7 @@ import API from "@/api";
 import message from "@arco-design/web-vue/es/message";
 import { dayjs } from "@arco-design/web-vue/es/_utils/date";
 
+const locale = ref(enUS);
 const formSearchParams = ref<API.ScoringResultQueryRequest>({});
 
 // Initialise search criteria (should not be modified)
