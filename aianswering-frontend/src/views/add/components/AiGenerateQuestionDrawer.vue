@@ -1,59 +1,66 @@
 <template>
-  <a-button type="outline" @click="handleClick">AI Generate Question</a-button>
-  <a-drawer
-    :width="340"
-    :visible="visible"
-    @ok="handleOk"
-    @cancel="handleCancel"
-    unmountOnClose
-  >
-    <template #title>AI Generate Question</template>
-    <div>
-      <a-form
-        :model="form"
-        label-align="left"
-        auto-label-width
-        @submit="handleSubmit"
-      >
-        <a-form-item label="App id">
-          {{ appId }}
-        </a-form-item>
-        <a-form-item field="questionNumber" label="Number of questions">
-          <a-input-number
-            min="0"
-            max="20"
-            v-model="form.questionNumber"
-            placeholder="Please enter number of questions"
-          />
-        </a-form-item>
-        <a-form-item field="optionNumber" label="Number of options">
-          <a-input-number
-            min="0"
-            max="6"
-            v-model="form.optionNumber"
-            placeholder="Please enter number of options"
-          />
-        </a-form-item>
-        <a-form-item>
-          <a-button
-            :loading="submitting"
-            type="primary"
-            html-type="submit"
-            style="width: 120px"
-          >
-            {{ submitting ? "Generating" : "Generation" }}
-          </a-button>
-        </a-form-item>
-      </a-form>
-    </div>
-  </a-drawer>
+  <a-config-provider :locale="locale">
+    <a-button type="outline" @click="handleClick"
+      >AI Generate Question</a-button
+    >
+    <a-drawer
+      :width="340"
+      :visible="visible"
+      @ok="handleOk"
+      @cancel="handleCancel"
+      unmountOnClose
+    >
+      <template #title>AI Generate Question</template>
+      <div>
+        <a-form
+          :model="form"
+          label-align="left"
+          auto-label-width
+          @submit="handleSubmit"
+        >
+          <a-form-item label="App id">
+            {{ appId }}
+          </a-form-item>
+          <a-form-item field="questionNumber" label="Number of questions">
+            <a-input-number
+              min="0"
+              max="20"
+              v-model="form.questionNumber"
+              placeholder="Please enter number of questions"
+            />
+          </a-form-item>
+          <a-form-item field="optionNumber" label="Number of options">
+            <a-input-number
+              min="0"
+              max="6"
+              v-model="form.optionNumber"
+              placeholder="Please enter number of options"
+            />
+          </a-form-item>
+          <a-form-item>
+            <a-button
+              :loading="submitting"
+              type="primary"
+              html-type="submit"
+              style="width: 120px"
+            >
+              {{ submitting ? "Generating" : "Generation" }}
+            </a-button>
+          </a-form-item>
+        </a-form>
+      </div>
+    </a-drawer>
+  </a-config-provider>
 </template>
 
 <script setup lang="ts">
+import enUS from "@arco-design/web-vue/es/locale/lang/en-us";
 import { defineProps, reactive, ref, withDefaults } from "vue";
 import API from "@/api";
 import { aiGenerateQuestionUsingPost } from "@/api/questionController";
 import message from "@arco-design/web-vue/es/message";
+
+const locale = ref(enUS);
 
 interface Props {
   appId: string;

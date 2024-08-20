@@ -1,8 +1,8 @@
-# AIAnswering-backend SpringBoot template
+# AIAnswering-backend
 
-> 作者：[Steven Cui](https://github.com/Stevenucd)
+> Author：[Steven Cui](https://github.com/Stevenucd)
 
-## Template Features 
+## Features 
 
 ### Frameworks & Features
 
@@ -22,7 +22,7 @@
 
 ## Functions
 
-- Sample SQL provided SQL
+- Sample SQL provided
 - User login, registration, cancellation, update, search, auth management
 - Post creation, deletion, editing, updating, database search
 - Post likes, unlikes
@@ -47,3 +47,5 @@ spring:
 ```
 
 2）Execute the database statement in `sql/create_table.sql` to automatically create the table.
+
+3）Execute the database statement in `sql/init_data.sql` to automatically initialize the data.

@@ -1,5 +1,7 @@
 # aianswering-frontend
 
+> Author：[Steven Cui](https://github.com/Stevenucd)
+
 ## Project setup
 ```
 npm install
