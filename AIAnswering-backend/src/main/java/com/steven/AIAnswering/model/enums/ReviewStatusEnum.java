@@ -7,16 +7,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 审核状态枚举
+ * Review status enumeration
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 public enum ReviewStatusEnum {
 
-    REVIEWING("待审核", 0),
-    PASS("通过", 1),
-    REJECT("拒绝", 2);
+    REVIEWING("Pending", 0),
+    PASS("Pass", 1),
+    REJECT("Reject", 2);
 
     private final String text;
 
@@ -28,7 +26,7 @@ public enum ReviewStatusEnum {
     }
 
     /**
-     * 根据 value 获取枚举
+     * Get enumeration by value
      *
      * @param value
      * @return
@@ -46,7 +44,7 @@ public enum ReviewStatusEnum {
     }
 
     /**
-     * 获取值列表
+     * Get value list
      *
      * @return
      */

@@ -10,10 +10,8 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 帖子
+ * Post
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @TableName(value = "post")
 @Data
@@ -26,47 +24,47 @@ public class Post implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * Content
      */
     private String content;
 
     /**
-     * 标签列表 json
+     * Tags list json
      */
     private String tags;
 
     /**
-     * 点赞数
+     * Likes number
      */
     private Integer thumbNum;
 
     /**
-     * 收藏数
+     * Favour number
      */
     private Integer favourNum;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 
     /**
-     * 创建时间
+     * Create time
      */
     private Date createTime;
 
     /**
-     * 更新时间
+     * Update time
      */
     private Date updateTime;
 
     /**
-     * 是否删除
+     * Delete or not
      */
     @TableLogic
     private Integer isDelete;

@@ -23,10 +23,10 @@
     </a-col>
     <a-col flex="100px">
       <div v-if="loginUserStore.loginUser.id">
-        {{ loginUserStore.loginUser.userName ?? "无名" }}
+        {{ loginUserStore.loginUser.userName ?? "Unknown" }}
       </div>
       <div v-else>
-        <a-button type="primary" href="/user/login">登录</a-button>
+        <a-button type="primary" href="/user/login">Login</a-button>
       </div>
     </a-col>
   </a-row>
@@ -42,20 +42,20 @@ import checkAccess from "@/access/checkAccess";
 const loginUserStore = useLoginUserStore();
 
 const router = useRouter();
-// 当前选中的菜单项
+// Currently selected menu item
 const selectedKeys = ref(["/"]);
-// 路由跳转时，自动更新选中的菜单项
+// Automatically update selected menu items when routing jumps
 router.afterEach((to, from, failure) => {
   selectedKeys.value = [to.path];
 });
 
-// 展示在菜单栏的路由数组
+// Array of routes displayed in the menu bar
 const visibleRoutes = computed(() => {
   return routes.filter((item) => {
     if (item.meta?.hideInMenu) {
       return false;
     }
-    // 根据权限过滤菜单
+    // Filter menus by authority
     if (!checkAccess(loginUserStore.loginUser, item.meta?.access as string)) {
       return false;
     }
@@ -63,7 +63,7 @@ const visibleRoutes = computed(() => {
   });
 });
 
-// 点击菜单跳转到对应页面
+// Click on the menu to jump to the corresponding page
 const doMenuClick = (key: string) => {
   router.push({
     path: key,

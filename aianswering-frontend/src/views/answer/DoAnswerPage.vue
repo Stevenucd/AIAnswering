@@ -23,7 +23,7 @@
             :disabled="!currentAnswer"
             @click="current += 1"
           >
-            下一题
+            Next question
           </a-button>
           <a-button
             type="primary"
@@ -33,10 +33,10 @@
             :disabled="!currentAnswer"
             @click="doSubmit"
           >
-            {{ submitting ? "评分中" : "查看结果" }}
+            {{ submitting ? "Rating" : "View results" }}
           </a-button>
           <a-button v-if="current > 1" circle @click="current -= 1">
-            上一题
+            Previous question
           </a-button>
         </a-space>
       </div>
@@ -73,14 +73,14 @@ const props = withDefaults(defineProps<Props>(), {
 const router = useRouter();
 
 const app = ref<API.AppVO>({});
-// 题目内容结构（理解为题目列表）
+// Structure of question content (understood as a list of questions)
 const questionContent = ref<API.QuestionContentDTO[]>([]);
 
-// 当前题目的序号（从 1 开始）
+// Serial number of the current question (from 1)
 const current = ref(1);
-// 当前题目
+// Current question
 const currentQuestion = ref<API.QuestionContentDTO>({});
-// 当前题目选项
+// Current question options
 const questionOptions = computed(() => {
   return currentQuestion.value?.options
     ? currentQuestion.value.options.map((option) => {
@@ -91,30 +91,30 @@ const questionOptions = computed(() => {
       })
     : [];
 });
-// 当前答案
+// Current answer
 const currentAnswer = ref<string>();
-// 回答列表
+// Answer list
 const answerList = reactive<string[]>([]);
-// 是否正在提交结果
+// Whether or not the result is being submitted
 const submitting = ref(false);
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   if (!props.appId) {
     return;
   }
-  // 获取 app
+  // Get app
   let res: any = await getAppVoByIdUsingGet({
     id: props.appId as any,
   });
   if (res.data.code === 0) {
     app.value = res.data.data as any;
   } else {
-    message.error("获取应用失败，" + res.data.message);
+    message.error("Failed to get app，" + res.data.message);
   }
-  // 获取题目
+  // Get question
   res = await listQuestionVoByPageUsingPost({
     appId: props.appId as any,
     current: 1,
@@ -125,23 +125,23 @@ const loadData = async () => {
   if (res.data.code === 0 && res.data.data?.records) {
     questionContent.value = res.data.data.records[0].questionContent;
   } else {
-    message.error("获取题目失败，" + res.data.message);
+    message.error("Failed to get question，" + res.data.message);
   }
 };
 
-// 获取旧数据
+// Getting old data
 watchEffect(() => {
   loadData();
 });
 
-// 改变 current 题号后，会自动更新当前题目和答案
+// Changing the current question number will automatically update the current question and answer.
 watchEffect(() => {
   currentQuestion.value = questionContent.value[current.value - 1];
   currentAnswer.value = answerList[current.value - 1];
 });
 
 /**
- * 选中选项后，保存选项记录
+ * Save the option record when the option is selected
  * @param value
  */
 const doRadioChange = (value: string) => {
@@ -149,7 +149,7 @@ const doRadioChange = (value: string) => {
 };
 
 /**
- * 提交
+ * Submit
  */
 const doSubmit = async () => {
   if (!props.appId || !answerList) {
@@ -163,7 +163,7 @@ const doSubmit = async () => {
   if (res.data.code === 0 && res.data.data) {
     router.push(`/answer/result/${res.data.data}`);
   } else {
-    message.error("提交答案失败，" + res.data.message);
+    message.error("Failed to submit answer，" + res.data.message);
   }
   submitting.value = false;
 };

@@ -17,10 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 帖子点赞服务实现
+ * Post Likes Service Implementation
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @Service
 public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb>
@@ -30,7 +28,7 @@ public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb
     private PostService postService;
 
     /**
-     * 点赞
+     * Likes
      *
      * @param postId
      * @param loginUser
@@ -38,15 +36,14 @@ public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb
      */
     @Override
     public int doPostThumb(long postId, User loginUser) {
-        // 判断实体是否存在，根据类别获取实体
+        // Determine if an entity exists, get entity based on category
         Post post = postService.getById(postId);
         if (post == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        // 是否已点赞
+        // Has liked or not
         long userId = loginUser.getId();
-        // 每个用户串行点赞
-        // 锁必须要包裹住事务方法
+        // Serial Likes per User
         PostThumbService postThumbService = (PostThumbService) AopContext.currentProxy();
         synchronized (String.valueOf(userId).intern()) {
             return postThumbService.doPostThumbInner(userId, postId);
@@ -69,11 +66,11 @@ public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb
         QueryWrapper<PostThumb> thumbQueryWrapper = new QueryWrapper<>(postThumb);
         PostThumb oldPostThumb = this.getOne(thumbQueryWrapper);
         boolean result;
-        // 已点赞
+        // Liked
         if (oldPostThumb != null) {
             result = this.remove(thumbQueryWrapper);
             if (result) {
-                // 点赞数 - 1
+                // Likes number - 1
                 result = postService.update()
                         .eq("id", postId)
                         .gt("thumbNum", 0)
@@ -84,10 +81,10 @@ public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb
                 throw new BusinessException(ErrorCode.SYSTEM_ERROR);
             }
         } else {
-            // 未点赞
+            // Unliked
             result = this.save(postThumb);
             if (result) {
-                // 点赞数 + 1
+                // Likes number + 1
                 result = postService.update()
                         .eq("id", postId)
                         .setSql("thumbNum = thumbNum + 1")

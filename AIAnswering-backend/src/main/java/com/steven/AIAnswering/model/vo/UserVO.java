@@ -5,10 +5,8 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 用户视图（脱敏）
+ * User VO (desensitised)
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @Data
 public class UserVO implements Serializable {
@@ -19,27 +17,27 @@ public class UserVO implements Serializable {
     private Long id;
 
     /**
-     * 用户昵称
+     * Username
      */
     private String userName;
 
     /**
-     * 用户头像
+     * User avatar
      */
     private String userAvatar;
 
     /**
-     * 用户简介
+     * User profile
      */
     private String userProfile;
 
     /**
-     * 用户角色：user/admin/ban
+     * User role：user/admin/ban
      */
     private String userRole;
 
     /**
-     * 创建时间
+     * Create time
      */
     private Date createTime;
 

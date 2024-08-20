@@ -5,23 +5,23 @@
     layout="inline"
     @submit="doSearch"
   >
-    <a-form-item field="appId" label="应用 id">
+    <a-form-item field="appId" label="App id">
       <a-input
         v-model="formSearchParams.appId"
-        placeholder="请输入应用 id"
+        placeholder="Please enter app id"
         allow-clear
       />
     </a-form-item>
-    <a-form-item field="userId" label="用户 id">
+    <a-form-item field="userId" label="User id">
       <a-input
         v-model="formSearchParams.userId"
-        placeholder="请输入用户 id"
+        placeholder="Please enter user id"
         allow-clear
       />
     </a-form-item>
     <a-form-item>
       <a-button type="primary" html-type="submit" style="width: 100px">
-        搜索
+        Search
       </a-button>
     </a-form-item>
   </a-form>
@@ -52,7 +52,7 @@
     </template>
     <template #optional="{ record }">
       <a-space>
-        <a-button status="danger" @click="doDelete(record)">删除</a-button>
+        <a-button status="danger" @click="doDelete(record)">Delete</a-button>
       </a-space>
     </template>
   </a-table>
@@ -70,7 +70,7 @@ import { dayjs } from "@arco-design/web-vue/es/_utils/date";
 
 const formSearchParams = ref<API.QuestionQueryRequest>({});
 
-// 初始化搜索条件（不应该被修改）
+// Initialise search criteria (should not be modified)
 const initSearchParams = {
   current: 1,
   pageSize: 10,
@@ -83,7 +83,7 @@ const dataList = ref<API.Question[]>([]);
 const total = ref<number>(0);
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   const res = await listQuestionByPageUsingPost(searchParams.value);
@@ -91,12 +91,12 @@ const loadData = async () => {
     dataList.value = res.data.data?.records || [];
     total.value = res.data.data?.total || 0;
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
 /**
- * 执行搜索
+ * Perform a search
  */
 const doSearch = () => {
   searchParams.value = {
@@ -106,7 +106,7 @@ const doSearch = () => {
 };
 
 /**
- * 当分页变化时，改变搜索条件，触发数据加载
+ * Change search criteria to trigger data loading when paging changes
  * @param page
  */
 const onPageChange = (page: number) => {
@@ -117,7 +117,7 @@ const onPageChange = (page: number) => {
 };
 
 /**
- * 删除
+ * Delete
  * @param record
  */
 const doDelete = async (record: API.Question) => {
@@ -131,48 +131,48 @@ const doDelete = async (record: API.Question) => {
   if (res.data.code === 0) {
     loadData();
   } else {
-    message.error("删除失败，" + res.data.message);
+    message.error("Delete failed，" + res.data.message);
   }
 };
 
 /**
- * 监听 searchParams 变量，改变时触发数据的重新加载
+ * Listens to the searchParams variable and triggers a reload of the data when it changes.
  */
 watchEffect(() => {
   loadData();
 });
 
-// 表格列配置
+// Table Column Configuration
 const columns = [
   {
     title: "id",
     dataIndex: "id",
   },
   {
-    title: "题目内容",
+    title: "Question Content",
     dataIndex: "questionContent",
     slotName: "questionContent",
   },
   {
-    title: "应用 id",
+    title: "App id",
     dataIndex: "appId",
   },
   {
-    title: "用户 id",
+    title: "User id",
     dataIndex: "userId",
   },
   {
-    title: "创建时间",
+    title: "Create Time",
     dataIndex: "createTime",
     slotName: "createTime",
   },
   {
-    title: "更新时间",
+    title: "Update Time",
     dataIndex: "updateTime",
     slotName: "updateTime",
   },
   {
-    title: "操作",
+    title: "Optional",
     slotName: "optional",
   },
 ];

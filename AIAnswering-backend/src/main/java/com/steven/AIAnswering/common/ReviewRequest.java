@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 审核请求
+ * Audit requests
  */
 @Data
 public class ReviewRequest implements Serializable {
@@ -16,12 +16,12 @@ public class ReviewRequest implements Serializable {
     private Long id;
 
     /**
-     * 状态：0-待审核, 1-通过, 2-拒绝
+     * Status：0-Pending, 1-Pass, 2-Reject
      */
     private Integer reviewStatus;
 
     /**
-     * 审核信息
+     * Audit information
      */
     private String reviewMessage;
 

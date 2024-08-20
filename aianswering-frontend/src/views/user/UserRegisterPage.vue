@@ -1,6 +1,6 @@
 <template>
   <div id="userRegisterPage">
-    <h2 style="margin-bottom: 16px">用户注册</h2>
+    <h2 style="margin-bottom: 16px">User register</h2>
     <a-form
       :model="form"
       :style="{ width: '480px', margin: '0 auto' }"
@@ -8,23 +8,30 @@
       auto-label-width
       @submit="handleSubmit"
     >
-      <a-form-item field="userAccount" label="账号">
-        <a-input v-model="form.userAccount" placeholder="请输入账号" />
+      <a-form-item field="userAccount" label="Account">
+        <a-input
+          v-model="form.userAccount"
+          placeholder="Please enter account"
+        />
       </a-form-item>
-      <a-form-item field="userPassword" tooltip="密码不小于 8 位" label="密码">
+      <a-form-item
+        field="userPassword"
+        tooltip="Password not less than 8 digits"
+        label="Password"
+      >
         <a-input-password
           v-model="form.userPassword"
-          placeholder="请输入密码"
+          placeholder="Please enter password"
         />
       </a-form-item>
       <a-form-item
         field="checkPassword"
-        tooltip="确认密码不小于 8 位"
-        label="确认密码"
+        tooltip="Confirm password not less than 8 digits"
+        label="Confirm password"
       >
         <a-input-password
           v-model="form.checkPassword"
-          placeholder="请输入确认密码"
+          placeholder="Please enter confirm password"
         />
       </a-form-item>
       <a-form-item>
@@ -37,9 +44,9 @@
           "
         >
           <a-button type="primary" html-type="submit" style="width: 120px">
-            注册
+            Register
           </a-button>
-          <a-link href="/user/login">老用户登录</a-link>
+          <a-link href="/user/login">Old user login</a-link>
         </div>
       </a-form-item>
     </a-form>
@@ -62,18 +69,18 @@ const form = reactive({
 } as API.UserRegisterRequest);
 
 /**
- * 提交
+ * Submit
  */
 const handleSubmit = async () => {
   const res = await userRegisterUsingPost(form);
   if (res.data.code === 0) {
-    message.success("注册成功");
+    message.success("Registration Success");
     router.push({
       path: "/user/login",
       replace: true,
     });
   } else {
-    message.error("注册失败，" + res.data.message);
+    message.error("Registration Failed，" + res.data.message);
   }
 };
 </script>

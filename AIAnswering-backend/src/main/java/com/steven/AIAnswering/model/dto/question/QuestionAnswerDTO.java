@@ -3,18 +3,18 @@ package com.steven.AIAnswering.model.dto.question;
 import lombok.Data;
 
 /**
- * 题目答案封装类（用于 AI 评分）
+ * Question answer encapsulation (for AI scoring)
  */
 @Data
 public class QuestionAnswerDTO {
 
     /**
-     * 题目
+     * Title
      */
     private String title;
 
     /**
-     * 用户答案
+     * User answer
      */
     private String userAnswer;
 }

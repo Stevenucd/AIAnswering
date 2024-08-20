@@ -29,10 +29,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * userAnswer服务实现
+ * userAnswer Service Implementation
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @Service
 @Slf4j
@@ -45,23 +43,23 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
     private AppService appService;
 
     /**
-     * 校验数据
+     * Verification Data
      *
      * @param userAnswer
-     * @param add      对创建的数据进行校验
+     * @param add      
      */
     @Override
     public void validUserAnswer(UserAnswer userAnswer, boolean add) {
         ThrowUtils.throwIf(userAnswer == null, ErrorCode.PARAMS_ERROR);
-        // 从对象中取值
+        // Get values from an object
         Long appId = userAnswer.getAppId();
-        // 创建数据时，参数不能为空
+        // Parameters cannot be empty when creating data
         if (add) {
-            // 补充校验规则
+            // Supplementary varification rules
             ThrowUtils.throwIf(appId == null || appId <= 0, ErrorCode.PARAMS_ERROR, "appId invalid");
         }
-        // 修改数据时，有参数则校验
-        // 补充校验规则
+        // When modifying data, verification if have parameter
+        // Supplementary varification rules
         if (appId != null) {
             App app = appService.getById(appId);
             ThrowUtils.throwIf(app == null, ErrorCode.PARAMS_ERROR, "application not exist");
@@ -69,7 +67,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
     }
 
     /**
-     * 获取查询条件
+     * Get Query Wrapper
      *
      * @param userAnswerQueryRequest
      * @return
@@ -80,7 +78,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         if (userAnswerQueryRequest == null) {
             return queryWrapper;
         }
-        // 从对象中取值
+        // Get values from an object
         Long id = userAnswerQueryRequest.getId();
         Long appId = userAnswerQueryRequest.getAppId();
         Integer appType = userAnswerQueryRequest.getAppType();
@@ -96,18 +94,18 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         String searchText = userAnswerQueryRequest.getSearchText();
         String sortField = userAnswerQueryRequest.getSortField();
         String sortOrder = userAnswerQueryRequest.getSortOrder();
-        // 补充需要的查询条件
-        // 从多字段中搜索
+        // Supplementary required queries
+        // Search from multiple fields
         if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
+            // Need to splice query conditions
             queryWrapper.and(qw -> qw.like("resultName", searchText).or().like("resultDesc", searchText));
         }
-        // 模糊查询
+        // Fuzzy queries
         queryWrapper.like(StringUtils.isNotBlank(choices), "choices", choices);
         queryWrapper.like(StringUtils.isNotBlank(resultName), "resultName", resultName);
         queryWrapper.like(StringUtils.isNotBlank(resultDesc), "resultDesc", resultDesc);
         queryWrapper.like(StringUtils.isNotBlank(resultPicture), "resultPicture", resultPicture);
-        // 精确查询
+        // Precise search
         queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
@@ -116,7 +114,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         queryWrapper.eq(ObjectUtils.isNotEmpty(appType), "appType", appType);
         queryWrapper.eq(ObjectUtils.isNotEmpty(resultScore), "resultScore", resultScore);
         queryWrapper.eq(ObjectUtils.isNotEmpty(scoringStrategy), "scoringStrategy", scoringStrategy);
-        // 排序规则
+        // Sorting rules
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
                 sortField);
@@ -124,7 +122,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
     }
 
     /**
-     * 获取userAnswer封装
+     * Get userAnswer VO
      *
      * @param userAnswer
      * @param request
@@ -132,12 +130,11 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
      */
     @Override
     public UserAnswerVO getUserAnswerVO(UserAnswer userAnswer, HttpServletRequest request) {
-        // 对象转封装类
+        // Object to VO
         UserAnswerVO userAnswerVO = UserAnswerVO.objToVo(userAnswer);
 
-        // 可以根据需要为封装对象补充值，不需要的内容可以删除
-        // region 可选
-        // 1. 关联查询用户信息
+        // region
+        // 1. Linked query user information
         Long userId = userAnswer.getUserId();
         User user = null;
         if (userId != null && userId > 0) {
@@ -151,7 +148,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
     }
 
     /**
-     * 分页获取userAnswer封装
+     * Get userAnswer VO by Page
      *
      * @param userAnswerPage
      * @param request
@@ -164,18 +161,16 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         if (CollUtil.isEmpty(userAnswerList)) {
             return userAnswerVOPage;
         }
-        // 对象列表 => 封装对象列表
         List<UserAnswerVO> userAnswerVOList = userAnswerList.stream().map(userAnswer -> {
             return UserAnswerVO.objToVo(userAnswer);
         }).collect(Collectors.toList());
 
-        // 可以根据需要为封装对象补充值，不需要的内容可以删除
-        // region 可选
-        // 1. 关联查询用户信息
+        // region
+        // 1. Linked query user information
         Set<Long> userIdSet = userAnswerList.stream().map(UserAnswer::getUserId).collect(Collectors.toSet());
         Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
                 .collect(Collectors.groupingBy(User::getId));
-        // 填充信息
+        // Filling information
         userAnswerVOList.forEach(userAnswerVO -> {
             Long userId = userAnswerVO.getUserId();
             User user = null;

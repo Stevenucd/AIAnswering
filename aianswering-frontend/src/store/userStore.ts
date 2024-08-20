@@ -4,11 +4,11 @@ import { getLoginUserUsingGet } from "@/api/userController";
 import ACCESS_ENUM from "@/access/accessEnum";
 
 /**
- * 登录用户信息全局状态
+ * Login user information global status
  */
 export const useLoginUserStore = defineStore("loginUser", () => {
   const loginUser = ref<API.LoginUserVO>({
-    userName: "未登录",
+    userName: "Not logged in",
   });
 
   function setLoginUser(newLoginUser: API.LoginUserVO) {

@@ -32,10 +32,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 帖子接口
+ * Post controller
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @RestController
 @RequestMapping("/post")
@@ -48,10 +46,10 @@ public class PostController {
     @Resource
     private UserService userService;
 
-    // region 增删改查
+    // region CRUD
 
     /**
-     * 创建
+     * Create post
      *
      * @param postAddRequest
      * @param request
@@ -80,7 +78,7 @@ public class PostController {
     }
 
     /**
-     * 删除
+     * Delete post
      *
      * @param deleteRequest
      * @param request
@@ -93,10 +91,10 @@ public class PostController {
         }
         User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
-        // 判断是否存在
+        // Determine exist or not
         Post oldPost = postService.getById(id);
         ThrowUtils.throwIf(oldPost == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可删除
+        // Can be deleted only by creator or an admin
         if (!oldPost.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
@@ -105,7 +103,7 @@ public class PostController {
     }
 
     /**
-     * 更新（仅管理员）
+     * Updates post (admin only)
      *
      * @param postUpdateRequest
      * @return
@@ -122,10 +120,10 @@ public class PostController {
         if (tags != null) {
             post.setTags(JSONUtil.toJsonStr(tags));
         }
-        // 参数校验
+        // Parameter verification
         postService.validPost(post, false);
         long id = postUpdateRequest.getId();
-        // 判断是否存在
+        // Determine exist or not
         Post oldPost = postService.getById(id);
         ThrowUtils.throwIf(oldPost == null, ErrorCode.NOT_FOUND_ERROR);
         boolean result = postService.updateById(post);
@@ -133,7 +131,7 @@ public class PostController {
     }
 
     /**
-     * 根据 id 获取
+     * Get by id
      *
      * @param id
      * @return
@@ -151,7 +149,7 @@ public class PostController {
     }
 
     /**
-     * 分页获取列表（仅管理员）
+     * List post by page（admin only）
      *
      * @param postQueryRequest
      * @return
@@ -167,7 +165,7 @@ public class PostController {
     }
 
     /**
-     * 分页获取列表（封装类）
+     * List post by page（Encapsulation）
      *
      * @param postQueryRequest
      * @param request
@@ -178,7 +176,7 @@ public class PostController {
                                                        HttpServletRequest request) {
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restrictions on crawler
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Post> postPage = postService.page(new Page<>(current, size),
                 postService.getQueryWrapper(postQueryRequest));
@@ -186,7 +184,7 @@ public class PostController {
     }
 
     /**
-     * 分页获取当前用户创建的资源列表
+     * List my post by page
      *
      * @param postQueryRequest
      * @param request
@@ -202,7 +200,7 @@ public class PostController {
         postQueryRequest.setUserId(loginUser.getId());
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restrictions on crawler
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Post> postPage = postService.page(new Page<>(current, size),
                 postService.getQueryWrapper(postQueryRequest));
@@ -212,7 +210,7 @@ public class PostController {
     // endregion
 
     /**
-     * 编辑（用户）
+     * Edit post（for users）
      *
      * @param postEditRequest
      * @param request
@@ -229,14 +227,14 @@ public class PostController {
         if (tags != null) {
             post.setTags(JSONUtil.toJsonStr(tags));
         }
-        // 参数校验
+        // Parameter verification
         postService.validPost(post, false);
         User loginUser = userService.getLoginUser(request);
         long id = postEditRequest.getId();
-        // 判断是否存在
+        // Determine exist or not
         Post oldPost = postService.getById(id);
         ThrowUtils.throwIf(oldPost == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可编辑
+        // Editable by creator or admin only
         if (!oldPost.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }

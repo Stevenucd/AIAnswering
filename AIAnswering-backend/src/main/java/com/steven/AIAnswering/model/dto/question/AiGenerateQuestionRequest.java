@@ -5,26 +5,24 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * AI 生成题目请求
+ * AI generates question requests
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @Data
 public class AiGenerateQuestionRequest implements Serializable {
 
     /**
-     * 应用 id
+     * App id
      */
     private Long appId;
 
     /**
-     * 题目数
+     * Question number
      */
     int questionNumber = 10;
 
     /**
-     * 选项数
+     * Option number
      */
     int optionNumber = 2;
 

@@ -9,15 +9,13 @@ import com.steven.AIAnswering.model.entity.PostFavour;
 import com.steven.AIAnswering.model.entity.User;
 
 /**
- * 帖子收藏服务
+ * Post Favour Service
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 public interface PostFavourService extends IService<PostFavour> {
 
     /**
-     * 帖子收藏
+     * Post Favour
      *
      * @param postId
      * @param loginUser
@@ -26,7 +24,7 @@ public interface PostFavourService extends IService<PostFavour> {
     int doPostFavour(long postId, User loginUser);
 
     /**
-     * 分页获取用户收藏的帖子列表
+     * List Favour Post by Page
      *
      * @param page
      * @param queryWrapper
@@ -37,7 +35,7 @@ public interface PostFavourService extends IService<PostFavour> {
                                     long favourUserId);
 
     /**
-     * 帖子收藏（内部服务）
+     * Post Favour (Internal services)
      *
      * @param userId
      * @param postId

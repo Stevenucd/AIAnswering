@@ -35,7 +35,7 @@ public class ScoringStrategyContext {
         if (appTypeEnum == null || appScoringStrategyEnum == null) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Application is incorrectly configured, no matching policy found");
         }
-        // 根据不同的应用类别和评分策略，选择对应的策略执行
+        // Depending on the application category and scoring strategy, the corresponding strategy is selected for execution
         switch (appTypeEnum) {
             case SCORE:
                 switch (appScoringStrategyEnum) {

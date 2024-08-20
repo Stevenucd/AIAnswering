@@ -5,23 +5,23 @@
     layout="inline"
     @submit="doSearch"
   >
-    <a-form-item field="userName" label="用户名">
+    <a-form-item field="userName" label="Username">
       <a-input
         allow-clear
         v-model="formSearchParams.userName"
-        placeholder="请输入用户名"
+        placeholder="Please enter username"
       />
     </a-form-item>
-    <a-form-item field="userProfile" label="用户简介">
+    <a-form-item field="userProfile" label="User Profile">
       <a-input
         allow-clear
         v-model="formSearchParams.userProfile"
-        placeholder="请输入用户简介"
+        placeholder="Please enter user profile"
       />
     </a-form-item>
     <a-form-item>
       <a-button type="primary" html-type="submit" style="width: 100px">
-        搜索
+        Search
       </a-button>
     </a-form-item>
   </a-form>
@@ -47,7 +47,7 @@
     </template>
     <template #optional="{ record }">
       <a-space>
-        <a-button status="danger" @click="doDelete(record)">删除</a-button>
+        <a-button status="danger" @click="doDelete(record)">Delete</a-button>
       </a-space>
     </template>
   </a-table>
@@ -65,7 +65,7 @@ import { dayjs } from "@arco-design/web-vue/es/_utils/date";
 
 const formSearchParams = ref<API.UserQueryRequest>({});
 
-// 初始化搜索条件（不应该被修改）
+// Initialise search criteria (should not be modified)
 const initSearchParams = {
   current: 1,
   pageSize: 10,
@@ -78,7 +78,7 @@ const dataList = ref<API.User[]>([]);
 const total = ref<number>(0);
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   const res = await listUserByPageUsingPost(searchParams.value);
@@ -86,12 +86,12 @@ const loadData = async () => {
     dataList.value = res.data.data?.records || [];
     total.value = res.data.data?.total || 0;
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
 /**
- * 执行搜索
+ * Perform a search
  */
 const doSearch = () => {
   searchParams.value = {
@@ -101,7 +101,7 @@ const doSearch = () => {
 };
 
 /**
- * 当分页变化时，改变搜索条件，触发数据加载
+ * Change search criteria to trigger data loading when paging changes
  * @param page
  */
 const onPageChange = (page: number) => {
@@ -112,7 +112,7 @@ const onPageChange = (page: number) => {
 };
 
 /**
- * 删除
+ * Delete
  * @param record
  */
 const doDelete = async (record: API.User) => {
@@ -126,56 +126,56 @@ const doDelete = async (record: API.User) => {
   if (res.data.code === 0) {
     loadData();
   } else {
-    message.error("删除失败，" + res.data.message);
+    message.error("Delete failed，" + res.data.message);
   }
 };
 
 /**
- * 监听 searchParams 变量，改变时触发数据的重新加载
+ * Listens to the searchParams variable and triggers a reload of the data when it changes.
  */
 watchEffect(() => {
   loadData();
 });
 
-// 表格列配置
+// Table Column Configuration
 const columns = [
   {
     title: "id",
     dataIndex: "id",
   },
   {
-    title: "账号",
+    title: "Account",
     dataIndex: "userAccount",
   },
   {
-    title: "用户名",
+    title: "Username",
     dataIndex: "userName",
   },
   {
-    title: "用户头像",
+    title: "User avatar",
     dataIndex: "userAvatar",
     slotName: "userAvatar",
   },
   {
-    title: "用户简介",
+    title: "User Profile",
     dataIndex: "userProfile",
   },
   {
-    title: "权限",
+    title: "Authority",
     dataIndex: "userRole",
   },
   {
-    title: "创建时间",
+    title: "Create Time",
     dataIndex: "createTime",
     slotName: "createTime",
   },
   {
-    title: "更新时间",
+    title: "Update Time",
     dataIndex: "updateTime",
     slotName: "updateTime",
   },
   {
-    title: "操作",
+    title: "Optional",
     slotName: "optional",
   },
 ];

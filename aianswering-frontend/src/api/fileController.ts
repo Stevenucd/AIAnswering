@@ -4,7 +4,7 @@ import request from '@/request';
 
 /** uploadFile POST /api/file/upload */
 export async function uploadFileUsingPost(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  // Overlay generated Param type (non-body parameter swagger does not generate an object by default)
   params: API.uploadFileUsingPOSTParams,
   body: {},
   file?: File,

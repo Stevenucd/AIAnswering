@@ -10,10 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * scoringResult视图
+ * scoringResult VO
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 @Data
 public class ScoringResultVO implements Serializable {
@@ -74,7 +72,7 @@ public class ScoringResultVO implements Serializable {
     private UserVO user;
 
     /**
-     * 封装类转对象
+     * VO to Object
      *
      * @param scoringResultVO
      * @return
@@ -90,7 +88,7 @@ public class ScoringResultVO implements Serializable {
     }
 
     /**
-     * 对象转封装类
+     * Object to VO
      *
      * @param scoringResult
      * @return

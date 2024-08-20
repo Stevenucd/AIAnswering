@@ -37,7 +37,7 @@
           <div class="arco-upload-picture-card" v-else>
             <div class="arco-upload-picture-card-text">
               <IconPlus />
-              <div style="margin-top: 10px; font-weight: 600">上传</div>
+              <div style="margin-top: 10px; font-weight: 600">Upload</div>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@ import { uploadFileUsingPost } from "@/api/fileController";
 import { Message } from "@arco-design/web-vue";
 
 /**
- * 定义组件属性类型
+ * Defining component property types
  */
 interface Props {
   biz: string;
@@ -62,7 +62,7 @@ interface Props {
 }
 
 /**
- * 给组件指定初始值
+ * Assigning Initial Values to Components
  */
 const props = withDefaults(defineProps<Props>(), {
   value: () => "",
@@ -77,7 +77,7 @@ if (props.value) {
   };
 }
 
-// 自定义请求
+// Custom requests
 const customRequest = async (option: any) => {
   const { onError, onSuccess, fileItem } = option;
 
@@ -97,7 +97,7 @@ const customRequest = async (option: any) => {
     onSuccess();
     console.log(file.value);
   } else {
-    Message.error("上传失败，" + res.data.message || "");
+    Message.error("Upload failed，" + res.data.message || "");
     onError(new Error(res.data.message));
   }
 };

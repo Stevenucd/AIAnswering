@@ -3,127 +3,127 @@ use AIAnswering;
 -- User Table Initial Data
 INSERT INTO user (id, userAccount, userPassword, unionId, mpOpenId, userName, userAvatar, userProfile, userRole,
                   createTime, updateTime, isDelete)
-VALUES (1, 'yupi', 'b0dd3697a192885d7c055db46155b26a', null, null, '鱼皮',
-        'https://k.sinaimg.cn/n/sinakd20110/560/w1080h1080/20230930/915d-f3d7b580c33632b191e19afa0a858d31.jpg/w700d1q75cms.jpg',
-        '欢迎来编程导航学习', 'admin', '2024-05-09 11:13:13', '2024-05-09 15:07:48', 0);
+VALUES (1, 'steven', 'b3c977db3a04a3e59fda655761e15ac2', null, null, 'Steven',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz6yp9nhKO-3OHuRj29--0kvWMVvz2y87NWA&s',
+        'My name is Xiaozhang Cui', 'admin', '2024-05-09 11:13:13', '2024-05-09 15:07:48', 0);
 
 -- Application Table Initial Data
 INSERT INTO app (id, appName, appDesc, appIcon, appType, scoringStrategy, reviewStatus, reviewMessage, reviewerId,
                  reviewTime, userId, createTime, updateTime, isDelete)
-VALUES (1, '自定义MBTI性格测试', '测试性格', '11', 1, 0, 1, null, null, null, 1, '2024-04-24 15:58:05', '2024-05-09 15:09:53', 0);
+VALUES (1, 'Customised MBTI Personality Test', 'Personality Test', 'https://img1.baidu.com/it/u=3862985929,50797134&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=503', 1, 1, 1, null, null, null, 1, '2024-04-24 15:58:05', '2024-05-09 15:09:53', 0);
 INSERT INTO app (id, appName, appDesc, appIcon, appType, scoringStrategy, reviewStatus, reviewMessage, reviewerId,
                  reviewTime, userId, createTime, updateTime, isDelete)
-VALUES (2, '自定义得分测试', '测试得分', '22', 0, 0, 1, null, null, null, 1, '2024-04-25 11:39:30', '2024-05-09 15:09:53', 0);
+VALUES (2, 'Custom Score Test', 'Test scores', 'https://img1.baidu.com/it/u=1081983487,3088109403&fm=253&fmt=auto&app=138&f=JPEG?w=499&h=333', 0, 0, 1, null, null, null, 1, '2024-04-25 11:39:30', '2024-05-09 15:09:53', 0);
 INSERT INTO app (id, appName, appDesc, appIcon, appType, scoringStrategy, reviewStatus, reviewMessage, reviewerId,
                  reviewTime, userId, createTime, updateTime, isDelete)
-VALUES (3, 'AI MBTI 性格测试', '快来测测你的 MBTI', '11', 1, 1, 1, null, null, null, 1, '2024-04-26 16:38:12',
+VALUES (3, 'AI MBTI Personality Test', 'Get your MBTI tested', 'https://img1.baidu.com/it/u=3862985929,50797134&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=503', 1, 1, 1, null, null, null, 1, '2024-04-26 16:38:12',
         '2024-05-09 15:09:53', 0);
 INSERT INTO app (id, appName, appDesc, appIcon, appType, scoringStrategy, reviewStatus, reviewMessage, reviewerId,
                  reviewTime, userId, createTime, updateTime, isDelete)
-VALUES (4, 'AI 得分测试', '看看你熟悉多少首都', '22', 0, 1, 1, null, null, null, 1, '2024-04-26 16:38:56', '2024-05-09 15:09:53', 0);
+VALUES (4, 'AI Score Test', 'Let''s see how many capitals you know', 'https://img1.baidu.com/it/u=1081983487,3088109403&fm=253&fmt=auto&app=138&f=JPEG?w=499&h=333', 0, 1, 1, null, null, null, 1, '2024-04-26 16:38:56', '2024-05-09 15:09:53', 0);
 
 -- Initial data for the questionnaire
 INSERT INTO question (id, questionContent, appId, userId, createTime, updateTime, isDelete)
 VALUES (1,
-        '[{"options":[{"result":"I","value":"独自工作","key":"A"},{"result":"E","value":"与他人合作","key":"B"}],"title":"1. 你通常更喜欢"},{"options":[{"result":"J","value":"喜欢有明确的计划","key":"A"},{"result":"P","value":"更愿意随机应变","key":"B"}],"title":"2. 当安排活动时"},{"options":[{"result":"T","value":"认为应该严格遵守","key":"A"},{"result":"F","value":"认为应灵活运用","key":"B"}],"title":"3. 你如何看待规则"},{"options":[{"result":"E","value":"经常是说话的人","key":"A"},{"result":"I","value":"更倾向于倾听","key":"B"}],"title":"4. 在社交场合中"},{"options":[{"result":"J","value":"先研究再行动","key":"A"},{"result":"P","value":"边做边学习","key":"B"}],"title":"5. 面对新的挑战"},{"options":[{"result":"S","value":"注重细节和事实","key":"A"},{"result":"N","value":"注重概念和想象","key":"B"}],"title":"6. 在日常生活中"},{"options":[{"result":"T","value":"更多基于逻辑分析","key":"A"},{"result":"F","value":"更多基于个人情感","key":"B"}],"title":"7. 做决定时"},{"options":[{"result":"S","value":"喜欢有结构和常规","key":"A"},{"result":"N","value":"喜欢自由和灵活性","key":"B"}],"title":"8. 对于日常安排"},{"options":[{"result":"P","value":"首先考虑可能性","key":"A"},{"result":"J","value":"首先考虑后果","key":"B"}],"title":"9. 当遇到问题时"},{"options":[{"result":"T","value":"时间是一种宝贵的资源","key":"A"},{"result":"F","value":"时间是相对灵活的概念","key":"B"}],"title":"10. 你如何看待时间"}]',
+        '[{"options":[{"result":"I","value":"Work alone","key":"A"},{"result":"E","value":"Cooperation with others","key":"B"}],"title":"You usually prefer"},{"options":[{"result":"J","value":"Likes to have a clear plan","key":"A"},{"result":"P","value":"Prefer to improvise","key":"B"}],"title":"When scheduling events"},{"options":[{"result":"T","value":"Considers that it should be strictly observed","key":"A"},{"result":"F","value":"Considers that flexibility should be applied","key":"B"}],"title":"How do you feel about rules"},{"options":[{"result":"E","value":"Often the talker","key":"A"},{"result":"I","value":"Prefer to listen","key":"B"}],"title":"In social situations"},{"options":[{"result":"J","value":"Research before action","key":"A"},{"result":"P","value":"Learn by doing","key":"B"}],"title":"Facing new challenges"},{"options":[{"result":"S","value":"Attention to detail and facts","key":"A"},{"result":"N","value":"Focus on concepts and imagination","key":"B"}],"title":"in daily life"},{"options":[{"result":"T","value":"More based on logical analyses","key":"A"},{"result":"F","value":"More based on personal feelings","key":"B"}],"title":"When make a decision"},{"options":[{"result":"S","value":"Like to have structure and routine","key":"A"},{"result":"N","value":"Prefers freedom and flexibility","key":"B"}],"title":"For daily arrangements"},{"options":[{"result":"P","value":"Consider the possibilities first","key":"A"},{"result":"J","value":"Consider the consequences first","key":"B"}],"title":"When in trouble"},{"options":[{"result":"T","value":"Time is a precious resource","key":"A"},{"result":"F","value":"Time is a relatively flexible concept","key":"B"}],"title":"How do you feel about time?"}]',
         1, 1, '2024-04-24 16:41:53', '2024-05-09 12:28:58', 0);
 INSERT INTO question (id, questionContent, appId, userId, createTime, updateTime, isDelete)
 VALUES (2,
-        '[{"options":[{"score":0,"value":"利马","key":"A"},{"score":0,"value":"圣多明各","key":"B"},{"score":0,"value":"圣萨尔瓦多","key":"C"},{"score":1,"value":"波哥大","key":"D"}],"title":"哥伦比亚的首都是?"},{"options":[{"score":0,"value":"蒙特利尔","key":"A"},{"score":0,"value":"多伦多","key":"B"},{"score":1,"value":"渥太华","key":"C"},{"score":0,"value":"温哥华","key":"D"}],"title":"加拿大的首都是?"},{"options":[{"score":0,"value":"大阪","key":"A"},{"score":1,"value":"东京","key":"B"},{"score":0,"value":"京都","key":"C"},{"score":0,"value":"名古屋","key":"D"}],"title":"日本的首都是?"},{"options":[{"score":0,"value":"墨尔本","key":"A"},{"score":0,"value":"悉尼","key":"B"},{"score":0,"value":"布里斯班","key":"C"},{"score":1,"value":"堪培拉","key":"D"}],"title":"澳大利亚的首都是?"},{"options":[{"score":1,"value":"雅加达","key":"A"},{"score":0,"value":"曼谷","key":"B"},{"score":0,"value":"胡志明市","key":"C"},{"score":0,"value":"吉隆坡","key":"D"}],"title":"印度尼西亚的首都是?"},{"options":[{"score":0,"value":"上海","key":"A"},{"score":0,"value":"杭州","key":"B"},{"score":1,"value":"北京","key":"C"},{"score":0,"value":"广州","key":"D"}],"title":"中国的首都是?"},{"options":[{"score":0,"value":"汉堡","key":"A"},{"score":0,"value":"慕尼黑","key":"B"},{"score":1,"value":"柏林","key":"C"},{"score":0,"value":"科隆","key":"D"}],"title":"德国的首都是?"},{"options":[{"score":0,"value":"釜山","key":"A"},{"score":1,"value":"首尔","key":"B"},{"score":0,"value":"大田","key":"C"},{"score":0,"value":"仁川","key":"D"}],"title":"韩国的首都是?"},{"options":[{"score":0,"value":"瓜达拉哈拉","key":"A"},{"score":0,"value":"蒙特雷","key":"B"},{"score":1,"value":"墨西哥城","key":"C"},{"score":0,"value":"坎昆","key":"D"}],"title":"墨西哥的首都是?"},{"options":[{"score":1,"value":"开罗","key":"A"},{"score":0,"value":"亚历山大","key":"B"},{"score":0,"value":"卢克索","key":"C"},{"score":0,"value":"卡利乌比亚","key":"D"}],"title":"埃及的首都是?"}]',
+        '[{"options":[{"score":0,"value":"Lima","key":"A"},{"score":0,"value":"San Domingo","key":"B"},{"score":0,"value":"San Salvador","key":"C"},{"score":1,"value":"Bogota","key":"D"}],"title":"The capital of Colombia is?"},{"options":[{"score":0,"value":"Montreal","key":"A"},{"score":0,"value":"Toronto","key":"B"},{"score":1,"value":"Ottawa","key":"C"},{"score":0,"value":"Vancouver","key":"D"}],"title":"The capital of Canada is?"},{"options":[{"score":0,"value":"Osaka","key":"A"},{"score":1,"value":"Tokyo","key":"B"},{"score":0,"value":"Kyoto","key":"C"},{"score":0,"value":"Nagoya","key":"D"}],"title":"The capital of Japan is?"},{"options":[{"score":0,"value":"Melbourne","key":"A"},{"score":0,"value":"Sydney","key":"B"},{"score":0,"value":"Brisbane","key":"C"},{"score":1,"value":"Canberra","key":"D"}],"title":"The capital of Australia is?"},{"options":[{"score":1,"value":"Jakarta","key":"A"},{"score":0,"value":"Bangkok","key":"B"},{"score":0,"value":"Ho Chi Minh","key":"C"},{"score":0,"value":"Kuala Lumpur","key":"D"}],"title":"The capital of Indonesia is?"},{"options":[{"score":0,"value":"Shanghai","key":"A"},{"score":0,"value":"Hangzhou","key":"B"},{"score":1,"value":"Beijing","key":"C"},{"score":0,"value":"Guangzhou","key":"D"}],"title":"The capital of China is?"},{"options":[{"score":0,"value":"Hamburg","key":"A"},{"score":0,"value":"Munich","key":"B"},{"score":1,"value":"Berlin","key":"C"},{"score":0,"value":"Cologne","key":"D"}],"title":"The capital of Germany is?"},{"options":[{"score":0,"value":"Busan","key":"A"},{"score":1,"value":"Seoul","key":"B"},{"score":0,"value":"Daejeon","key":"C"},{"score":0,"value":"Incheon","key":"D"}],"title":"The capital of Korea is?"},{"options":[{"score":0,"value":"Guadalajara","key":"A"},{"score":0,"value":"Monterey","key":"B"},{"score":1,"value":"Mexico","key":"C"},{"score":0,"value":"Cancún","key":"D"}],"title":"The capital of Mexico is?"},{"options":[{"score":1,"value":"Cairo","key":"A"},{"score":0,"value":"Alexandria","key":"B"},{"score":0,"value":"Luxor","key":"C"},{"score":0,"value":"Kaliubia","key":"D"}],"title":"The capital of Egypt is?"}]',
         2, 1, '2024-04-25 15:03:07', '2024-05-09 12:28:58', 0);
 INSERT INTO question (id, questionContent, appId, userId, createTime, updateTime, isDelete)
 VALUES (3,
-        '[{"options":[{"result":"I","value":"独自工作","key":"A"},{"result":"E","value":"与他人合作","key":"B"}],"title":"1. 你通常更喜欢"},{"options":[{"result":"J","value":"喜欢有明确的计划","key":"A"},{"result":"P","value":"更愿意随机应变","key":"B"}],"title":"2. 当安排活动时"},{"options":[{"result":"T","value":"认为应该严格遵守","key":"A"},{"result":"F","value":"认为应灵活运用","key":"B"}],"title":"3. 你如何看待规则"},{"options":[{"result":"E","value":"经常是说话的人","key":"A"},{"result":"I","value":"更倾向于倾听","key":"B"}],"title":"4. 在社交场合中"},{"options":[{"result":"J","value":"先研究再行动","key":"A"},{"result":"P","value":"边做边学习","key":"B"}],"title":"5. 面对新的挑战"},{"options":[{"result":"S","value":"注重细节和事实","key":"A"},{"result":"N","value":"注重概念和想象","key":"B"}],"title":"6. 在日常生活中"},{"options":[{"result":"T","value":"更多基于逻辑分析","key":"A"},{"result":"F","value":"更多基于个人情感","key":"B"}],"title":"7. 做决定时"},{"options":[{"result":"S","value":"喜欢有结构和常规","key":"A"},{"result":"N","value":"喜欢自由和灵活性","key":"B"}],"title":"8. 对于日常安排"},{"options":[{"result":"P","value":"首先考虑可能性","key":"A"},{"result":"J","value":"首先考虑后果","key":"B"}],"title":"9. 当遇到问题时"},{"options":[{"result":"T","value":"时间是一种宝贵的资源","key":"A"},{"result":"F","value":"时间是相对灵活的概念","key":"B"}],"title":"10. 你如何看待时间"}]',
+        '[{"options":[{"result":"I","value":"Work alone","key":"A"},{"result":"E","value":"Cooperation with others","key":"B"}],"title":"You usually prefer"},{"options":[{"result":"J","value":"Likes to have a clear plan","key":"A"},{"result":"P","value":"Prefer to improvise","key":"B"}],"title":"When scheduling events"},{"options":[{"result":"T","value":"Considers that it should be strictly observed","key":"A"},{"result":"F","value":"Considers that flexibility should be applied","key":"B"}],"title":"How do you feel about rules"},{"options":[{"result":"E","value":"Often the talker","key":"A"},{"result":"I","value":"Prefer to listen","key":"B"}],"title":"In social situations"},{"options":[{"result":"J","value":"Research before action","key":"A"},{"result":"P","value":"Learn by doing","key":"B"}],"title":"Facing new challenges"},{"options":[{"result":"S","value":"Attention to detail and facts","key":"A"},{"result":"N","value":"Focus on concepts and imagination","key":"B"}],"title":"in daily life"},{"options":[{"result":"T","value":"More based on logical analyses","key":"A"},{"result":"F","value":"More based on personal feelings","key":"B"}],"title":"When make a decision"},{"options":[{"result":"S","value":"Like to have structure and routine","key":"A"},{"result":"N","value":"Prefers freedom and flexibility","key":"B"}],"title":"For daily arrangements"},{"options":[{"result":"P","value":"Consider the possibilities first","key":"A"},{"result":"J","value":"Consider the consequences first","key":"B"}],"title":"When in trouble"},{"options":[{"result":"T","value":"Time is a precious resource","key":"A"},{"result":"F","value":"Time is a relatively flexible concept","key":"B"}],"title":"How do you feel about time?"}]',
         3, 1, '2024-04-26 16:39:29', '2024-05-09 12:28:58', 0);
 INSERT INTO question (id, questionContent, appId, userId, createTime, updateTime, isDelete)
 VALUES (4,
-        '[{"options":[{"score":0,"value":"利马","key":"A"},{"score":0,"value":"圣多明各","key":"B"},{"score":0,"value":"圣萨尔瓦多","key":"C"},{"score":1,"value":"波哥大","key":"D"}],"title":"哥伦比亚的首都是?"},{"options":[{"score":0,"value":"蒙特利尔","key":"A"},{"score":0,"value":"多伦多","key":"B"},{"score":1,"value":"渥太华","key":"C"},{"score":0,"value":"温哥华","key":"D"}],"title":"加拿大的首都是?"},{"options":[{"score":0,"value":"大阪","key":"A"},{"score":1,"value":"东京","key":"B"},{"score":0,"value":"京都","key":"C"},{"score":0,"value":"名古屋","key":"D"}],"title":"日本的首都是?"},{"options":[{"score":0,"value":"墨尔本","key":"A"},{"score":0,"value":"悉尼","key":"B"},{"score":0,"value":"布里斯班","key":"C"},{"score":1,"value":"堪培拉","key":"D"}],"title":"澳大利亚的首都是?"},{"options":[{"score":1,"value":"雅加达","key":"A"},{"score":0,"value":"曼谷","key":"B"},{"score":0,"value":"胡志明市","key":"C"},{"score":0,"value":"吉隆坡","key":"D"}],"title":"印度尼西亚的首都是?"},{"options":[{"score":0,"value":"上海","key":"A"},{"score":0,"value":"杭州","key":"B"},{"score":1,"value":"北京","key":"C"},{"score":0,"value":"广州","key":"D"}],"title":"中国的首都是?"},{"options":[{"score":0,"value":"汉堡","key":"A"},{"score":0,"value":"慕尼黑","key":"B"},{"score":1,"value":"柏林","key":"C"},{"score":0,"value":"科隆","key":"D"}],"title":"德国的首都是?"},{"options":[{"score":0,"value":"釜山","key":"A"},{"score":1,"value":"首尔","key":"B"},{"score":0,"value":"大田","key":"C"},{"score":0,"value":"仁川","key":"D"}],"title":"韩国的首都是?"},{"options":[{"score":0,"value":"瓜达拉哈拉","key":"A"},{"score":0,"value":"蒙特雷","key":"B"},{"score":1,"value":"墨西哥城","key":"C"},{"score":0,"value":"坎昆","key":"D"}],"title":"墨西哥的首都是?"},{"options":[{"score":1,"value":"开罗","key":"A"},{"score":0,"value":"亚历山大","key":"B"},{"score":0,"value":"卢克索","key":"C"},{"score":0,"value":"卡利乌比亚","key":"D"}],"title":"埃及的首都是?"}]',
+        '[{"options":[{"score":0,"value":"Lima","key":"A"},{"score":0,"value":"San Domingo","key":"B"},{"score":0,"value":"San Salvador","key":"C"},{"score":1,"value":"Bogota","key":"D"}],"title":"The capital of Colombia is?"},{"options":[{"score":0,"value":"Montreal","key":"A"},{"score":0,"value":"Toronto","key":"B"},{"score":1,"value":"Ottawa","key":"C"},{"score":0,"value":"Vancouver","key":"D"}],"title":"The capital of Canada is?"},{"options":[{"score":0,"value":"Osaka","key":"A"},{"score":1,"value":"Tokyo","key":"B"},{"score":0,"value":"Kyoto","key":"C"},{"score":0,"value":"Nagoya","key":"D"}],"title":"The capital of Japan is?"},{"options":[{"score":0,"value":"Melbourne","key":"A"},{"score":0,"value":"Sydney","key":"B"},{"score":0,"value":"Brisbane","key":"C"},{"score":1,"value":"Canberra","key":"D"}],"title":"The capital of Australia is?"},{"options":[{"score":1,"value":"Jakarta","key":"A"},{"score":0,"value":"Bangkok","key":"B"},{"score":0,"value":"Ho Chi Minh","key":"C"},{"score":0,"value":"Kuala Lumpur","key":"D"}],"title":"The capital of Indonesia is?"},{"options":[{"score":0,"value":"Shanghai","key":"A"},{"score":0,"value":"Hangzhou","key":"B"},{"score":1,"value":"Beijing","key":"C"},{"score":0,"value":"Guangzhou","key":"D"}],"title":"The capital of China is?"},{"options":[{"score":0,"value":"Hamburg","key":"A"},{"score":0,"value":"Munich","key":"B"},{"score":1,"value":"Berlin","key":"C"},{"score":0,"value":"Cologne","key":"D"}],"title":"The capital of Germany is?"},{"options":[{"score":0,"value":"Busan","key":"A"},{"score":1,"value":"Seoul","key":"B"},{"score":0,"value":"Daejeon","key":"C"},{"score":0,"value":"Incheon","key":"D"}],"title":"The capital of Korea is?"},{"options":[{"score":0,"value":"Guadalajara","key":"A"},{"score":0,"value":"Monterey","key":"B"},{"score":1,"value":"Mexico","key":"C"},{"score":0,"value":"Cancún","key":"D"}],"title":"The capital of Mexico is?"},{"options":[{"score":1,"value":"Cairo","key":"A"},{"score":0,"value":"Alexandria","key":"B"},{"score":0,"value":"Luxor","key":"C"},{"score":0,"value":"Kaliubia","key":"D"}],"title":"The capital of Egypt is?"}]',
         4, 1, '2024-04-26 16:39:29', '2024-05-09 12:28:58', 0);
 
 
 -- Initial data for scoring results table
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (1, 'ISTJ（物流师）', '忠诚可靠，被公认为务实，注重细节。', 'icon_url_istj', '["I","S","T","J"]', null,
+VALUES (1, 'ISTJ (logistician)', 'Loyal and reliable, recognised as pragmatic and detail-oriented.', 'icon_url_istj', '["I","S","T","J"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (2, 'ISFJ（守护者）', '善良贴心，以同情心和责任为特点。', 'icon_url_isfj', '["I","S","F","J"]', null,
+VALUES (2, 'ISFJ (Defender)', 'Kind and attentive, characterised by compassion and responsibility.', 'icon_url_isfj', '["I","S","F","J"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (3, 'INFJ（占有者）', '理想主义者，有着深刻的洞察力，善于理解他人。', 'icon_url_infj', '["I","N","F","J"]', null,
+VALUES (3, 'INFJ (Advocate)', 'Idealist with deep insight and good understanding of others.', 'icon_url_infj', '["I","N","F","J"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (4, 'INTJ（设计师）', '独立思考者，善于规划和实现目标，理性而果断。', 'icon_url_intj', '["I","N","T","J"]', null,
+VALUES (4, 'INTJ (Architect)', 'Independent thinker, good at planning and achieving goals, rational and decisive.', 'icon_url_intj', '["I","N","T","J"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (5, 'ISTP（运动员）', '冷静自持，善于解决问题，擅长实践技能。', 'icon_url_istp', '["I","S","T","P"]', null,
+VALUES (5, 'ISTP (Virtuoso)', 'Calm and self-possessed, good problem solver, good at practical skills.', 'icon_url_istp', '["I","S","T","P"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (6, 'ISFP（艺术家）', '具有艺术感和敏感性，珍视个人空间和自由。', 'icon_url_isfp', '["I","S","F","P"]', null,
+VALUES (6, 'ISFP (Adventurer)', 'Artistic and sensitive, cherishing personal space and freedom.', 'icon_url_isfp', '["I","S","F","P"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (7, 'INFP（治愈者）', '理想主义者，富有创造力，以同情心和理解他人著称。', 'icon_url_infp', '["I","N","F","P"]', null,
+VALUES (7, 'INFP (Mediator)', 'Idealist, creative, known for compassion and understanding of others.', 'icon_url_infp', '["I","N","F","P"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (8, 'INTP（学者）', '思维清晰，探索精神，独立思考且理性。', 'icon_url_intp', '["I","N","T","P"]', null,
+VALUES (8, 'INTP (Logician)', 'Clear thinker, exploratory spirit, independent thinker and rational.', 'icon_url_intp', '["I","N","T","P"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (9, 'ESTP（拓荒者）', '敢于冒险，乐于冒险，思维敏捷，行动果断。', 'icon_url_estp', '["E","S","T","P"]', null,
+VALUES (9, 'ESTP (Entrepreneur)', 'Daring and adventurous, quick-thinking and decisive.', 'icon_url_estp', '["E","S","T","P"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (10, 'ESFP（表演者）', '热情开朗，善于社交，热爱生活，乐于助人。', 'icon_url_esfp', '["E","S","F","P"]', null,
+VALUES (10, 'ESFP (Entertainer)', 'Enthusiastic, outgoing, sociable, fun-loving and helpful.', 'icon_url_esfp', '["E","S","F","P"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (11, 'ENFP（倡导者）', '富有想象力，充满热情，善于激发他人的活力和潜力。', 'icon_url_enfp', '["E","N","F","P"]', null,
+VALUES (11, 'ENFP (Campaigner)', 'Imaginative and enthusiastic, with a knack for inspiring energy and potential in others.', 'icon_url_enfp', '["E","N","F","P"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (12, 'ENTP（发明家）', '充满创造力，善于辩论，挑战传统，喜欢探索新领域。', 'icon_url_entp', '["E","N","T","P"]', null,
+VALUES (12, 'ENTP (Debater)', 'Creative, debatable, challenges convention and enjoys exploring new territory.', 'icon_url_entp', '["E","N","T","P"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (13, 'ESTJ（主管）', '务实果断，善于组织和管理，重视效率和目标。', 'icon_url_estj', '["E","S","T","J"]', null,
+VALUES (13, 'ESTJ (Executive)', 'Pragmatic and decisive, good at organisation and management, with a focus on efficiency and targets.', 'icon_url_estj', '["E","S","T","J"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (14, 'ESFJ（尽责者）', '友善热心，以协调、耐心和关怀为特点，善于团队合作。', 'icon_url_esfj', '["E","S","F","J"]',
+VALUES (14, 'ESFJ (Consul)', 'Friendly and enthusiastic, characterised by co-ordination, patience and caring, good team player.', 'icon_url_esfj', '["E","S","F","J"]',
         null, '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (15, 'ENFJ（教导着）', '热情关爱，善于帮助他人，具有领导力和社交能力。', 'icon_url_enfj', '["E","N","F","J"]', null,
+VALUES (15, 'ENFJ (Protagonist)', 'Passionate and caring, good at helping others, leadership and social skills.', 'icon_url_enfj', '["E","N","F","J"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (16, 'ENTJ（统帅）', '果断自信，具有领导才能，善于规划和执行目标。', 'icon_url_entj', '["E","N","T","J"]', null,
+VALUES (16, 'ENTJ (Commander)', 'Decisive and confident, with leadership skills and adept at planning and executing objectives.', 'icon_url_entj', '["E","N","T","J"]', null,
         '2024-04-24 16:57:02', '2024-05-09 12:28:21', 0, 1, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (17, '首都知识大师', '你真棒棒哦，首都知识非常出色！', null, null, 9, '2024-04-25 15:05:44', '2024-05-09 12:28:21',
+VALUES (17, 'Capital Knowledge Guru', 'You are awesome and your knowledge of capital cities is outstanding!', null, null, 9, '2024-04-25 15:05:44', '2024-05-09 12:28:21',
         0, 2, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (18, '地理小能手！', '你对于世界各国的首都了解得相当不错，但还有一些小地方需要加强哦！', null, null, 7,
+VALUES (18, 'Geography master！', 'You know the world''s capitals pretty well, but there are still a few little things you need to work on!', null, null, 7,
         '2024-04-25 15:05:44', '2024-05-09 12:28:21', 0, 2, 1);
 INSERT INTO scoring_result (id, resultName, resultDesc, resultPicture, resultProp, resultScoreRange, createTime,
                             updateTime, isDelete, appId, userId)
-VALUES (19, '继续加油！', '还需努力哦', null, null, 0, '2024-04-25 15:05:44', '2024-05-09 12:28:21', 0, 2, 1);
+VALUES (19, 'Keep going!', 'Still need to work on it.', null, null, 0, '2024-04-25 15:05:44', '2024-05-09 12:28:21', 0, 2, 1);
 
 -- Initial data for the user response form
 INSERT INTO user_answer (id, appId, appType, choices, resultId, resultName, resultDesc, resultPicture, resultScore,
                               scoringStrategy, userId, createTime, updateTime, isDelete)
-VALUES (1, 1, 1, '["A","A","A","B","A","A","A","B","B","A"]', 1, 'ISTJ（物流师）', '忠诚可靠，被公认为务实，注重细节。', 'icon_url_istj',
+VALUES (1, 1, 1, '["A","A","A","B","A","A","A","B","B","A"]', 1, 'ISTJ (logistician)', 'Loyal and reliable, recognised as pragmatic and detail-oriented.', 'icon_url_istj',
         null, 0, 1, '2024-05-09 15:08:22', '2024-05-09 15:10:13', 0);
 INSERT INTO user_answer (id, appId, appType, choices, resultId, resultName, resultDesc, resultPicture, resultScore,
                               scoringStrategy, userId, createTime, updateTime, isDelete)
-VALUES (2, 2, 0, '["D","C","B","D","A","C","C","B","C","A"]', 17, '首都知识大师', '你真棒棒哦，首都知识非常出色！', null, 10, 0, 1,
+VALUES (2, 2, 0, '["D","C","B","D","A","C","C","B","C","A"]', 17, 'Capital Knowledge Guru', 'You are awesome and your knowledge of capital cities is outstanding!', null, 10, 0, 1,
         '2024-05-09 15:08:36', '2024-05-09 15:10:13', 0);

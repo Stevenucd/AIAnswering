@@ -21,17 +21,17 @@ import MyAnswerPage from "@/views/answer/MyAnswerPage.vue";
 export const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "主页",
+    name: "Homepage",
     component: HomePage,
   },
   {
     path: "/add/app",
-    name: "创建应用",
+    name: "Create app",
     component: AddAppPage,
   },
   {
     path: "/add/app/:id",
-    name: "修改应用",
+    name: "Edit app",
     props: true,
     component: AddAppPage,
     meta: {
@@ -40,7 +40,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/add/question/:appId",
-    name: "创建题目",
+    name: "Create question",
     component: AddQuestionPage,
     props: true,
     meta: {
@@ -49,7 +49,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/add/scoring_result/:appId",
-    name: "创建评分",
+    name: "Create scoring result",
     component: AddScoringResultPage,
     props: true,
     meta: {
@@ -58,7 +58,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/app/detail/:id",
-    name: "应用详情页",
+    name: "App detail",
     props: true,
     component: AppDetailPage,
     meta: {
@@ -67,7 +67,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/answer/do/:appId",
-    name: "答题",
+    name: "Do questions",
     component: DoAnswerPage,
     props: true,
     meta: {
@@ -77,7 +77,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/answer/result/:id",
-    name: "答题结果",
+    name: "Answer result",
     component: AnswerResultPage,
     props: true,
     meta: {
@@ -87,7 +87,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/answer/my",
-    name: "我的答题",
+    name: "My answers",
     component: MyAnswerPage,
     meta: {
       access: ACCESS_ENUM.USER,
@@ -95,7 +95,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/admin/user",
-    name: "用户管理",
+    name: "user",
     component: AdminUserPage,
     meta: {
       access: ACCESS_ENUM.ADMIN,
@@ -103,7 +103,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/admin/app",
-    name: "应用管理",
+    name: "app",
     component: AdminAppPage,
     meta: {
       access: ACCESS_ENUM.ADMIN,
@@ -111,7 +111,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/admin/question",
-    name: "题目管理",
+    name: "question",
     component: AdminQuestionPage,
     meta: {
       access: ACCESS_ENUM.ADMIN,
@@ -119,7 +119,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/admin/scoring_result",
-    name: "评分管理",
+    name: "scoring result",
     component: AdminScoringResultPage,
     meta: {
       access: ACCESS_ENUM.ADMIN,
@@ -127,7 +127,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/admin/user_answer",
-    name: "回答管理",
+    name: "user answers",
     component: AdminUserAnswerPage,
     meta: {
       access: ACCESS_ENUM.ADMIN,
@@ -135,7 +135,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/noAuth",
-    name: "无权限",
+    name: "No authority",
     component: NoAuthPage,
     meta: {
       hideInMenu: true,
@@ -143,7 +143,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/hide",
-    name: "隐藏页面",
+    name: "Hide page",
     component: HomePage,
     meta: {
       hideInMenu: true,
@@ -151,17 +151,17 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/user",
-    name: "用户",
+    name: "User",
     component: UserLayout,
     children: [
       {
         path: "/user/login",
-        name: "用户登录",
+        name: "User Login",
         component: UserLoginPage,
       },
       {
         path: "/user/register",
-        name: "用户注册",
+        name: "User Register",
         component: UserRegisterPage,
       },
     ],

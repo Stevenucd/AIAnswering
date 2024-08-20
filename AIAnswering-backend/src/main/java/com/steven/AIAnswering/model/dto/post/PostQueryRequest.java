@@ -9,8 +9,6 @@ import lombok.EqualsAndHashCode;
 /**
  * 查询请求
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -27,37 +25,37 @@ public class PostQueryRequest extends PageRequest implements Serializable {
     private Long notId;
 
     /**
-     * 搜索词
+     * Search text
      */
     private String searchText;
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * content
      */
     private String content;
 
     /**
-     * 标签列表
+     * Tags list
      */
     private List<String> tags;
 
     /**
-     * 至少有一个标签
+     * At least one tag
      */
     private List<String> orTags;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 
     /**
-     * 收藏用户 id
+     * Favour user id
      */
     private Long favourUserId;
 

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class AiConfig {
 
     /**
-     * apiKey，需要从开放平台获取
+     * apiKey，get from ZHIPU AI Open platform
      */
 
     private String apiKey;

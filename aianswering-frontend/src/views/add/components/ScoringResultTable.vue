@@ -5,23 +5,23 @@
     layout="inline"
     @submit="doSearch"
   >
-    <a-form-item field="resultName" label="结果名称">
+    <a-form-item field="resultName" label="Result name">
       <a-input
         v-model="formSearchParams.resultName"
-        placeholder="请输入结果名称"
+        placeholder="Please enter result name"
         allow-clear
       />
     </a-form-item>
-    <a-form-item field="resultDesc" label="结果描述">
+    <a-form-item field="resultDesc" label="Result description">
       <a-input
         v-model="formSearchParams.resultDesc"
-        placeholder="请输入结果描述"
+        placeholder="Please enter result description"
         allow-clear
       />
     </a-form-item>
     <a-form-item>
       <a-button type="primary" html-type="submit" style="width: 100px">
-        搜索
+        Search
       </a-button>
     </a-form-item>
   </a-form>
@@ -47,8 +47,8 @@
     </template>
     <template #optional="{ record }">
       <a-space>
-        <a-button status="success" @click="doUpdate?.(record)">修改</a-button>
-        <a-button status="danger" @click="doDelete(record)">删除</a-button>
+        <a-button status="success" @click="doUpdate?.(record)">Edit</a-button>
+        <a-button status="danger" @click="doDelete(record)">Delete</a-button>
       </a-space>
     </template>
   </a-table>
@@ -77,7 +77,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const formSearchParams = ref<API.ScoringResultQueryRequest>({});
 
-// 初始化搜索条件（不应该被修改）
+// Initialise search criteria (should not be modified)
 const initSearchParams = {
   current: 1,
   pageSize: 10,
@@ -92,7 +92,7 @@ const dataList = ref<API.ScoringResultVO[]>([]);
 const total = ref<number>(0);
 
 /**
- * 加载数据
+ * Load data
  */
 const loadData = async () => {
   if (!props.appId) {
@@ -107,18 +107,18 @@ const loadData = async () => {
     dataList.value = res.data.data?.records || [];
     total.value = res.data.data?.total || 0;
   } else {
-    message.error("获取数据失败，" + res.data.message);
+    message.error("Failed to get data，" + res.data.message);
   }
 };
 
-// 暴露函数给父组件
+// Exposing functions to the parent component
 defineExpose({
   loadData,
 });
 
 
 /**
- * 执行搜索
+ * Perform a search
  */
 const doSearch = () => {
   searchParams.value = {
@@ -128,7 +128,7 @@ const doSearch = () => {
 };
 
 /**
- * 当分页变化时，改变搜索条件，触发数据加载
+ * Change search criteria to trigger data loading when paging changes
  * @param page
  */
 const onPageChange = (page: number) => {
@@ -139,7 +139,7 @@ const onPageChange = (page: number) => {
 };
 
 /**
- * 删除
+ * Delete
  * @param record
  */
 const doDelete = async (record: API.ScoringResult) => {
@@ -153,56 +153,56 @@ const doDelete = async (record: API.ScoringResult) => {
   if (res.data.code === 0) {
     loadData();
   } else {
-    message.error("删除失败，" + res.data.message);
+    message.error("Delete failed，" + res.data.message);
   }
 };
 
 /**
- * 监听 searchParams 变量，改变时触发数据的重新加载
+ * Listens to the searchParams variable and triggers a reload of the data when it changes.
  */
 watchEffect(() => {
   loadData();
 });
 
-// 表格列配置
+// Table Column Configuration
 const columns = [
   {
     title: "id",
     dataIndex: "id",
   },
   {
-    title: "名称",
+    title: "Name",
     dataIndex: "resultName",
   },
   {
-    title: "描述",
+    title: "Description",
     dataIndex: "resultDesc",
   },
   {
-    title: "图片",
+    title: "Picture",
     dataIndex: "resultPicture",
     slotName: "resultPicture",
   },
   {
-    title: "结果属性",
+    title: "Result Properties",
     dataIndex: "resultProp",
   },
   {
-    title: "评分范围",
+    title: "Score Range",
     dataIndex: "resultScoreRange",
   },
   {
-    title: "创建时间",
+    title: "Create Time",
     dataIndex: "createTime",
     slotName: "createTime",
   },
   {
-    title: "更新时间",
+    title: "Update Time",
     dataIndex: "updateTime",
     slotName: "updateTime",
   },
   {
-    title: "操作",
+    title: "Optional",
     slotName: "optional",
   },
 ];

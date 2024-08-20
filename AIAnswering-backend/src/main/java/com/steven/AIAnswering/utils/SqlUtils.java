@@ -3,15 +3,13 @@ package com.steven.AIAnswering.utils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * SQL 工具
+ * SQL Utils
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 public class SqlUtils {
 
     /**
-     * 校验排序字段是否合法（防止 SQL 注入）
+     * Verify that sorted fields are legal (prevent SQL injection)
      *
      * @param sortField
      * @return

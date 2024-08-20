@@ -7,14 +7,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * App 评分策略枚举
+ * App Scoring Strategy Enum
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
 public enum AppScoringStrategyEnum {
 
-    CUSTOM("自定义", 0),
+    CUSTOM("Custom", 0),
     AI("AI", 1);
 
     private final String text;
@@ -27,7 +25,7 @@ public enum AppScoringStrategyEnum {
     }
 
     /**
-     * 根据 value 获取枚举
+     * Get enumeration by value
      *
      * @param value
      * @return
@@ -45,7 +43,7 @@ public enum AppScoringStrategyEnum {
     }
 
     /**
-     * 获取值列表
+     * Get value list
      *
      * @return
      */

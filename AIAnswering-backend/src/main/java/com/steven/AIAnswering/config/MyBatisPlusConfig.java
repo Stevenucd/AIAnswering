@@ -8,23 +8,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * MyBatis Plus 配置
+ * MyBatis Plus configuration
  *
- * @author https://github.com/liyupi
  */
 @Configuration
 @MapperScan("com.steven.AIAnswering.mapper")
 public class MyBatisPlusConfig {
 
     /**
-     * 拦截器配置
+     * Interceptor configuration
      *
      * @return
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        // 分页插件
+        // Pagination Plugin
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }

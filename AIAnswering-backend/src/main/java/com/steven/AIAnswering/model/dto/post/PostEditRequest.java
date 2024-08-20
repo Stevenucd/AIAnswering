@@ -5,10 +5,8 @@ import java.util.List;
 import lombok.Data;
 
 /**
- * 编辑请求
+ * Editing Request
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @Data
 public class PostEditRequest implements Serializable {
@@ -19,17 +17,17 @@ public class PostEditRequest implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * Title
      */
     private String title;
 
     /**
-     * 内容
+     * content
      */
     private String content;
 
     /**
-     * 标签列表
+     * Tags list
      */
     private List<String> tags;
 
