@@ -4,7 +4,7 @@
       <h1>{{ app.appName }}</h1>
       <p>{{ app.appDesc }}</p>
       <h2 style="margin-bottom: 16px">
-        {{ current }}、{{ currentQuestion?.title }}
+        {{ current }}. {{ currentQuestion?.title }}
       </h2>
       <div>
         <a-radio-group
