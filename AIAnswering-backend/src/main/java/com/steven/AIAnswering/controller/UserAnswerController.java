@@ -1,5 +1,6 @@
 package com.steven.AIAnswering.controller;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.steven.AIAnswering.annotation.AuthCheck;
@@ -25,6 +26,7 @@ import com.steven.AIAnswering.service.UserAnswerService;
 import com.steven.AIAnswering.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -82,8 +84,12 @@ public class UserAnswerController {
         User loginUser = userService.getLoginUser(request);
         userAnswer.setUserId(loginUser.getId());
         // Write to database
-        boolean result = userAnswerService.save(userAnswer);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        try {
+            boolean result = userAnswerService.save(userAnswer);
+            ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        } catch (DuplicateKeyException e){
+            // ignore error
+        }
         // Returns the newly written data id
         long newUserAnswerId = userAnswer.getId();
         // Calling the scoring module
@@ -268,4 +274,9 @@ public class UserAnswerController {
     }
 
     // endregion
+
+    @GetMapping("/generate/id")
+    public BaseResponse<Long> generateUserAnswerId() {
+        return ResultUtils.success(IdUtil.getSnowflakeNextId());
+    }
 }
