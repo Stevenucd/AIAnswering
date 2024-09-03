@@ -46,7 +46,7 @@ export async function editPostUsingPost(
 
 /** getPostVOById GET /api/post/get/vo */
 export async function getPostVoByIdUsingGet(
-  // Overlay generated Param type (non-body parameter swagger does not generate an object by default)
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getPostVOByIdUsingGETParams,
   options?: { [key: string]: any },
 ) {

@@ -53,10 +53,13 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         ThrowUtils.throwIf(userAnswer == null, ErrorCode.PARAMS_ERROR);
         // Get values from an object
         Long appId = userAnswer.getAppId();
+        Long id = userAnswer.getId();
         // Parameters cannot be empty when creating data
         if (add) {
             // Supplementary varification rules
             ThrowUtils.throwIf(appId == null || appId <= 0, ErrorCode.PARAMS_ERROR, "appId invalid");
+            ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR, "id invalid");
+
         }
         // When modifying data, verification if have parameter
         // Supplementary varification rules
