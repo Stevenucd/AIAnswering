@@ -7,7 +7,7 @@
 
 ### Project Description
 
-**AI question answering app platform** based on Vue 3 + Spring Boot + Redis + ChatGLM AI.
+**AI question answering app platform** based on Vue 3 + Spring Boot + Redis + ChatGLM AI + RxJava + SSE.
 
 Users can quickly create and publish a variety of applications based on AI, and support retrieve, answering questions online, and obtaining answer summaries based on scoring algorithms or AI; administrators can review applications, centrally manage the entire site's content.
 
@@ -64,6 +64,11 @@ _**etc...**_
 - Java Spring Boot Framework (See `AIAnswering-backend/README.md`)
 - Storage Layer: MySQL Database + Redis Cache + Tencent Cloud COS Object Storage
 - MyBatis-Plus and MyBatis X automatic generation
+- Redisson distributed lock
+- Caffeine local cache
+- RxJava responsive framework
+- SSE server side push
+- Idempotent design + Distributed ID snowflake algorithm
 - Generic AI capabilities based on the ChatGLM big model
 - Multiple design patterns
 

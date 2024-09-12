@@ -35,7 +35,6 @@
             <a-button type="primary" :href="`/answer/do/${id}`"
               >Start answering</a-button
             >
-            <a-button>Share app</a-button>
             <a-button v-if="isMy" :href="`/add/question/${id}`"
               >Edit question
             </a-button>
