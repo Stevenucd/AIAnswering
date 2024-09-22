@@ -1,7 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
 // API update time：
-// API unique identification：
+// API unique sign：
 import * as appController from './appController';
 import * as fileController from './fileController';
 import * as postController from './postController';

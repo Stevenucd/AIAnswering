@@ -4,7 +4,7 @@
       <h1>{{ app.appName }}</h1>
       <p>{{ app.appDesc }}</p>
       <h2 style="margin-bottom: 16px">
-        {{ current }}、{{ currentQuestion?.title }}
+        {{ current }}. {{ currentQuestion?.title }}
       </h2>
       <div>
         <a-radio-group
@@ -58,7 +58,10 @@ import { useRouter } from "vue-router";
 import { listQuestionVoByPageUsingPost } from "@/api/questionController";
 import message from "@arco-design/web-vue/es/message";
 import { getAppVoByIdUsingGet } from "@/api/appController";
-import { addUserAnswerUsingPost } from "@/api/userAnswerController";
+import {
+  addUserAnswerUsingPost,
+  generateUserAnswerIdUsingGet,
+} from "@/api/userAnswerController";
 
 interface Props {
   appId: string;
@@ -95,8 +98,25 @@ const questionOptions = computed(() => {
 const currentAnswer = ref<string>();
 // Answer list
 const answerList = reactive<string[]>([]);
-// Whether or not the result is being submitted
+// Whether the result is being submitted
 const submitting = ref(false);
+
+// Unique id
+const id = ref<number>();
+// Generate unique id
+const generateId = async () => {
+  const res = await generateUserAnswerIdUsingGet();
+  if (res.data.code === 0) {
+    id.value = res.data.data as any;
+  } else {
+    message.error("Failed to get unique id，" + res.data.message);
+  }
+};
+
+// Generate a unique id when entering the page
+watchEffect(() => {
+  generateId();
+});
 
 /**
  * Load data
@@ -159,6 +179,7 @@ const doSubmit = async () => {
   const res = await addUserAnswerUsingPost({
     appId: props.appId as any,
     choices: answerList,
+    id: id.value as any,
   });
   if (res.data.code === 0 && res.data.data) {
     router.push(`/answer/result/${res.data.data}`);

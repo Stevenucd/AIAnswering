@@ -1,5 +1,6 @@
 package com.steven.AIAnswering.controller;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.steven.AIAnswering.annotation.AuthCheck;
@@ -20,14 +21,23 @@ import com.steven.AIAnswering.model.vo.QuestionVO;
 import com.steven.AIAnswering.service.AppService;
 import com.steven.AIAnswering.service.QuestionService;
 import com.steven.AIAnswering.service.UserService;
+import com.zhipu.oapi.service.v4.model.ChatMessage;
+import com.zhipu.oapi.service.v4.model.ModelData;
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Question controller
@@ -314,6 +324,63 @@ public class QuestionController {
         String json = result.substring(start, end + 1);
         List<QuestionContentDTO> questionContentDTOList = JSONUtil.toList(json, QuestionContentDTO.class);
         return ResultUtils.success(questionContentDTOList);
+    }
+
+    @GetMapping("/ai_generate/sse")
+    public SseEmitter aiGenerateQuestionSSE(AiGenerateQuestionRequest aiGenerateQuestionRequest) {
+        ThrowUtils.throwIf(aiGenerateQuestionRequest == null, ErrorCode.PARAMS_ERROR);
+        // Get Parameters
+        Long appId = aiGenerateQuestionRequest.getAppId();
+        int questionNumber = aiGenerateQuestionRequest.getQuestionNumber();
+        int optionNumber = aiGenerateQuestionRequest.getOptionNumber();
+        // Get app information
+        App app = appService.getById(appId);
+        ThrowUtils.throwIf(app == null, ErrorCode.NOT_FOUND_ERROR);
+        // Encapsulate Prompt
+        String userMessage = getGenerateQuestionUserMessage(app, questionNumber, optionNumber);
+        // Create SSE connection object
+        SseEmitter sseEmitter = new SseEmitter(0L);
+        // AI generate, SSE streaming return
+        Flowable<ModelData> modelDataFlowable = aiManager.doStreamRequest(GENERATE_QUESTION_SYSTEM_MESSAGE, userMessage, null);
+        // Left bracket counter, in addition to the default value, when it becomes 0, it means that the left bracket is equal to the right bracket
+        AtomicInteger counter = new AtomicInteger(0);
+        // Splice question
+        StringBuilder stringBuilder = new StringBuilder();
+        modelDataFlowable
+                .observeOn(Schedulers.io())
+                .map(modelData -> modelData.getChoices().get(0).getDelta().getContent())
+                .map(message -> message.replaceAll("[\\t\\n\\x0B\\f\\r]", ""))
+                .filter(StrUtil::isNotBlank)
+                .flatMap(message -> {
+                    List<Character> characterList = new ArrayList<>();
+                    for(char c : message.toCharArray()){
+                        characterList.add(c);
+                    }
+                    return Flowable.fromIterable(characterList);
+                })
+                .doOnNext(c -> {
+                    // If '{', counter++
+                    if(c == '{'){
+                        counter.addAndGet(1);
+                    }
+                    if(counter.get() > 0){
+                        stringBuilder.append(c);
+                    }
+                    if(c == '}'){
+                        counter.addAndGet(-1);
+                        if(counter.get() == 0){
+                            // The question can be spliced and returned to the front-end via SSE
+                            sseEmitter.send(JSONUtil.toJsonStr(stringBuilder.toString()));
+                            // reset stringBuilder
+                            stringBuilder.setLength(0);
+                        }
+                    }
+                })
+                .doOnError((e) -> log.error("sse error", e))
+                .doOnComplete(sseEmitter::complete)
+                .subscribe();
+
+        return sseEmitter;
     }
 
     // endregion

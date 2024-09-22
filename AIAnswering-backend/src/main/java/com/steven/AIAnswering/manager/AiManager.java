@@ -5,10 +5,8 @@ import com.steven.AIAnswering.common.ErrorCode;
 import com.steven.AIAnswering.exception.BusinessException;
 import com.zhipu.oapi.ClientV4;
 import com.zhipu.oapi.Constants;
-import com.zhipu.oapi.service.v4.model.ChatCompletionRequest;
-import com.zhipu.oapi.service.v4.model.ChatMessage;
-import com.zhipu.oapi.service.v4.model.ChatMessageRole;
-import com.zhipu.oapi.service.v4.model.ModelApiResponse;
+import com.zhipu.oapi.service.v4.model.*;
+import io.reactivex.Flowable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -97,6 +95,48 @@ public class AiManager {
         try {
             ModelApiResponse invokeModelApiResp = clientV4.invokeModelApi(chatCompletionRequest);
             return invokeModelApiResp.getData().getChoices().get(0).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, e.getMessage());
+        }
+    }
+
+    /**
+     * Streaming request (simplified)
+     *
+     * @param systemMessage
+     * @param userMessage
+     * @param temperature
+     * @return
+     */
+    public Flowable<ModelData> doStreamRequest(String systemMessage, String userMessage, Float temperature) {
+        List<ChatMessage> chatMessageList = new ArrayList<>();
+        ChatMessage systemChatMessage = new ChatMessage(ChatMessageRole.USER.value(), systemMessage);
+        chatMessageList.add(systemChatMessage);
+        ChatMessage userChatMessage = new ChatMessage(ChatMessageRole.USER.value(), userMessage);
+        chatMessageList.add(userChatMessage);
+        return doStreamRequest(chatMessageList, temperature);
+    }
+
+    /**
+     * Streaming requests
+     *
+     * @param messages
+     * @param temperature
+     * @return
+     */
+    public Flowable<ModelData> doStreamRequest(List<ChatMessage> messages, Float temperature) {
+        // Create request
+        ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
+                .model(Constants.ModelChatGLM4)
+                .stream(Boolean.TRUE)
+                .temperature(temperature)
+                .invokeMethod(Constants.invokeMethod)
+                .messages(messages)
+                .build();
+        try {
+            ModelApiResponse invokeModelApiResp = clientV4.invokeModelApi(chatCompletionRequest);
+            return invokeModelApiResp.getFlowable();
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, e.getMessage());

@@ -23,6 +23,9 @@
           <AiGenerateQuestionDrawer
             :appId="appId"
             :onSuccess="onAiGenerateSuccess"
+            :onSSESuccess="onAiGenerateSuccessSSE"
+            :onSSEClose="onSSEClose"
+            :onSSEStart="onSSEStart"
           />
         </a-space>
         <div v-for="(question, index) in questionContent" :key="index">
@@ -263,5 +266,26 @@ const onAiGenerateSuccess = (result: API.QuestionContentDTO[]) => {
     `AI generate title successful, generate ${result.length} question(s)`
   );
   questionContent.value = [...questionContent.value, ...result];
+};
+
+/**
+ * Execution after AI successful generate questions (Real-Time)
+ */
+const onAiGenerateSuccessSSE = (result: API.QuestionContentDTO) => {
+  questionContent.value = [...questionContent.value, result];
+};
+
+/**
+ * SSE Generate Start
+ */
+const onSSEStart = (event: any) => {
+  message.success("Generate Start");
+};
+
+/**
+ * SSE Generate Success
+ */
+const onSSEClose = (event: any) => {
+  message.success("Generate Success");
 };
 </script>

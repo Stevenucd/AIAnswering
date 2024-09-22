@@ -38,14 +38,23 @@
             />
           </a-form-item>
           <a-form-item>
-            <a-button
-              :loading="submitting"
-              type="primary"
-              html-type="submit"
-              style="width: 120px"
-            >
-              {{ submitting ? "Generating" : "Generation" }}
-            </a-button>
+            <a-space direction="vertical">
+              <a-button
+                :loading="submitting"
+                type="primary"
+                html-type="submit"
+                style="width: 120px"
+              >
+                {{ submitting ? "Generating" : "Generation" }}
+              </a-button>
+              <a-button
+                :loading="sseSubmitting"
+                style="width: 150px"
+                @click="handleSSESubmit"
+              >
+                {{ sseSubmitting ? "Generating" : "Real-Time Generation" }}
+              </a-button>
+            </a-space>
           </a-form-item>
         </a-form>
       </div>
@@ -65,6 +74,9 @@ const locale = ref(enUS);
 interface Props {
   appId: string;
   onSuccess?: (result: API.QuestionContentDTO[]) => void;
+  onSSESuccess?: (result: API.QuestionContentDTO) => void;
+  onSSEStart?: (event: any) => void;
+  onSSEClose?: (event: any) => void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -80,6 +92,7 @@ const form = reactive({
 
 const visible = ref(false);
 const submitting = ref(false);
+const sseSubmitting = ref(false);
 
 const handleClick = () => {
   visible.value = true;
@@ -114,5 +127,42 @@ const handleSubmit = async () => {
     message.error("Operation failed，" + res.data.message);
   }
   submitting.value = false;
+};
+
+/**
+ * SSE Submit (Real-Time Generation)
+ */
+const handleSSESubmit = async () => {
+  if (!props.appId) {
+    return;
+  }
+  sseSubmitting.value = true;
+
+  // Create SSE request
+  const eventSource = new EventSource(
+    `http://localhost:8101/api/question/ai_generate/sse` +
+      `?appId=${props.appId}&optionNumber=${form.optionNumber}&questionNumber=${form.questionNumber}`
+  );
+  let first = true;
+  // Receive message
+  eventSource.onmessage = function (event) {
+    if (first) {
+      props.onSSEStart?.(event);
+      handleCancel();
+      first = !first;
+    }
+    props.onSSESuccess?.(JSON.parse(event.data));
+  };
+  // Error or normal disconnect
+  eventSource.onerror = function (event) {
+    if (event.eventPhase === EventSource.CLOSED) {
+      console.log("Disconnect");
+      props.onSSEClose?.(event);
+      eventSource.close();
+    } else {
+      eventSource.close();
+    }
+  };
+  sseSubmitting.value = false;
 };
 </script>

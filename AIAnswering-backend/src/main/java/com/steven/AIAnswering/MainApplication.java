@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * Project Launch Portal
  *
  */
-@SpringBootApplication(exclude = {RedisAutoConfiguration.class})
+@SpringBootApplication
 @MapperScan("com.steven.AIAnswering.mapper")
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)

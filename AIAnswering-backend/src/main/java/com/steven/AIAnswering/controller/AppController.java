@@ -262,7 +262,7 @@ public class AppController {
         ThrowUtils.throwIf(oldApp == null, ErrorCode.NOT_FOUND_ERROR);
         // Already in this state
         if (oldApp.getReviewStatus().equals(reviewStatus)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请勿重复审核");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Please do not repeat the review");
         }
         // Update audit status
         User loginUser = userService.getLoginUser(request);
