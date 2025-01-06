@@ -60,8 +60,6 @@ public class QuestionController {
     @Resource
     private AiManager aiManager;
 
-//    @Resource
-//    private Scheduler vipScheduler;
 
     // region CRUD
 
